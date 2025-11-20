@@ -1,0 +1,10 @@
+stable-baselines3
+lru-dict
+scikit-learn  # might not have to be explicitly installed
+tqdm
+numba
+ananke-causal
+autograd
+JPype1
+# scipy might need version 1.10.1
+# git+https://github.com/cmu-phil/py-tetrad   (is not available pypi)
