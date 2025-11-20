@@ -6,6 +6,7 @@ from numba.typed import List
 @njit(fastmath=True, cache=True)
 def ricf_update_kernel(X, B, Omega, parent_indices, sibling_indices, n, d):
     epsilon = X - X @ B.T
+    ridge_lambda = 1e-8  # for stability of OLS solve
     for var_index in range(d):
         # get epsilon_minusi (use mask for numba)
         mask_minusi = np.arange(d) != var_index
@@ -41,8 +42,11 @@ def ricf_update_kernel(X, B, Omega, parent_indices, sibling_indices, n, d):
             z_idx = orig_idx if orig_idx < var_index else orig_idx - 1
             Xmat[:, 1 + n_parents + k] = Z_minusi[:, z_idx]
         # ols
-        # using lstsq since solve might be unstable
-        params, ssr, rank, s = np.linalg.lstsq(Xmat, Y)
+        Xmat_T = Xmat.T
+        gram = Xmat_T @ Xmat
+        for i in range(n_cols):
+            gram[i, i] += ridge_lambda
+        params = np.linalg.solve(gram, Xmat_T @ Y)
         
         current_B_row = B[var_index, :].copy() # for epsilon update
         param_idx = 1
@@ -55,12 +59,9 @@ def ricf_update_kernel(X, B, Omega, parent_indices, sibling_indices, n, d):
             Omega[idx, var_index] = val
             param_idx += 1
             
-        if len(ssr) > 0:
-            scale = ssr / n
-        else:
-            y_pred = Xmat @ params
-            residuals = Y - y_pred
-            scale = np.dot(residuals, residuals) / n
+        y_pred = Xmat @ params
+        residuals = Y - y_pred
+        scale = np.dot(residuals, residuals) / n
         
         # schur complement addition
         omega_i_minusi = Omega[var_index, mask_minusi]
