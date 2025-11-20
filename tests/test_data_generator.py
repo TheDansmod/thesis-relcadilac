@@ -11,7 +11,7 @@ def test_run_bow_free(num_nodes, avg_degree, frac_directed, deg_var, num_iter=10
     generator = GraphGenerator()  # no seed
     avg_degrees, frac_directeds = [], []
     for it in range(num_iter):
-        adj_d, adj_b, X, S, bic = generator.get_admg(
+        adj_d, adj_b, X, S, bic, pag = generator.get_admg(
             num_nodes=num_nodes, 
             avg_degree=avg_degree, 
             frac_directed=frac_directed,
@@ -38,7 +38,7 @@ def test_run_ancestral(num_iter=1000):
         num_nodes = random.randint(5, 100)
         avg_degree = random.randint(2, num_nodes-1)
         frac_directed = np.random.uniform(low=0.2, high=0.8, size=(1,))[0]
-        adj_d, adj_b, X, S, bic = generator.get_admg(
+        adj_d, adj_b, X, S, bic, pag = generator.get_admg(
             num_nodes=num_nodes, 
             avg_degree=avg_degree, 
             frac_directed=frac_directed,

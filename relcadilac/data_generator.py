@@ -5,6 +5,7 @@ import numpy as np
 
 from relcadilac.utils import get_transitive_closure
 from relcadilac.optim_linear_gaussian_sem import LinearGaussianSEM
+from dcd.utils.admg2pag import get_graph_from_adj, admg_to_pag, get_pag_matrix
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -89,7 +90,8 @@ class GraphGenerator:
         plot_directory = os.getcwd(), 
         do_sampling = False, 
         num_samples = 2000, 
-        sampling_params = None
+        sampling_params = None,
+        get_pag = True
     ):
         # generates a random bow-free ADMG.
         # num_nodes: number of nodes in the ADMG
@@ -196,7 +198,7 @@ class GraphGenerator:
             # self.plot_admg(adj_dir, adj_bidir, plot_filename, plot_directory)
             
         # Sampling
-        samples, data_cov_matrix, bic = None, None, None
+        samples, data_cov_matrix, bic, pag_matrix = None, None, None, None
         if do_sampling:
             if sampling_params is None:
                 sampling_params = {}
@@ -207,7 +209,10 @@ class GraphGenerator:
             model = LinearGaussianSEM(adj_dir, adj_bidir, samples, data_cov_matrix)
             model.fit()
             bic = model.bic()
-        return adj_dir, adj_bidir, samples, data_cov_matrix, bic
+        # pag
+        if get_pag:
+            pag_matrix = get_pag_matrix(admg_to_pag(get_graph_from_adj(adj_dir, adj_bidir)))
+        return adj_dir, adj_bidir, samples, data_cov_matrix, bic, pag_matrix
 
 
 if __name__ == '__main__':
@@ -219,7 +224,7 @@ if __name__ == '__main__':
     avg_degree = 2
     frac_directed = 0.6
     
-    adj_d, adj_b, X, S, bic = generator.get_admg(
+    adj_d, adj_b, X, S, bic, pag = generator.get_admg(
         num_nodes=num_nodes, 
         avg_degree=avg_degree, 
         frac_directed=frac_directed,

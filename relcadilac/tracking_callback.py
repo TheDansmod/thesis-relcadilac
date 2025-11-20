@@ -11,6 +11,7 @@ class TrackingCallback(BaseCallback):
         self.best_action = None  # the z vector
         self.pbar = None  # this is the progress bar
         self.num_samples = num_samples
+        self.average_rewards = []  # in order to track the rewards
 
     def _on_training_start(self) -> None:
         """ Initialize the progress bar. """
@@ -20,6 +21,7 @@ class TrackingCallback(BaseCallback):
         # This method will be called by the model after each call to `env.step()`.
         rewards = self.locals['rewards']
         infos = self.locals['infos']
+        self.average_rewards.append(np.mean(rewards))
         batch_best_idx = np.argmax(rewards)
         batch_best_reward = rewards[batch_best_idx]
         if batch_best_reward > self.best_reward:

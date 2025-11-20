@@ -18,9 +18,10 @@ from stable_baselines3.common.vec_env import SubprocVecEnv, VecNormalize
 
 from relcadilac.admg_env import ADMGEnv
 from relcadilac.tracking_callback import TrackingCallback
-from relcadilac.utils import vec_2_bow_free_admg, vec_2_ancestral_admg
+from relcadilac.utils import vec_2_bow_free_admg, vec_2_ancestral_admg, plot_rewards
 from relcadilac.data_generator import GraphGenerator
 from relcadilac.optim_linear_gaussian_sem import LinearGaussianSEM
+from dcd.utils.admg2pag import get_graph_from_adj, admg_to_pag, get_pag_matrix
 
 warnings.simplefilter("ignore")
 os.environ["PYTHONWARNINGS"] = "ignore"
@@ -31,9 +32,9 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 def relcadilac(
         X,
         sample_cov,
-        steps_per_env=1000,
+        steps_per_env=2000,
         n_envs=8,
-        rl_params={"normalize_advantage": True, "n_epochs": 1, "device": "cuda", "verbose": 0, 'n_steps': 16, 'ent_coef': 0.01},
+        rl_params={"normalize_advantage": True, "n_epochs": 1, "device": "cuda", "verbose": 0, 'n_steps': 16, 'ent_coef': 0.05},
         admg_model = 'bow-free',   # could be either bow-free or ancestral
         verbose=1,
         random_state=0,
@@ -64,11 +65,13 @@ def relcadilac(
         best_action = action[0]
     else:
         best_action = tracking.best_action
-    pred_admg = vec2admg(best_action, d, np.tril_indices(d, -1))
+    pred_D, pred_B = vec2admg(best_action, d, np.tril_indices(d, -1))
     best_bic = - tracking.best_reward * n
+    pag_matrix = get_pag_matrix(admg_to_pag(get_graph_from_adj(pred_D, pred_B)))
     logger.info(f'\nBest BIC = {best_bic}')
-    logger.info(f'Predicted ADMG (parents on columns) = \nDirected Edges:\n{pred_admg[0].astype(int)}\nBidirected Edges:\n{pred_admg[1]}')
-    return pred_admg
+    logger.info(f'Predicted ADMG (parents on columns) = \nDirected Edges:\n{pred_D.astype(int)}\nBidirected Edges:\n{pred_B}')
+    plot_rewards(tracking.average_rewards)
+    return pred_D, pred_B, pag_matrix
 
 def get_specific_graph_data():
     np.random.seed(42)
@@ -107,7 +110,7 @@ if __name__ == '__main__':
     seed = 42
     admg_model = 'bow-free'
     # graph_gen = GraphGenerator(seed)
-    # D, B, X, S, bic = graph_gen.get_admg(num_nodes=10, avg_degree=4, frac_directed=0.7, degree_variance=0.1, admg_model=admg_model, do_sampling=True, num_samples=5000)
+    # D, B, X, S, bic, pag = graph_gen.get_admg(num_nodes=10, avg_degree=4, frac_directed=0.7, degree_variance=0.1, admg_model=admg_model, do_sampling=True, num_samples=5000)
     D, B, X, S, bic = get_specific_graph_data()
     logger.info(f"BIC of TRUE graph: {bic}\n")
 

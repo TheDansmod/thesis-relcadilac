@@ -2,8 +2,36 @@ import os
 import shutil
 import pickle
 import itertools
+import numpy as np
 from ananke.graphs import ADMG
 
+
+# danish mod: added below function to return matrix representation of PAG
+def get_pag_matrix(G):
+    """
+    Function to return a numpy ndarray representing the PAG
+
+    :param G: Ananke ADMG with 'pag_edges' attribute.
+    :return: numpy nd-array of shape (num_nodes, num_nodes) where columns are sources
+             and rows are targets and A[i, j] represents the edge mark at node j
+             1 = circle (o), 2 = head (>), 3 = tail (-)
+    """
+    num_nodes = len(G.vertices)
+    pag_matrix = np.zeros((num_nodes, num_nodes))
+    vertex_map = {v: i for i, v in enumerate(G.vertices)}  # we don't care which vertex is mapped to which number
+    edge_mark_map = {"o": 1, "-": 3, ">": 2, "<": 2}
+    for edge in G.pag_edges:
+        pag_matrix[vertex_map[edge["v"]], vertex_map[edge["u"]]] = edge_mark_map[edge["type"][0]]
+        pag_matrix[vertex_map[edge["u"]], vertex_map[edge["v"]]] = edge_mark_map[edge["type"][-1]]
+    return pag_matrix
+
+# danish mod: added below function to convert adjacency matrices to ananke-ADMG graph
+def get_graph_from_adj(D, B):
+    d = D.shape[0]
+    vertices = [f'{i}' for i in range(d)]
+    di_edges = [(f'{idx[1]}', f'{idx[0]}') for idx, x in np.ndenumerate(D) if x > 0]
+    bi_edges = [(f'{idx[0]}', f'{idx[1]}') for idx, x in np.ndenumerate(np.triu(B, 1)) if x > 0]
+    return ADMG(vertices=vertices, di_edges=di_edges, bi_edges=bi_edges)
 
 def pprint_pag(G):
     """
@@ -149,18 +177,20 @@ if __name__ == '__main__':
                   [0, 0, 0, 1],
                   [1, 0, 0, 0],
                   [0, 0, 1, 0]])
-    B = np.array([[0, 1, 0, 1],
-                  [1, 0, 0, 0],
-                  [0, 0, 0, 0],
-                  [1, 0, 0, 0]])
+    B = np.array([[0, 0, 0, 0],
+                  [0, 0, 1, 0],
+                  [0, 1, 0, 0],
+                  [0, 0, 0, 0]])
     vertices = [f'{i}' for i in range(dim)]
     di_edges = [(f'{idx[1]}', f'{idx[0]}') for idx, x in np.ndenumerate(D) if x > 0]
     bi_edges = [(f'{idx[0]}', f'{idx[1]}') for idx, x in np.ndenumerate(np.triu(B, 1)) if x > 0]
     G = ADMG(vertices=vertices, di_edges=di_edges, bi_edges=bi_edges)
     logging.info("made org graph")
-    G.draw(direction="LR").render(filename='0398_org_graph', directory=folder, format='pdf')
-    logging.info("drawn org graph")
+    # G.draw(direction="LR").render(filename='0398_org_graph', directory=folder, format='pdf')
+    # logging.info("drawn org graph")
     PAG = admg_to_pag(G)
     logging.info("converted org graph to pag")
-    PAG.draw(direction="LR").render(filename='0400_pag_graph', directory=folder, format='pdf')
-    logging.info("drawn pag graph")
+    pprint_pag(PAG)
+    print(f'PAG MATRIX:\n{get_pag_matrix(PAG)}')
+    # PAG.draw(direction="LR").render(filename='0400_pag_graph', directory=folder, format='pdf')
+    # logging.info("drawn pag graph")

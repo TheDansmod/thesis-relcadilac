@@ -8,3 +8,4 @@ autograd
 JPype1
 # scipy might need version 1.10.1
 # git+https://github.com/cmu-phil/py-tetrad   (is not available pypi)
+graphviz  # including graphviz on system
