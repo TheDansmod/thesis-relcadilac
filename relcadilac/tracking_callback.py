@@ -2,8 +2,6 @@ import numpy as np
 from tqdm import tqdm
 from stable_baselines3.common.callbacks import BaseCallback
 
-from relcadilac.utils import draw_admg
-
 class TrackingCallback(BaseCallback):
     def __init__(self, total_timesteps, num_samples, verbose = 0):
         super(TrackingCallback, self).__init__(verbose)
@@ -29,8 +27,6 @@ class TrackingCallback(BaseCallback):
         if batch_best_reward > self.best_reward:
             self.best_reward = batch_best_reward
             self.best_action = infos[batch_best_idx]['action_vector']
-            best_admg = infos[batch_best_idx]['admg']
-            # draw_admg(best_admg[0], best_admg[1], f'best_admg_{self.best_reward}', r"/mnt/windows/Users/lordh/Documents/LibraryOfBabel/Projects/thesis/diagrams/")
             if self.verbose > 0:
                 self.pbar.write(f"New least BIC found: {- self.best_reward * self.num_samples}")
         if self.n_calls % 50 == 0:

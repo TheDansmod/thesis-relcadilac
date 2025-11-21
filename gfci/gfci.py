@@ -24,12 +24,14 @@ def get_data():
     df = pd.DataFrame({f'{i}': X[:, i] for i in range(dim)}, dtype=np.float64)
     return df
 
-def gfci_search(df):
+def gfci_search(X):
+    # X is a n x d numpy matrix (d is number of nodes)
     # returns a numpy matrix (d, d) for a PAG where
     # A[i, j] = 0 means no edge between i and j, else there is an edge
     # A[i, j] = 1 means on edge between i and j, j has a circle
     # A[i, j] = 2 means on edge between i and j, j has a head / arrow
     # A[i, j] = 3 means on edge between i and j, j has a tail
+    df = pd.DataFrame({f'{i}': X[:, i] for i in range(X.shape[1])}, dtype=np.float64)
     search = ts.TetradSearch(df)
 
     ## Use a SEM BIC score and Fisher Z Test

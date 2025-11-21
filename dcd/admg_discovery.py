@@ -11,7 +11,10 @@ import copy
 
 # danish mod: put these in dcd folder so added dcd in front of import path
 from dcd.ricf import bic
-from dcd.utils.admg2pag import admg_to_pag, pprint_pag
+# danish mod: importing get_pag_matrix as well
+from dcd.utils.admg2pag import admg_to_pag, pprint_pag, get_pag_matrix
+# danish mod: I need to convert the ananke graph to adjacency matrices
+from relcadilac.utils import get_adj_from_ananke_graph
 
 @primitive
 def cycle_loss(W):
@@ -414,9 +417,10 @@ class Discovery:
         final_W2[np.abs(final_W2) < w_threshold] = 0
         return self.get_graph(final_W1, final_W2, data.columns, w_threshold), convergence
 
+    # danish mod: added local attrubute so that I can also return matrices instead which I need
     def discover_admg(self, data, admg_class, tiers=None, unconfounded_vars=[], max_iter=100,
                       h_tol=1e-8, rho_max=1e+16, num_restarts=5, w_threshold=0.05,
-                      ricf_increment=1, ricf_tol=1e-4, verbose=False, detailed_output=False):
+                      ricf_increment=1, ricf_tol=1e-4, verbose=False, detailed_output=False, local=True):
         """
         Function for running the structure learning procedure within a pre-specified ADMG hypothesis class.
 
@@ -459,7 +463,13 @@ class Discovery:
             print("Final estimated bi_edges", self.G_.bi_edges)
             print("Final BIC", best_bic)
 
-        return self.G_
+        # danish mod: returning pag as well as admg
+        if local: # this is what was there - and is the default
+            return self.G_
+        # below is what I need, need to have local=False for this
+        pag = get_pag_matrix(admg_to_pag(self.G_))
+        D, B = get_adj_from_ananke_graph(self.G_)
+        return D, B, pag
 
 
 if __name__ == "__main__":

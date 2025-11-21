@@ -109,6 +109,7 @@ class GraphGenerator:
         # probs
         base_p_edge = avg_degree / (num_nodes - 1)
         
+        print("danish: here 1")
         # validate connectedness
         while True:
             if degree_variance > 0:
@@ -130,6 +131,7 @@ class GraphGenerator:
             if p_none < 0: 
                 p_none = 0.3 # default for safety
 
+            print("danish: here 2")
             # conditional probability for bidirected edge given no directed edge exists - for ancestral graphs
             if p_none + p_bidir > 0:
                 p_bidir_cond = p_bidir / (p_none + p_bidir)
@@ -158,6 +160,7 @@ class GraphGenerator:
             u_dir = iu_indices[0][idx_dir]
             v_dir = iu_indices[1][idx_dir]
             adj_dir[v_dir, u_dir] = 1 
+            print("danish: here 3")
             
             # bidirected edges - different for ancestral and bow-free
             if admg_model == 'bow-free':
@@ -177,6 +180,7 @@ class GraphGenerator:
                             adj_bidir[u, v] = 1
                             adj_bidir[v, u] = 1
             
+            print("danish: here 4")
             # permute nodes
             perm = self.rng.permutation(num_nodes)
             adj_dir = adj_dir[perm, :][:, perm]
@@ -186,6 +190,7 @@ class GraphGenerator:
             if self._is_connected(adj_dir, adj_bidir):
                 break
 
+        print("danish: here 5")
         # log num nodes and edges
         n_dir = np.sum(adj_dir)
         n_bidir = np.sum(np.triu(adj_bidir, 1))
@@ -200,6 +205,7 @@ class GraphGenerator:
         # Sampling
         samples, data_cov_matrix, bic, pag_matrix = None, None, None, None
         if do_sampling:
+            print("danish: here 6")
             if sampling_params is None:
                 sampling_params = {}
             defaults = {'beta_low': 0.5, 'beta_high': 2.0, 'omega_offdiag_low': 0.4, 'omega_offdiag_high': 0.7, 'omega_diag_low': 0.7, 'omega_diag_high': 1.2, 'num_samples': num_samples, 'standardize_data': False, 'center_data': True}
@@ -207,11 +213,15 @@ class GraphGenerator:
             samples = self.sample_data_from_admg(adj_dir, adj_bidir, final_params)
             data_cov_matrix = np.cov(samples.T)
             model = LinearGaussianSEM(adj_dir, adj_bidir, samples, data_cov_matrix)
+            print("danish: here 6.3")
             model.fit()
+            print("danish: here 6.8")
             bic = model.bic()
+            print("danish: here 7")
         # pag
         if get_pag:
             pag_matrix = get_pag_matrix(admg_to_pag(get_graph_from_adj(adj_dir, adj_bidir)))
+            print("danish: here 8")
         return adj_dir, adj_bidir, samples, data_cov_matrix, bic, pag_matrix
 
 

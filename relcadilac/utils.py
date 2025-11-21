@@ -92,3 +92,15 @@ def get_bic(D, B, X, S):
     model = myLGSem(D, B, X, S)
     model.fit()
     return model.bic()
+
+def get_adj_from_ananke_graph(G):
+    # takes in an ananke ADMG graph, G and returns two adjacency matrices
+    num_nodes = len(G.vertices)
+    dir_matrix, bidir_matrix = np.zeros((num_nodes, num_nodes)), np.zeros((num_nodes, num_nodes))
+    vertex_map = {v: i for i, v in enumerate(G.vertices)}  # we don't care which vertex is mapped to which number
+    for u, v in G.di_edges:  # iterate through a set of tuples of directed edges
+        dir_matrix[vertex_map[v], vertex_map[u]] = 1  # if (u, v) is in di_edges then there is edge u -> v, but in our matrices if A[u, v] = 1 it means there is an edge from v to u
+    for u, v in G.bi_edges:  # iterate through a set of tuples of bidirected edges - each just once
+        bidir_matrix[vertex_map[v], vertex_map[u]] = 1
+        bidir_matrix[vertex_map[u], vertex_map[v]] = 1
+    return dir_matrix, bidir_matrix

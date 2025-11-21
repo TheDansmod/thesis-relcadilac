@@ -45,6 +45,6 @@ class ADMGEnv(gym.Env):
         reward = self.evaluate(admg)
         terminated = True
         truncated = False
-        info = {"action_vector": action, "admg": admg}
+        info = {"action_vector": action}
         return self._obs, reward, terminated, truncated, info
     
