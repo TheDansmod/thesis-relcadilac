@@ -32,10 +32,10 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 def relcadilac(
         X,
         sample_cov,
+        admg_model,   # could be either bow-free or ancestral
         steps_per_env=2000,
         n_envs=8,
         rl_params={"normalize_advantage": True, "n_epochs": 1, "device": "cuda", "verbose": 0, 'n_steps': 16, 'ent_coef': 0.05},
-        admg_model = 'bow-free',   # could be either bow-free or ancestral
         verbose=1,
         random_state=0,
         **unused

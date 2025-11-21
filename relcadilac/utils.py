@@ -1,6 +1,9 @@
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 from ananke.graphs.admg import ADMG
+from ananke.models.linear_gaussian_sem import LinearGaussianSEM as LGSem
+from relcadilac.optim_linear_gaussian_sem import LinearGaussianSEM as myLGSem
 
 def vec_2_bow_free_admg(z, d, tril_ind):
     p = z[:d]
@@ -24,7 +27,6 @@ def get_transitive_closure(num_nodes, adj):
             break
         R = R_next
     return R.astype(float).T
-
 
 def vec_2_ancestral_admg(z, d, tril_ind):
     p = z[:d]
@@ -73,3 +75,20 @@ def plot_rewards(rewards):
     plt.title("Average rewards per step")
     plt.savefig(r"/mnt/windows/Users/lordh/Documents/LibraryOfBabel/Projects/thesis/diagrams/average_rewards_plot")
     plt.close()
+
+def get_ananke_bic(D, B, X):
+    d = D.shape[0]
+    vertices = [f'{i}' for i in range(d)]
+    di_edges = [(f'{idx[1]}', f'{idx[0]}') for idx, x in np.ndenumerate(D) if x > 0]
+    bi_edges = [(f'{idx[0]}', f'{idx[1]}') for idx, x in np.ndenumerate(np.triu(B, 1)) if x > 0]
+    G = ADMG(vertices=vertices, di_edges=di_edges, bi_edges=bi_edges)
+    df_X = pd.DataFrame({f'{i}': X[:, i] for i in range(d)})
+    model = LGSem(G)
+    model.fit(df_X)
+    return model.bic(X)
+
+
+def get_bic(D, B, X, S):
+    model = myLGSem(D, B, X, S)
+    model.fit()
+    return model.bic()

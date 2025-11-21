@@ -27,7 +27,7 @@ def get_admg_metrics(true_admg, pred_admg, num_decimal_places=4):
         precision = true_pos / (true_pos + false_pos)
     # F1 score = 2 / ((1/recall) + (1/precision))
     if precision + recall <= 0:
-        f1 = 0
+        f1 = 1
     else:
         f1 = 2 * precision * recall / (precision + recall)
     # SHD - double count for reverse edge
@@ -46,7 +46,10 @@ def get_tpr_fdr_f1(mat_true, mat_pred):
     true_pos = np.intersect1d(fnz_true, fnz_pred, assume_unique=True).shape[0]
     false_pos = np.setdiff1d(fnz_pred, fnz_true, assume_unique=True).shape[0]
     false_neg = np.setdiff1d(fnz_true, fnz_pred, assume_unique=True).shape[0]
-    f1 = 2 * true_pos / (2 * true_pos + false_pos + false_neg)  # denominator can't be 0
+    if (true_pos + false_pos + false_neg) <= 0:  # not possible unless mat_true is 0, so F1 = 1
+        f1 = 1
+    else:
+        f1 = 2 * true_pos / (2 * true_pos + false_pos + false_neg)
     if (true_pos + false_neg) <= 0:
         true_pos_rate = 0
     else:

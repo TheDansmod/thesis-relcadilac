@@ -6,7 +6,7 @@ from numba.typed import List
 @njit(fastmath=True, cache=True)
 def ricf_update_kernel(X, B, Omega, parent_indices, sibling_indices, n, d):
     epsilon = X - X @ B.T
-    ridge_lambda = 1e-8  # for stability of OLS solve
+    # ridge_lambda = 1e-8  # for stability of OLS solve
     for var_index in range(d):
         # get epsilon_minusi (use mask for numba)
         mask_minusi = np.arange(d) != var_index
@@ -44,8 +44,8 @@ def ricf_update_kernel(X, B, Omega, parent_indices, sibling_indices, n, d):
         # ols
         Xmat_T = Xmat.T
         gram = Xmat_T @ Xmat
-        for i in range(n_cols):
-            gram[i, i] += ridge_lambda
+        # for i in range(n_cols):
+        #     gram[i, i] += ridge_lambda
         params = np.linalg.solve(gram, Xmat_T @ Y)
         
         current_B_row = B[var_index, :].copy() # for epsilon update
@@ -61,7 +61,7 @@ def ricf_update_kernel(X, B, Omega, parent_indices, sibling_indices, n, d):
             
         y_pred = Xmat @ params
         residuals = Y - y_pred
-        scale = np.dot(residuals, residuals) / n
+        scale = np.dot(residuals, residuals) / (n - n_cols)
         
         # schur complement addition
         omega_i_minusi = Omega[var_index, mask_minusi]

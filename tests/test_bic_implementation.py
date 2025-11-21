@@ -19,7 +19,7 @@ def test_my_bic(num_runs):
         degree_variance = 0.1
         admg_model = random.choice(['bow-free', 'ancestral'])
         num_samples = random.choice([1_000, 2_000, 4_000, 8_000])
-        D, B, X, S, bic, pag = generator.get_admg(num_nodes, avg_degree, frac_directed, degree_variance=degree_variance, plot=False, num_samples=num_samples, do_sampling=True)
+        D, B, X, S, bic, pag = generator.get_admg(num_nodes, avg_degree, frac_directed, degree_variance=degree_variance, plot=False, num_samples=num_samples, do_sampling=True, get_pag=False)
         d = D.shape[0]
         df_X = pd.DataFrame({f'{i}': X[:, i] for i in range(d)})
         # from library
