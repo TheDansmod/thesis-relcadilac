@@ -79,11 +79,14 @@ def ricf_update_kernel(X, B, Omega, parent_indices, sibling_indices, n, d):
 
 class LinearGaussianSEM:
     def __init__(self, adj_di, adj_bi, data_matrix, sample_cov_matrix):
-        self.X = data_matrix # passed in as contiguous arrays
-        self.S = sample_cov_matrix # passed in as contiguous arrays
+        self.X = data_matrix # expected to be passed in as contiguous arrays
+        self.S = sample_cov_matrix # expected to be passed in as contiguous arrays
         self.n, self.d = self.X.shape
         
+        # lambda_ = 0.05  # this is the parameter used by Bhattacharya in his 2021 paper
         self.n_params = np.sum(adj_di) + (np.sum(adj_bi) // 2) + self.d
+        # self.n_params = lambda_ * (np.sum(adj_di) + (np.sum(adj_bi) // 2))
+
         self._parent_index_map = List()
         self._sibling_index_map = List()
         for v in range(self.d):

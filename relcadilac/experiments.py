@@ -24,40 +24,42 @@ def sample_size_variation():
     sample_sizes = [500, 1000, 2000, 4000]
     experiment_data = []
     for sample_size in sample_sizes:
-        print(f'sample size = {sample_size}')
-        params = {'num_nodes': 10, 'avg_degree': 4, 'frac_directed': 0.6, 'degree_variance': 0.2, 'num_samples': 0, 'admg_model': 'ancestral', 'beta_low': 0.5, 'beta_high': 2.0, 'omega_offdiag_low': 0.4, 'omega_offdiag_high': 0.7, 'omega_diag_low': 0.7, 'omega_diag_high': 1.2, 'standardize_data': False, 'center_data': True, 'steps_per_env': 2000, 'n_envs': 8, 'normalize_advantage': True, 'n_epochs': 1, 'device': 'cuda', 'n_steps': 16, 'ent_coef': 0.05, 'dcd_num_restarts': 1}
-        num_nodes = params['num_nodes']
-        avg_degree = params['avg_degree']
-        frac_directed = params['frac_directed']
-        degree_variance = params['degree_variance']
-        admg_model = params['admg_model']
-        params['num_samples'] = sample_size
-        D, B, X, S, bic, pag = generator.get_admg(num_nodes=num_nodes, avg_degree=avg_degree, frac_directed=frac_directed, degree_variance=degree_variance, admg_model=admg_model, plot=False, do_sampling=True, num_samples=sample_size)
-        # relcadilac
-        start = time.perf_counter()
-        pred_D, pred_B, pred_pag, _ = rel_admg(X, S, admg_model)
-        params['relcadilac_time_sec'] = time.perf_counter() - start
-        params['relcadilac_admg_metrics'] = get_admg_metrics((D, B), (pred_D, pred_B))
-        params['relcadilac_pag_metrics'] = get_pag_metrics(pag, pred_pag)
-        print(f'\trelcadilac done')
-        # gfci
-        start = time.perf_counter()
-        pred_pag = gfci_search(X)
-        params['gfci_time_sec'] = time.perf_counter() - start
-        params['gfci_pag_metrics'] = get_pag_metrics(pag, pred_pag)
-        print(f'\tgfci done')
-        # dcd
-        df_X = pd.DataFrame({f'{i}': X[:, i] for i in range(num_nodes)})
-        admg_class = 'bowfree' if admg_model == 'bow-free' else 'ancestral'
-        learn = Discovery()  # using all default parameters
-        start = time.perf_counter()
-        pred_D, pred_B, pred_pag = learn.discover_admg(df_X, admg_class=admg_class, local=False, num_restarts=params['dcd_num_restarts'])
-        params['dcd_time_sec'] = time.perf_counter() - start
-        params['dcd_admg_metrics'] = get_admg_metrics((D, B), (pred_D, pred_B))
-        params['dcd_pag_metrics'] = get_pag_metrics(pag, pred_pag)
-        print(f'\tdcd done')
-        experiment_data.append(params)
-    with open(r"/mnt/windows/Users/lordh/Documents/LibraryOfBabel/Projects/thesis/runs/run_001.json", "w") as f:
+        for i in range(4):
+            print(f'sample size = {sample_size}')
+            params = {'num_nodes': 10, 'avg_degree': 4, 'frac_directed': 0.6, 'degree_variance': 0.2, 'num_samples': 0, 'admg_model': 'ancestral', 'beta_low': 0.5, 'beta_high': 2.0, 'omega_offdiag_low': 0.4, 'omega_offdiag_high': 0.7, 'omega_diag_low': 0.7, 'omega_diag_high': 1.2, 'standardize_data': False, 'center_data': True, 'steps_per_env': 2000, 'n_envs': 8, 'normalize_advantage': True, 'n_epochs': 1, 'device': 'cuda', 'n_steps': 16, 'ent_coef': 0.05, 'dcd_num_restarts': 1}
+            num_nodes = params['num_nodes']
+            avg_degree = params['avg_degree']
+            frac_directed = params['frac_directed']
+            degree_variance = params['degree_variance']
+            admg_model = params['admg_model']
+            params['num_samples'] = sample_size
+            D, B, X, S, bic, pag = generator.get_admg(num_nodes=num_nodes, avg_degree=avg_degree, frac_directed=frac_directed, degree_variance=degree_variance, admg_model=admg_model, plot=False, do_sampling=True, num_samples=sample_size)
+            # relcadilac
+            start = time.perf_counter()
+            pred_D, pred_B, pred_pag, _ = rel_admg(X, S, admg_model)
+            params['relcadilac_time_sec'] = time.perf_counter() - start
+            params['relcadilac_admg_metrics'] = get_admg_metrics((D, B), (pred_D, pred_B))
+            params['relcadilac_pag_metrics'] = get_pag_metrics(pag, pred_pag)
+            print(f'\trelcadilac done')
+            # gfci
+            start = time.perf_counter()
+            pred_pag = gfci_search(X)
+            params['gfci_time_sec'] = time.perf_counter() - start
+            params['gfci_pag_metrics'] = get_pag_metrics(pag, pred_pag)
+            print(f'\tgfci done')
+            # dcd
+            df_X = pd.DataFrame({f'{i}': X[:, i] for i in range(num_nodes)})
+            admg_class = 'bowfree' if admg_model == 'bow-free' else 'ancestral'
+            learn = Discovery()  # using all default parameters
+            start = time.perf_counter()
+            pred_D, pred_B, pred_pag = learn.discover_admg(df_X, admg_class=admg_class, local=False, num_restarts=params['dcd_num_restarts'])
+            params['dcd_time_sec'] = time.perf_counter() - start
+            params['dcd_admg_metrics'] = get_admg_metrics((D, B), (pred_D, pred_B))
+            params['dcd_pag_metrics'] = get_pag_metrics(pag, pred_pag)
+            print(f'\tdcd done')
+            experiment_data.append(params)
+            print(params)  # so as not to lose data if a run fails
+    with open(r"/mnt/windows/Users/lordh/Documents/LibraryOfBabel/Projects/thesis/runs/run_002.json", "w") as f:
         json.dump(experiment_data, f, indent=2)
 
 def single_test():
