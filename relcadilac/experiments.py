@@ -20,20 +20,23 @@ from relcadilac.utils import draw_admg, get_ananke_bic
 from gfci.gfci import gfci_search
 from dcd.admg_discovery import Discovery
 
-def sample_size_variation():
-    sample_sizes = [500, 1000, 2000, 4000]
+def num_nodes_variation():
+    num_nodes_list = [5, 10, 15, 20, 30, 50]
     experiment_data = []
-    for sample_size in sample_sizes:
-        for i in range(4):
-            print(f'sample size = {sample_size}')
-            params = {'num_nodes': 10, 'avg_degree': 4, 'frac_directed': 0.6, 'degree_variance': 0.2, 'num_samples': 0, 'admg_model': 'ancestral', 'beta_low': 0.5, 'beta_high': 2.0, 'omega_offdiag_low': 0.4, 'omega_offdiag_high': 0.7, 'omega_diag_low': 0.7, 'omega_diag_high': 1.2, 'standardize_data': False, 'center_data': True, 'steps_per_env': 2000, 'n_envs': 8, 'normalize_advantage': True, 'n_epochs': 1, 'device': 'cuda', 'n_steps': 16, 'ent_coef': 0.05, 'dcd_num_restarts': 1, 'vec_envs_random_state': 0}
-            num_nodes = params['num_nodes']
-            avg_degree = params['avg_degree']
-            frac_directed = params['frac_directed']
-            degree_variance = params['degree_variance']
-            admg_model = params['admg_model']
-            params['num_samples'] = sample_size
-            D, B, X, S, bic, pag = generator.get_admg(num_nodes=num_nodes, avg_degree=avg_degree, frac_directed=frac_directed, degree_variance=degree_variance, admg_model=admg_model, plot=False, do_sampling=True, num_samples=sample_size)
+    for n_nodes in num_nodes_list:
+        for i in range(5):
+            print(f'num nodes = {n_nodes}')
+            params = {'num_nodes': n_nodes, 'avg_degree': 4, 'frac_directed': 0.6, 'degree_variance': 0.2, 'num_samples': 2000, 'admg_model': 'ancestral', 'beta_low': 0.5, 'beta_high': 2.0, 'omega_offdiag_low': 0.4, 'omega_offdiag_high': 0.7, 'omega_diag_low': 0.7, 'omega_diag_high': 1.2, 'standardize_data': False, 'center_data': True, 'steps_per_env': 2000, 'n_envs': 8, 'normalize_advantage': True, 'n_epochs': 1, 'device': 'cuda', 'n_steps': 16, 'ent_coef': 0.05, 'dcd_num_restarts': 1, 'vec_envs_random_state': 0}
+            D, B, X, S, bic, pag = generator.get_admg(
+                    num_nodes=params['num_nodes'],
+                    avg_degree=params['avg_degree'],
+                    frac_directed=params['frac_directed'],
+                    degree_variance=params['degree_variance'],
+                    admg_model=params['admg_model'],
+                    plot=False,
+                    do_sampling=True,
+                    num_samples=params['num_samples']
+                )
             # relcadilac
             rl_params = {'normalize_advantage': params['normalize_advantage'], 'n_epochs': params['n_epochs'], 'device': params['device'], 'n_steps': params['n_steps'], 'verbose': 0, 'ent_coef': params['ent_coef']}
             start = time.perf_counter()
@@ -49,7 +52,7 @@ def sample_size_variation():
             params['gfci_pag_metrics'] = get_pag_metrics(pag, pred_pag)
             print(f'\tgfci done')
             # dcd
-            df_X = pd.DataFrame({f'{i}': X[:, i] for i in range(num_nodes)})
+            df_X = pd.DataFrame({f'{i}': X[:, i] for i in range(n_nodes)})
             admg_class = 'bowfree' if admg_model == 'bow-free' else 'ancestral'
             learn = Discovery()  # using all default parameters
             start = time.perf_counter()
@@ -60,7 +63,7 @@ def sample_size_variation():
             print(f'\tdcd done')
             experiment_data.append(params)
             print(params)  # so as not to lose data if a run fails
-    with open(r"/mnt/windows/Users/lordh/Documents/LibraryOfBabel/Projects/thesis/runs/run_002.json", "w") as f:
+    with open(r"/mnt/windows/Users/lordh/Documents/LibraryOfBabel/Projects/thesis/runs/run_003.json", "w") as f:
         json.dump(experiment_data, f, indent=2)
 
 def single_test():
@@ -89,4 +92,4 @@ def single_test():
 if __name__ == '__main__':
     seed = 20
     generator = GraphGenerator(seed)
-    sample_size_variation()
+    num_nodes_variation()
