@@ -26,7 +26,7 @@ def sample_size_variation():
     for sample_size in sample_sizes:
         for i in range(4):
             print(f'sample size = {sample_size}')
-            params = {'num_nodes': 10, 'avg_degree': 4, 'frac_directed': 0.6, 'degree_variance': 0.2, 'num_samples': 0, 'admg_model': 'ancestral', 'beta_low': 0.5, 'beta_high': 2.0, 'omega_offdiag_low': 0.4, 'omega_offdiag_high': 0.7, 'omega_diag_low': 0.7, 'omega_diag_high': 1.2, 'standardize_data': False, 'center_data': True, 'steps_per_env': 2000, 'n_envs': 8, 'normalize_advantage': True, 'n_epochs': 1, 'device': 'cuda', 'n_steps': 16, 'ent_coef': 0.05, 'dcd_num_restarts': 1}
+            params = {'num_nodes': 10, 'avg_degree': 4, 'frac_directed': 0.6, 'degree_variance': 0.2, 'num_samples': 0, 'admg_model': 'ancestral', 'beta_low': 0.5, 'beta_high': 2.0, 'omega_offdiag_low': 0.4, 'omega_offdiag_high': 0.7, 'omega_diag_low': 0.7, 'omega_diag_high': 1.2, 'standardize_data': False, 'center_data': True, 'steps_per_env': 2000, 'n_envs': 8, 'normalize_advantage': True, 'n_epochs': 1, 'device': 'cuda', 'n_steps': 16, 'ent_coef': 0.05, 'dcd_num_restarts': 1, 'vec_envs_random_state': 0}
             num_nodes = params['num_nodes']
             avg_degree = params['avg_degree']
             frac_directed = params['frac_directed']
@@ -35,8 +35,9 @@ def sample_size_variation():
             params['num_samples'] = sample_size
             D, B, X, S, bic, pag = generator.get_admg(num_nodes=num_nodes, avg_degree=avg_degree, frac_directed=frac_directed, degree_variance=degree_variance, admg_model=admg_model, plot=False, do_sampling=True, num_samples=sample_size)
             # relcadilac
+            rl_params = {'normalize_advantage': params['normalize_advantage'], 'n_epochs': params['n_epochs'], 'device': params['device'], 'n_steps': params['n_steps'], 'verbose': 0, 'ent_coef': params['ent_coef']}
             start = time.perf_counter()
-            pred_D, pred_B, pred_pag, _ = rel_admg(X, S, admg_model)
+            pred_D, pred_B, pred_pag, _ = rel_admg(X, S, admg_model, steps_per_env=params['steps_per_env'], n_envs=params['n_envs'], rl_params=rl_params, random_state=params['vec_envs_random_state'], verbose=0)
             params['relcadilac_time_sec'] = time.perf_counter() - start
             params['relcadilac_admg_metrics'] = get_admg_metrics((D, B), (pred_D, pred_B))
             params['relcadilac_pag_metrics'] = get_pag_metrics(pag, pred_pag)
@@ -88,4 +89,4 @@ def single_test():
 if __name__ == '__main__':
     seed = 20
     generator = GraphGenerator(seed)
-    single_test()
+    sample_size_variation()

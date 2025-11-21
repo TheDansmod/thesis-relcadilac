@@ -26,7 +26,7 @@ def relcadilac(
         sample_cov,
         admg_model,   # could be either bow-free or ancestral
         steps_per_env=2000,
-        n_envs=4,
+        n_envs=8,
         rl_params={"normalize_advantage": True, "n_epochs": 1, "device": "cuda", "verbose": 0, 'n_steps': 16, 'ent_coef': 0.05},
         verbose=1,
         random_state=0,
@@ -47,7 +47,8 @@ def relcadilac(
     tracking = TrackingCallback(total_timesteps=steps, num_samples=n, verbose=verbose)
 
     model = PPO("MlpPolicy", vec_env, seed=random_state, **rl_params)
-    logger.info("triggering learn")
+    if verbose:
+        logger.info("triggering learn")
     model.learn(total_timesteps=steps, callback=tracking) # we don't use the default progress bar since that slows things down
 
     if tracking.best_action is None:
@@ -60,8 +61,9 @@ def relcadilac(
     pred_D, pred_B = vec2admg(best_action, d, np.tril_indices(d, -1))
     best_bic = - tracking.best_reward * n
     pag_matrix = get_pag_matrix(admg_to_pag(get_graph_from_adj(pred_D, pred_B)))
-    logger.info(f'\nBest BIC = {best_bic}')
-    logger.info(f'Predicted ADMG (parents on columns) = \nDirected Edges:\n{pred_D.astype(int)}\nBidirected Edges:\n{pred_B}')
+    if verbose:
+        logger.info(f'\nBest BIC = {best_bic}')
+        logger.info(f'Predicted ADMG (parents on columns) = \nDirected Edges:\n{pred_D.astype(int)}\nBidirected Edges:\n{pred_B}')
     return pred_D, pred_B, pag_matrix, {'average_rewards': tracking.average_rewards}
 
 if __name__ == '__main__':
