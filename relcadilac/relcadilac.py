@@ -1,11 +1,4 @@
 import os
-# danish: check if needed (seems to work)
-os.environ["OMP_NUM_THREADS"] = "1"
-os.environ["MKL_NUM_THREADS"] = "1"
-os.environ["OPENBLAS_NUM_THREADS"] = "1"
-os.environ["VECLIB_MAXIMUM_THREADS"] = "1"
-os.environ["NUMEXPR_NUM_THREADS"] = "1"
-
 import time
 import logging
 import warnings
@@ -20,27 +13,25 @@ from relcadilac.admg_env import ADMGEnv
 from relcadilac.tracking_callback import TrackingCallback
 from relcadilac.utils import vec_2_bow_free_admg, vec_2_ancestral_admg
 from relcadilac.data_generator import GraphGenerator
-from relcadilac.optim_linear_gaussian_sem import LinearGaussianSEM
 from dcd.utils.admg2pag import get_graph_from_adj, admg_to_pag, get_pag_matrix
 
 warnings.simplefilter("ignore")
 os.environ["PYTHONWARNINGS"] = "ignore"
 
 logger = logging.getLogger(__name__)
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def relcadilac(
         X,
         sample_cov,
         admg_model,   # could be either bow-free or ancestral
         steps_per_env=2000,
-        n_envs=8,
+        n_envs=4,
         rl_params={"normalize_advantage": True, "n_epochs": 1, "device": "cuda", "verbose": 0, 'n_steps': 16, 'ent_coef': 0.05},
         verbose=1,
         random_state=0,
         **unused
     ):
-    print('invoked 1')
     if not admg_model in ['bow-free', 'ancestral']:
         raise ValueError("admg_model must either be `bow-free` or `ancestral`")
     rl_params = deepcopy(rl_params or {})
@@ -54,13 +45,10 @@ def relcadilac(
     raw_vec_env = make_vec_env(ADMGEnv, n_envs=n_envs, env_kwargs=dict(nodes=d, X=X, sample_cov=sample_cov, vec2admg=vec2admg), vec_env_cls=SubprocVecEnv)
     vec_env = VecNormalize(raw_vec_env, norm_obs=False, norm_reward=False, gamma=1.0, clip_reward=np.inf)
     tracking = TrackingCallback(total_timesteps=steps, num_samples=n, verbose=verbose)
-    print('invoked 2')
 
     model = PPO("MlpPolicy", vec_env, seed=random_state, **rl_params)
     logger.info("triggering learn")
-    print('invoked 3')
     model.learn(total_timesteps=steps, callback=tracking) # we don't use the default progress bar since that slows things down
-    print('invoked 4')
 
     if tracking.best_action is None:
         vec_env = model.get_env()
@@ -69,11 +57,9 @@ def relcadilac(
         best_action = action[0]
     else:
         best_action = tracking.best_action
-    print('invoked 5')
     pred_D, pred_B = vec2admg(best_action, d, np.tril_indices(d, -1))
     best_bic = - tracking.best_reward * n
     pag_matrix = get_pag_matrix(admg_to_pag(get_graph_from_adj(pred_D, pred_B)))
-    print('invoked 6')
     logger.info(f'\nBest BIC = {best_bic}')
     logger.info(f'Predicted ADMG (parents on columns) = \nDirected Edges:\n{pred_D.astype(int)}\nBidirected Edges:\n{pred_B}')
     return pred_D, pred_B, pag_matrix, {'average_rewards': tracking.average_rewards}
@@ -81,10 +67,10 @@ def relcadilac(
 if __name__ == '__main__':
     start = time.perf_counter()
     logger.info('STARTED EXEC\n\n')
-    seed = 42
-    admg_model = 'bow-free'
+    seed = 32
+    admg_model = 'ancestral'
     graph_gen = GraphGenerator(seed)
-    D, B, X, S, bic, pag = graph_gen.get_admg(num_nodes=10, avg_degree=4, frac_directed=0.7, degree_variance=0.1, admg_model=admg_model, do_sampling=True, num_samples=5000)
+    D, B, X, S, bic, pag = graph_gen.get_admg(num_nodes=10, avg_degree=4, frac_directed=0.7, degree_variance=0.2, admg_model=admg_model, do_sampling=True, num_samples=1000)
     logger.info(f"BIC of TRUE graph: {bic}\n")
 
     est = relcadilac(X, sample_cov=S, admg_model=admg_model)

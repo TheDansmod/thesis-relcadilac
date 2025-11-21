@@ -89,9 +89,11 @@ def get_ananke_bic(D, B, X):
 
 
 def get_bic(D, B, X, S):
-    model = myLGSem(D, B, X, S)
-    model.fit()
-    return model.bic()
+    # danish: this is different, change it
+    return get_ananke_bic(D, B, X)
+    # model = myLGSem(D, B, X, S)
+    # model.fit()
+    # return model.bic()
 
 def get_adj_from_ananke_graph(G):
     # takes in an ananke ADMG graph, G and returns two adjacency matrices

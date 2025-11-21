@@ -4,7 +4,7 @@ import gymnasium as gym
 from lru import LRU
 from gymnasium import spaces
 
-from relcadilac.optim_linear_gaussian_sem import LinearGaussianSEM
+from relcadilac.utils import get_bic
 
 class ADMGEnv(gym.Env):
     def __init__(self, nodes, X, sample_cov, vec2admg):
@@ -32,10 +32,7 @@ class ADMGEnv(gym.Env):
             return self._cache[key]
         # D is the binary adjacency matrix for the directed edges
         # B is the symmetric binary adjacency matrix for the bidirected edges
-        model = LinearGaussianSEM(D, B, self.data, self.sample_cov)
-        model.fit()
-        bic = model.bic()
-        reward = - bic / self.n
+        reward = - get_bic(D, B, self.data, self.sample_cov) / self.n
         self._cache[key] = reward
         return reward # we want to minimise the BIC, but this is reward, so we are maximising -bic
 
