@@ -3,7 +3,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from ananke.graphs.admg import ADMG
 from ananke.models.linear_gaussian_sem import LinearGaussianSEM as LGSem
+
 from relcadilac.optim_linear_gaussian_sem import LinearGaussianSEM as myLGSem
+from dcd.utils.admg2pag import get_graph_from_adj, admg_to_pag, get_pag_matrix
 
 def vec_2_bow_free_admg(z, d, tril_ind):
     p = z[:d]
@@ -68,12 +70,33 @@ def draw_admg(D, B, file_name, folder):
     G = ADMG(vertices=vertices, di_edges=di_edges, bi_edges=bi_edges)
     G.draw(direction="LR").render(filename=file_name, directory=folder, format='pdf')
 
-def plot_rewards(rewards):
+def draw_admg_named_vertices(D, B, vertex_names, file_name, folder):
+    # same as draw_admg, but when you have names for your vertices
+    d = D.shape[0]
+    vertices = [vertex_names[i] for i in range(d)]
+    di_edges = [(vertex_names[idx[1]], vertex_names[idx[0]]) for idx, x in np.ndenumerate(D) if x > 0]
+    bi_edges = [(vertex_names[idx[0]], vertex_names[idx[1]]) for idx, x in np.ndenumerate(np.triu(B, 1)) if x > 0]
+    G = ADMG(vertices=vertices, di_edges=di_edges, bi_edges=bi_edges)
+    G.draw(direction="LR").render(filename=file_name, directory=folder, format='pdf')
+
+def get_thresholded_admg(D, B, X, S, threshold=0.05):
+    # fits a linear gaussian model, then applies threshold, obtains D and B again
+    d = D.shape[0]
+    model = myLGSem(D, B, X, S)
+    model.fit()
+    D, B = np.zeros((d, d)), np.zeros((d, d))
+    beta = np.where(model.B_ <= threshold, 0, model.B_)
+    omega = np.where(model.omega_ <= threshold, 0, model.omega_)
+    D[np.nonzero(beta)] = 1
+    B[np.nonzero(omega)] = 1
+    return D, B
+
+def plot_rewards(rewards, save_path='diagrams/reward.png'):
     plt.plot(rewards)
-    plt.xlabel("step?")
+    plt.xlabel("step (all envs take 1 step)")
     plt.ylabel("average reward")
     plt.title("Average rewards per step")
-    plt.savefig(r"/mnt/windows/Users/lordh/Documents/LibraryOfBabel/Projects/thesis/diagrams/average_rewards_plot")
+    plt.savefig(save_path)
     plt.close()
 
 def get_ananke_bic(D, B, X):
@@ -106,3 +129,6 @@ def get_adj_from_ananke_graph(G):
         bidir_matrix[vertex_map[v], vertex_map[u]] = 1
         bidir_matrix[vertex_map[u], vertex_map[v]] = 1
     return dir_matrix, bidir_matrix
+
+def convert_admg_to_pag(D, B):
+        return get_pag_matrix(admg_to_pag(get_graph_from_adj(D, B)))

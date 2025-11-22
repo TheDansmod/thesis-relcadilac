@@ -1,0 +1,61 @@
+{
+  "num_nodes": 7,
+  "avg_degree": 4,
+  "frac_directed": 0.6,
+  "degree_variance": 0.2,
+  "num_samples": 3000,
+  "admg_model": "ancestral",
+  "beta_low": 0.5,
+  "beta_high": 2.0,
+  "omega_offdiag_low": 0.4,
+  "omega_offdiag_high": 0.7,
+  "omega_diag_low": 0.7,
+  "omega_diag_high": 1.2,
+  "standardize_data": false,
+  "center_data": true,
+  "steps_per_env": 2000,
+  "n_envs": 8,
+  "normalize_advantage": true,
+  "n_epochs": 1,
+  "device": "cuda",
+  "n_steps": 16,
+  "ent_coef": 0.05,
+  "dcd_num_restarts": 1,
+  "vec_envs_random_state": 0,
+  "relcadilac_time_sec": 209.4070551830082,
+  "relcadilac_admg_metrics": {
+    "admg": {
+      "tpr": 0.5555555555555556,
+      "fdr": 0.6428571428571429,
+      "f1": 0.43478260869565216,
+      "shd": 13.0
+    },
+    "skeleton": {
+      "tpr": 0.6923076923076923,
+      "fdr": 0.4,
+      "f1": 0.6428571428571429
+    }
+  },
+  "relcadilac_pag_metrics": {
+    "skeleton": {
+      "f1": 0.782608695652174,
+      "tpr": 1.0,
+      "fdr": 0.35714285714285715
+    },
+    "circle": {
+      "tpr": 0.0,
+      "fdr": 1.0,
+      "f1": 0.0
+    },
+    "head": {
+      "tpr": 0.5833333333333334,
+      "fdr": 0.5,
+      "f1": 0.5384615384615384
+    },
+    "tail": {
+      "tpr": 1.0,
+      "fdr": 0.6666666666666666,
+      "f1": 0.5
+    }
+  }
+}

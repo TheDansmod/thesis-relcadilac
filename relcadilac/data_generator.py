@@ -3,8 +3,7 @@ import logging
 
 import numpy as np
 
-from relcadilac.utils import get_transitive_closure, get_bic
-from dcd.utils.admg2pag import get_graph_from_adj, admg_to_pag, get_pag_matrix
+from relcadilac.utils import get_transitive_closure, get_bic, convert_admg_to_pag
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -208,7 +207,7 @@ class GraphGenerator:
             bic = get_bic(adj_dir, adj_bidir, samples, data_cov_matrix)
         # pag
         if get_pag:
-            pag_matrix = get_pag_matrix(admg_to_pag(get_graph_from_adj(adj_dir, adj_bidir)))
+            pag_matrix = convert_admg_to_pag(adj_dir, adj_bidir)
         return adj_dir, adj_bidir, samples, data_cov_matrix, bic, pag_matrix
 
 
