@@ -16,12 +16,12 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 
-# from relcadilac.data_generator import GraphGenerator
-# from relcadilac.relcadilac import relcadilac as rel_admg
-# from relcadilac.metrics import get_admg_metrics, get_pag_metrics
-# from relcadilac.utils import draw_admg, get_ananke_bic, plot_rewards, get_thresholded_admg, convert_admg_to_pag
-# from gfci.gfci import gfci_search
-# from dcd.admg_discovery import Discovery
+from relcadilac.data_generator import GraphGenerator
+from relcadilac.relcadilac import relcadilac as rel_admg
+from relcadilac.metrics import get_admg_metrics, get_pag_metrics
+from relcadilac.utils import draw_admg, get_ananke_bic, plot_rewards, get_thresholded_admg, convert_admg_to_pag
+from gfci.gfci import gfci_search
+from dcd.admg_discovery import Discovery
 
 def num_nodes_variation():
     #### DANISH: be careful with the threshold
@@ -70,14 +70,14 @@ def num_nodes_variation():
     with open(r"/mnt/windows/Users/lordh/Documents/LibraryOfBabel/Projects/thesis/runs/run_003.json", "w") as f:
         json.dump(experiment_data, f, indent=2)
 
-def sample_size_variation():
+def sample_size_variation(seed):
     print("\n\nRUNNING SAMPLE SIZE VARIATION\n\n")
     sample_sizes = [500, 1000, 2000, 4000]
     experiment_data = []
     for sample_size in sample_sizes:
         for i in range(2):
             print(f'sample size = {sample_sizes}')
-            params = {'num_nodes': 10, 'avg_degree': 4, 'frac_directed': 0.6, 'degree_variance': 0.2, 'num_samples': sample_size, 'admg_model': 'ancestral', 'beta_low': 0.5, 'beta_high': 2.0, 'omega_offdiag_low': 0.4, 'omega_offdiag_high': 0.7, 'omega_diag_low': 0.7, 'omega_diag_high': 1.2, 'standardize_data': False, 'center_data': True, 'steps_per_env': 2000, 'n_envs': 8, 'normalize_advantage': True, 'n_epochs': 1, 'device': 'cuda', 'n_steps': 16, 'ent_coef': 0.05, 'dcd_num_restarts': 1, 'vec_envs_random_state': 0, 'do_thresholding': True, 'threshold': 0.05}
+            params = {'num_nodes': 10, 'avg_degree': 4, 'frac_directed': 0.6, 'degree_variance': 0.2, 'num_samples': sample_size, 'admg_model': 'ancestral', 'beta_low': 0.5, 'beta_high': 2.0, 'omega_offdiag_low': 0.4, 'omega_offdiag_high': 0.7, 'omega_diag_low': 0.7, 'omega_diag_high': 1.2, 'standardize_data': False, 'center_data': True, 'steps_per_env': 2000, 'n_envs': 8, 'normalize_advantage': True, 'n_epochs': 1, 'device': 'cuda', 'n_steps': 16, 'ent_coef': 0.05, 'dcd_num_restarts': 1, 'vec_envs_random_state': 0, 'do_thresholding': True, 'threshold': 0.05, 'generator_seed': seed}
             D, B, X, S, bic, pag = generator.get_admg(
                     num_nodes=params['num_nodes'],
                     avg_degree=params['avg_degree'],
@@ -544,5 +544,5 @@ def plot_merged_sample_size_variation_data():
 
 if __name__ == '__main__':
     seed = 32
-    # generator = GraphGenerator(seed)
-    plot_merged_sample_size_variation_data()
+    generator = GraphGenerator(seed)
+    sample_size_variation(seed)
