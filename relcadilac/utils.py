@@ -85,8 +85,8 @@ def get_thresholded_admg(D, B, X, S, threshold=0.05):
     model = myLGSem(D, B, X, S)
     model.fit()
     D, B = np.zeros((d, d)), np.zeros((d, d))
-    beta = np.where(model.B_ <= threshold, 0, model.B_)
-    omega = np.where(model.omega_ <= threshold, 0, model.omega_)
+    beta = np.where(abs(model.B_) <= threshold, 0, model.B_)
+    omega = np.where(abs(model.omega_) <= threshold, 0, model.omega_)
     D[np.nonzero(beta)] = 1
     B[np.nonzero(omega)] = 1
     return D, B
