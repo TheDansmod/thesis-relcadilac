@@ -16,12 +16,12 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 
-from relcadilac.data_generator import GraphGenerator
-from relcadilac.relcadilac import relcadilac as rel_admg
-from relcadilac.metrics import get_admg_metrics, get_pag_metrics
-from relcadilac.utils import draw_admg, get_ananke_bic, plot_rewards, get_thresholded_admg, convert_admg_to_pag
-from gfci.gfci import gfci_search
-from dcd.admg_discovery import Discovery
+# from relcadilac.data_generator import GraphGenerator
+# from relcadilac.relcadilac import relcadilac as rel_admg
+# from relcadilac.metrics import get_admg_metrics, get_pag_metrics
+# from relcadilac.utils import draw_admg, get_ananke_bic, plot_rewards, get_thresholded_admg, convert_admg_to_pag
+# from gfci.gfci import gfci_search
+# from dcd.admg_discovery import Discovery
 
 def num_nodes_variation(seed):
     #### DANISH: be careful with the threshold
@@ -132,7 +132,7 @@ def sample_size_variation(seed):
             params['gfci_pag_metrics'] = get_pag_metrics(pag, pred_pag)
             print(f'\tgfci done')
             # dcd
-            df_X = pd.DataFrame({f'{i}': X[:, i] for i in range(n_nodes)})
+            df_X = pd.DataFrame({f'{i}': X[:, i] for i in range(params['num_nodes'])})
             admg_class = 'bowfree' if params['admg_model'] == 'bow-free' else 'ancestral'
             learn = Discovery()  # using all default parameters
             start = time.perf_counter()
@@ -559,8 +559,59 @@ def plot_merged_sample_size_variation_data():
         plt.savefig(f'diagrams/sample_size_dcd_rel_thresh_gfci_{tp}_pag_metrics.png')
         plt.close()
 
+def check_rewards_convergence_run_006():
+    with open(r'runs/run_006.json', 'r') as f:
+        data = json.load(f)
+    avg_rewards = list(map(float, data['relcadilac_avg_rewards']))
+    plt.plot(avg_rewards)
+    plt.xlabel("8 Steps = 1 unit")
+    plt.ylabel("reward value")
+    plt.title("5 node, degree 4, 500 samples, ancestral graph")
+    plt.show()
+
+def check_rewards_convergence():
+    with open(r'runs/run_007.json', 'r') as f:
+        data = json.load(f)
+    sample_sizes = [500, 600, 700, 1000, 1500, 2000, 2500, 3000]
+    rewards = {ss: None for ss in sample_sizes} # the list (None to start) for each sample size will contain the averaged rewards over 10 runs
+    for single_run in data:
+        single_run_rewards = np.array(list(map(float, single_run['relcadilac_avg_rewards']))) / 10  # divide by 10 to average out the rewards since there are 10 runs for each sample size
+        if rewards[single_run['num_samples']] is None:
+            rewards[single_run['num_samples']] = single_run_rewards
+        else:
+            rewards[single_run['num_samples']] += single_run_rewards
+    for ss in sample_sizes:
+        plt.plot(rewards[ss], label=f'{ss}')
+    plt.xlabel('8 steps = 1 unit')
+    plt.ylabel("reward value")
+    plt.legend()
+    plt.title("7 node, degree 4, ancestral graph")
+    plt.savefig("diagrams/rewards_varying_sample_size_ancestral.png")
+
+def check_bic_variance():
+    # this function I am essentially checking how the true and predicted bic values (or rather the difference between them) vary as the sample size increases
+    with open(r'runs/run_007.json', 'r') as f:
+        data = json.load(f)
+    sample_sizes = [500, 600, 700, 1000, 1500, 2000, 2500, 3000]
+    true_bic = {ss: 0 for ss in sample_sizes} # the list for each sample size will contain the 10 ground truth bic values for that sample size
+    pred_bic = {ss: 0 for ss in sample_sizes} # the list for each sample size will contain the 10 predicted bic values for that sample size
+    for single_run in data:
+        true_bic[single_run['num_samples']] += single_run['ground_truth_bic'] / 10  # divide by 10 to average things out since there were 10 runs
+        pred_bic[single_run['num_samples']] += single_run['relcadilac_pred_bic'] / 10  # divide by 10 to average things out since there were 10 runs
+    true_bic_list = [true_bic[ss] for ss in sample_sizes]
+    pred_bic_list = [pred_bic[ss] for ss in sample_sizes]
+    frac_diff = [(pred_bic[ss] - true_bic[ss]) / true_bic[ss] for ss in sample_sizes]
+    # plt.plot(sample_sizes, true_bic_list, label='true bic')
+    # plt.plot(sample_sizes, pred_bic_list, label='pred bic')
+    plt.plot(sample_sizes, frac_diff, label='frac diff')
+    plt.xlabel("Sample Sizes")
+    plt.ylabel("BIC Values")
+    plt.legend()
+    plt.title("Fractional Excess of predicted BIC values over true BIC values vs Sample Size, 7 Node, Degree 4, Ancestral Graphs")
+    plt.savefig("diagrams/fractional_excess_bic_vs_sample_size.png")
+
 if __name__ == '__main__':
     seed = 32
-    generator = GraphGenerator(seed)
-    num_nodes_variation(seed)
-    sample_size_variation(seed)
+    # generator = GraphGenerator(seed)
+    # num_nodes_variation(seed)
+    check_bic_variance()
