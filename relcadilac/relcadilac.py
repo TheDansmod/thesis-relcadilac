@@ -11,7 +11,7 @@ from stable_baselines3.common.vec_env import SubprocVecEnv, VecNormalize
 
 from relcadilac.admg_env import ADMGEnv
 from relcadilac.tracking_callback import TrackingCallback
-from relcadilac.utils import vec_2_bow_free_admg, vec_2_ancestral_admg, convert_admg_to_pag
+from relcadilac.utils import vec_2_bow_free_admg, vec_2_ancestral_admg, convert_admg_to_pag, vec_2_bow_free_admg_known_topo_order, vec_2_ancestral_admg_known_topo_order, vec_2_bow_free_admg_logits
 from relcadilac.data_generator import GraphGenerator
 
 warnings.simplefilter("ignore")
@@ -29,19 +29,20 @@ def relcadilac(
         rl_params={"normalize_advantage": True, "n_epochs": 1, "device": "cuda", "verbose": 0, 'n_steps': 16, 'ent_coef': 0.05},
         verbose=1,
         random_state=0,
+        topo_order=None,  # should be a numpy array of shape (d,)
         **unused
     ):
     if not admg_model in ['bow-free', 'ancestral']:
         raise ValueError("admg_model must either be `bow-free` or `ancestral`")
     rl_params = deepcopy(rl_params or {})
     if admg_model == 'bow-free':
-        vec2admg = vec_2_bow_free_admg
+        vec2admg = vec_2_bow_free_admg_known_topo_order if topo_order is not None else vec_2_bow_free_admg
     if admg_model == 'ancestral':
-        vec2admg = vec_2_ancestral_admg
+        vec2admg = vec_2_ancestral_admg_known_topo_order if topo_order is not None else vec_2_ancestral_admg
     n, d = X.shape
     steps = steps_per_env * n_envs
 
-    raw_vec_env = make_vec_env(ADMGEnv, n_envs=n_envs, env_kwargs=dict(nodes=d, X=X, sample_cov=sample_cov, vec2admg=vec2admg), vec_env_cls=SubprocVecEnv)
+    raw_vec_env = make_vec_env(ADMGEnv, n_envs=n_envs, env_kwargs=dict(nodes=d, X=X, sample_cov=sample_cov, vec2admg=vec2admg, topo_order=topo_order), vec_env_cls=SubprocVecEnv)
     vec_env = VecNormalize(raw_vec_env, norm_obs=False, norm_reward=False, gamma=1.0, clip_reward=np.inf)
     try:
         tracking = TrackingCallback(total_timesteps=steps, num_samples=n, verbose=verbose)
@@ -58,7 +59,7 @@ def relcadilac(
             best_action = action[0]
         else:
             best_action = tracking.best_action
-        pred_D, pred_B = vec2admg(best_action, d, np.tril_indices(d, -1))
+        pred_D, pred_B = vec2admg(best_action, d, np.tril_indices(d, -1), topo_order)
         best_bic = - tracking.best_reward * n
         pag_matrix = convert_admg_to_pag(pred_D, pred_B)
         if verbose:

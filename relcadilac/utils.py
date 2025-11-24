@@ -7,7 +7,7 @@ from ananke.models.linear_gaussian_sem import LinearGaussianSEM as LGSem
 from relcadilac.optim_linear_gaussian_sem import LinearGaussianSEM as myLGSem
 from dcd.utils.admg2pag import get_graph_from_adj, admg_to_pag, get_pag_matrix
 
-def vec_2_bow_free_admg(z, d, tril_ind):
+def vec_2_bow_free_admg(z, d, tril_ind, topo_order):  # still takes the argument but does nothing with it
     p = z[:d]
     diE = np.zeros((d, d))
     diE[tril_ind] = z[d:(d * (d+1)) // 2]
@@ -15,6 +15,66 @@ def vec_2_bow_free_admg(z, d, tril_ind):
     biE = np.zeros((d, d))
     biE[tril_ind] = z[(d * (d+1)) // 2:]
     B = (biE + biE.T > 0) * (1 - D) * (1 - D.T)
+    return D, B
+
+def vec_2_bow_free_admg_known_topo_order(z, d, tril_ind, topo_order):
+    diE = np.zeros((d, d))
+    diE[tril_ind] = z[: (d * (d-1)) // 2]
+    D = (diE + diE.T > 0) * (topo_order[:, None] > topo_order[None, :])
+    biE = np.zeros((d, d))
+    biE[tril_ind] = z[(d * (d-1)) // 2:]
+    B = (biE + biE.T > 0) * (1 - D) * (1 - D.T)
+    return D, B
+
+def vec_2_bow_free_admg_logits(z, d, tril_ind, topo_order):
+    p = z[:d]
+    m = len(tril_ind[0])
+    w_di = z[d : d + m]
+    w_bi = z[d + m :]
+
+    # 3. Construct the Logic Competition
+    # We create a (3, m) stack: [Null_Potentials, Dir_Potentials, Bi_Potentials]
+    # Null potentials are fixed at 0.
+    null_potentials = np.zeros(m)
+
+    # Stack structure: row 0 = Null, row 1 = Directed, row 2 = Bidirected
+    logits = np.vstack([null_potentials, w_di, w_bi]) # Shape (3, m)
+
+    # 4. Determine Edge Types via Argmax
+    # choices will be an array of length m with values {0, 1, 2}
+    choices = np.argmax(logits, axis=0)
+
+    # 5. Map back to Adjacency Matrices
+    # Create strictly lower triangular matrices first
+    D = np.zeros((d, d))
+    B = np.zeros((d, d))
+
+    D[tril_ind] = (choices == 1).astype(float)
+    B[tril_ind] = (choices == 2).astype(float)
+
+    # 6. Enforce Topological Ordering on Directed Edges
+    # An edge i->j exists in the final graph ONLY if:
+    #   a) The logit competition selected Directed (L_dir[i,j] == 1 or L_dir[j,i] == 1)
+    #   b) The ordering condition is met.
+
+    # Expand p to compare all pairs
+    # P_diff[i, j] = p[i] - p[j]
+    P_diff = p[:, None] - p[None, :]
+
+    # The tril_ind usually maps to indices (i, j) where i > j.
+    # We populate the full matrix by adding the transpose (symmetrizing the existence decision)
+    # then masking by ordering.
+
+    # "Raw" existence based on logits (ignoring direction for a moment)
+    adj_existence_dir = D + D.T
+
+    # Final D: Keep edge if existence is predicted AND ordering agrees
+    D = (D + D.T) * (p[:, None] > p[None, :])
+
+    # Final B: Bidirected edges are symmetric and unconstrained by ordering
+    # (other than the bow-free constraint which is handled by the mutual exclusivity of argmax)
+    B = B + B.T
+
     return D, B
 
 def get_transitive_closure(num_nodes, adj):
@@ -30,7 +90,7 @@ def get_transitive_closure(num_nodes, adj):
         R = R_next
     return R.astype(float).T
 
-def vec_2_ancestral_admg(z, d, tril_ind):
+def vec_2_ancestral_admg(z, d, tril_ind, topo_order):  # still takes the topo_order argument but does nothing with it
     p = z[:d]
     diE = np.zeros((d, d))
     diE[tril_ind] = z[d:(d * (d+1)) // 2]
@@ -56,6 +116,34 @@ def vec_2_ancestral_admg(z, d, tril_ind):
                 R[j, i] = 1.0
     biE = np.zeros((d, d))
     biE[tril_ind] = z[(d * (d+1)) // 2:]
+    B = (biE + biE.T > 0) * (1 - R) * (1 - R.T)
+    return D, B
+
+def vec_2_ancestral_admg_known_topo_order(z, d, tril_ind, topo_order):
+    diE = np.zeros((d, d))
+    diE[tril_ind] = z[: (d * (d-1)) // 2]
+    D = (diE + diE.T > 0) * (topo_order[:, None] > topo_order[None, :])
+    # get transitive closure matrix R
+    # create adj list - cols=sources, rows=targets
+    rows, cols = np.nonzero(D)
+    adj_list = [[] for _ in range(d)]
+    for u, v in zip(cols, rows):
+        adj_list[u].append(v)
+    reach = [0] * d  # bitmask of all nodes reachable from u
+    for u in topo_order[::-1]:  # iterate through reverse topo order
+        r_u = 0
+        for v in adj_list[u]:
+            # u reaches v (1 << v) and everything v reaches (reach[v])
+            r_u |= (1 << v) | reach[v]
+        reach[u] = r_u
+    R = np.zeros((d, d), dtype=float)
+    for i in range(d):
+        mask = reach[i]
+        for j in range(d):
+            if (mask >> j) & 1:
+                R[j, i] = 1.0
+    biE = np.zeros((d, d))
+    biE[tril_ind] = z[(d * (d-1)) // 2:]
     B = (biE + biE.T > 0) * (1 - R) * (1 - R.T)
     return D, B
 

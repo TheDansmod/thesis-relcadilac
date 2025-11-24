@@ -13,15 +13,16 @@ os.environ["PYTHONWARNINGS"] = "ignore"
 
 import numpy as np
 import pandas as pd
+import networkx as nx
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 
-# from relcadilac.data_generator import GraphGenerator
-# from relcadilac.relcadilac import relcadilac as rel_admg
-# from relcadilac.metrics import get_admg_metrics, get_pag_metrics
-# from relcadilac.utils import draw_admg, get_ananke_bic, plot_rewards, get_thresholded_admg, convert_admg_to_pag
-# from gfci.gfci import gfci_search
-# from dcd.admg_discovery import Discovery
+from relcadilac.data_generator import GraphGenerator
+from relcadilac.relcadilac import relcadilac as rel_admg
+from relcadilac.metrics import get_admg_metrics, get_pag_metrics
+from relcadilac.utils import draw_admg, get_ananke_bic, plot_rewards, get_thresholded_admg, convert_admg_to_pag, get_bic
+from gfci.gfci import gfci_search
+from dcd.admg_discovery import Discovery
 
 def num_nodes_variation(seed):
     #### DANISH: be careful with the threshold
@@ -228,6 +229,9 @@ def single_test():
     print(f'time taken: {(end - start) / 60} mins\n{admg_metrics}\n{pag_metrics}')
 
 def flatten_data(data):
+    # data here is a single dictionary
+    reject_keys = ['relcadilac_directed_thresh_adj', 'relcadilac_bidirected_thresh_adj', 'relcadilac_avg_rewards', 'ground_truth_directed_adj', 'ground_truth_bidirected_adj', 'relcadilac_directed_pred_adj', 'relcadilac_bidirected_pred_adj']
+    # we need to reject some keys since their values are the matrices or lists
     flat_data = {}
     stack = [(data, '')]
     while stack:
@@ -236,6 +240,8 @@ def flatten_data(data):
             new_key = f"{curr_key}_{k}" if curr_key else k
             if isinstance(val, dict):
                 stack.append((val, new_key))
+            elif new_key in reject_keys:
+                continue
             else:
                 flat_data[new_key] = val
     return flat_data
@@ -246,7 +252,7 @@ def get_df_from_runs(data):
         rows.append(flatten_data(exp))
     return pd.DataFrame.from_records(rows)
 
-def create_sample_size_plots(file_path='runs/run_004.json'):
+def create_sample_size_plots(file_path='runs/run_012.json'):
     with open(file_path, 'r') as f:
         data = json.load(f)
     df = get_df_from_runs(data)
@@ -256,7 +262,7 @@ def create_sample_size_plots(file_path='runs/run_004.json'):
         averaged_rows.append(df.query(f'num_samples == {sample_size}').mean(axis=0, numeric_only=True))
     df_new = pd.DataFrame(averaged_rows)
     # tpr fdr f1
-    fig, ax = plt.subplots(figsize=(16, 9))
+    fig, ax = plt.subplots(figsize=(10, 6))
     ax.plot(sample_sizes, df_new['relcadilac_admg_metrics_admg_tpr'], '-r')
     ax.plot(sample_sizes, df_new['relcadilac_admg_metrics_admg_fdr'], '-g')
     ax.plot(sample_sizes, df_new['relcadilac_admg_metrics_admg_f1'], '-b')
@@ -276,11 +282,11 @@ def create_sample_size_plots(file_path='runs/run_004.json'):
     ax.legend(handles=legend_elements_styles, loc='lower left', title='Algorithm')
     ax.set_xlabel('Number of Samples')
     ax.set_ylabel('Value')
-    ax.set_title('DCD vs Relcadilac, ADMG Metrics, Ancestral Graphs')
-    plt.savefig('diagrams/dcd_rel_tpr_fdr_f1_admg.png')
+    ax.set_title('DCD vs Relcadilac, ADMG Metrics, Bow-free Graphs')
+    plt.savefig('diagrams/bowfree_sample_size_dcd_rel_tpr_fdr_f1_admg.png')
     plt.close()
     # skeleton tpr fdr f1
-    fig, ax = plt.subplots(figsize=(16, 9))
+    fig, ax = plt.subplots(figsize=(10, 6))
     ax.plot(sample_sizes, df_new['relcadilac_admg_metrics_skeleton_tpr'], '-r')
     ax.plot(sample_sizes, df_new['relcadilac_admg_metrics_skeleton_fdr'], '-g')
     ax.plot(sample_sizes, df_new['relcadilac_admg_metrics_skeleton_f1'], '-b')
@@ -291,11 +297,11 @@ def create_sample_size_plots(file_path='runs/run_004.json'):
     ax.legend(handles=legend_elements_styles, loc='lower left', title='Algorithm')
     ax.set_xlabel('Number of Samples')
     ax.set_ylabel('Value')
-    ax.set_title('DCD vs Relcadilac, ADMG Skeleton Metrics, Ancestral Graphs')
-    plt.savefig('diagrams/dcd_rel_tpr_fdr_f1_admg_skeleton.png')
+    ax.set_title('DCD vs Relcadilac, ADMG Skeleton Metrics, Bowfree Graphs')
+    plt.savefig('diagrams/bowfree_sample_size_dcd_rel_tpr_fdr_f1_admg_skeleton.png')
     plt.close()
     # shd runtime
-    fig, ax = plt.subplots(figsize=(16, 9))
+    fig, ax = plt.subplots(figsize=(10, 6))
     ax.plot(sample_sizes, df_new['relcadilac_admg_metrics_admg_shd'], '-b')
     ax.plot(sample_sizes, df_new['dcd_admg_metrics_admg_shd'], '--b')
     ax.set_ylabel('Structural Hamming Distance (SHD)')
@@ -311,8 +317,8 @@ def create_sample_size_plots(file_path='runs/run_004.json'):
     ax.legend(handles=legend_elements_styles, loc='lower left', title='Algorithm')
     ax.legend(handles=legend_elements_styles, loc='lower right', title='Algorithm')
     ax.set_xlabel('Number of Samples')
-    ax.set_title('DCD vs Relcadilac, ADMG SHD and Runtime, Ancestral Graphs')
-    plt.savefig('diagrams/dcd_rel_shd_runtime.png')
+    ax.set_title('DCD vs Relcadilac, ADMG SHD and Runtime, Bow-free Graphs')
+    plt.savefig('diagrams/bowfree_sample_size_dcd_rel_shd_runtime.png')
     plt.close()
     # dcd Relcadilac, gfci (pag graphs)
     types = ['skeleton', 'circle', 'head', 'tail']
@@ -327,7 +333,7 @@ def create_sample_size_plots(file_path='runs/run_004.json'):
         Line2D([0], [0], color='black', lw=2, linestyle=':', label='GFCI')
     ]
     for tp in types:
-        fig, ax = plt.subplots(figsize=(16, 9))
+        fig, ax = plt.subplots(figsize=(10, 6))
         ax.plot(sample_sizes, df_new[f'relcadilac_pag_metrics_{tp}_tpr'], '-r')
         ax.plot(sample_sizes, df_new[f'relcadilac_pag_metrics_{tp}_fdr'], '-g')
         ax.plot(sample_sizes, df_new[f'relcadilac_pag_metrics_{tp}_f1'], '-b')
@@ -341,21 +347,21 @@ def create_sample_size_plots(file_path='runs/run_004.json'):
         ax.legend(handles=legend_elements_styles, loc='lower left', title='Algorithm')
         ax.set_xlabel('Number of Samples')
         ax.set_ylabel('Value')
-        ax.set_title('DCD vs Relcadilac vs GFCI, PAG Metrics, Ancestral Graphs')
-        plt.savefig(f'diagrams/dcd_rel_gfci_{tp}_pag_metrics.png')
+        ax.set_title(f'DCD vs Relcadilac vs GFCI, PAG {tp} Metrics, Bow-free Graphs')
+        plt.savefig(f'diagrams/bowfree_sample_size_dcd_rel_gfci_{tp}_pag_metrics.png')
         plt.close()
 
-def create_num_nodes_plot(file_path='runs/run_003.json'):
+def create_num_nodes_plot(file_path='runs/run_011_stdout.json'):
     with open(file_path, 'r') as f:
         data = json.load(f)
     df = get_df_from_runs(data)
-    # df.to_csv('runs/run_003.csv')
+    df.to_csv('runs/run_011.csv')
     averaged_rows = []
     num_nodes_list = [5, 10, 15, 20, 30]
     for num_nodes in num_nodes_list:
         averaged_rows.append(df.query(f'num_nodes == {num_nodes}').mean(axis=0, numeric_only=True))
     df_new = pd.DataFrame(averaged_rows)
-    # df_new.to_csv('runs/run_003_avg.csv')
+    df_new.to_csv('runs/run_011_avg.csv')
     # tpr fdr f1
     fig, ax = plt.subplots(figsize=(10, 6))
     ax.plot(num_nodes_list, df_new['relcadilac_admg_metrics_admg_tpr'], '-r')
@@ -377,8 +383,8 @@ def create_num_nodes_plot(file_path='runs/run_003.json'):
     ax.legend(handles=legend_elements_styles, loc='lower left', title='Algorithm')
     ax.set_xlabel('Number of Nodes')
     ax.set_ylabel('Value')
-    ax.set_title('DCD vs Relcadilac, ADMG Metrics, Ancestral Graphs')
-    plt.savefig('diagrams/dcd_rel_tpr_fdr_f1_admg.png')
+    ax.set_title('DCD vs Relcadilac, ADMG Metrics, Bow-Free Graphs')
+    plt.savefig('diagrams/bowfree_dcd_rel_tpr_fdr_f1_admg.png')
     plt.close()
     print('dcd_rel_tpr_fdr_f1_admg plotted')
     # skeleton tpr fdr f1
@@ -393,8 +399,8 @@ def create_num_nodes_plot(file_path='runs/run_003.json'):
     ax.legend(handles=legend_elements_styles, loc='lower left', title='Algorithm')
     ax.set_xlabel('Number of Nodes')
     ax.set_ylabel('Value')
-    ax.set_title('DCD vs Relcadilac, ADMG Skeleton Metrics, Ancestral Graphs')
-    plt.savefig('diagrams/dcd_rel_tpr_fdr_f1_admg_skeleton.png')
+    ax.set_title('DCD vs Relcadilac, ADMG Skeleton Metrics, Bow-Free Graphs')
+    plt.savefig('diagrams/bowfree_dcd_rel_tpr_fdr_f1_admg_skeleton.png')
     plt.close()
     print('dcd_rel_tpr_fdr_f1_admg_skeleton plotted')
     # shd runtime
@@ -414,8 +420,8 @@ def create_num_nodes_plot(file_path='runs/run_003.json'):
     ax.legend(handles=legend_elements_styles, loc='lower left', title='Algorithm')
     ax.legend(handles=legend_elements_styles, loc='lower right', title='Algorithm')
     ax.set_xlabel('Number of Nodes')
-    ax.set_title('DCD vs Relcadilac, ADMG SHD and Runtime, Ancestral Graphs')
-    plt.savefig('diagrams/dcd_rel_shd_runtime.png')
+    ax.set_title('DCD vs Relcadilac, ADMG SHD and Runtime, Bow-Free Graphs')
+    plt.savefig('diagrams/bowfree_dcd_rel_shd_runtime.png')
     plt.close()
     print('dcd_rel_shd_runtime plotted')
     # dcd Relcadilac, gfci (pag graphs)
@@ -445,8 +451,8 @@ def create_num_nodes_plot(file_path='runs/run_003.json'):
         ax.legend(handles=legend_elements_styles, loc='lower left', title='Algorithm')
         ax.set_xlabel('Number of Nodes')
         ax.set_ylabel('Value')
-        ax.set_title('DCD vs Relcadilac vs GFCI, PAG Metrics, Ancestral Graphs')
-        plt.savefig(f'diagrams/dcd_rel_gfci_{tp}_pag_metrics.png')
+        ax.set_title('DCD vs Relcadilac vs GFCI, PAG Metrics, Bow-free Graphs')
+        plt.savefig(f'diagrams/bowfree_dcd_rel_gfci_{tp}_pag_metrics.png')
         plt.close()
         print(f'dcd_rel_gfci_{tp}_pag_metrics plotted')
 
@@ -569,6 +575,42 @@ def check_rewards_convergence_run_006():
     plt.title("5 node, degree 4, 500 samples, ancestral graph")
     plt.show()
 
+def check_rewards_convergence_run_013():
+    with open(r'runs/run_013.json', 'r') as f:
+        data = json.load(f)
+    avg_rewards = list(map(float, data['relcadilac_avg_rewards']))
+    plt.plot(avg_rewards)
+    plt.xlabel("8 Steps = 1 unit")
+    plt.ylabel("reward value")
+    plt.title("15 node, degree 4, 2000 samples, ancestral graph, 4000 steps_per_env")
+    plt.show()
+
+def check_rewards_convergence_run_014():
+    with open(r'runs/run_014.json', 'r') as f:
+        data = json.load(f)
+    avg_rewards = list(map(float, data['relcadilac_avg_rewards']))
+    plt.plot(avg_rewards)
+    plt.xlabel("8 Steps = 1 unit")
+    plt.ylabel("reward value")
+    plt.title("10 node, degree 4, 4000 samples, ancestral graph, 4000 steps_per_env")
+    plt.show()
+
+def check_rewards_convergence_run_011():
+    with open(r'runs/run_011_stdout.json', 'r') as f:
+        data = json.load(f)
+    for num_nodes in [5, 10, 15, 20, 30]:
+        exp_num_nodes = None
+        for exp in data:
+            if exp['num_nodes'] == num_nodes:
+                exp_num_nodes = exp
+                break
+        avg_rewards = list(map(float, exp_num_nodes['relcadilac_avg_rewards']))
+        plt.plot(avg_rewards)
+        plt.xlabel("8 Steps = 1 unit")
+        plt.ylabel("reward value")
+        plt.title(f"{num_nodes} node, degree 4, 2000 samples, bowfree graph")
+        plt.savefig(f'diagrams/bow_free_reward_convergence_{num_nodes}_nodes.png')
+
 def check_rewards_convergence():
     with open(r'runs/run_007.json', 'r') as f:
         data = json.load(f)
@@ -588,7 +630,7 @@ def check_rewards_convergence():
     plt.title("7 node, degree 4, ancestral graph")
     plt.savefig("diagrams/rewards_varying_sample_size_ancestral.png")
 
-def check_bic_variance():
+def check_bic_variance_sample_size():
     # this function I am essentially checking how the true and predicted bic values (or rather the difference between them) vary as the sample size increases
     with open(r'runs/run_007.json', 'r') as f:
         data = json.load(f)
@@ -610,8 +652,261 @@ def check_bic_variance():
     plt.title("Fractional Excess of predicted BIC values over true BIC values vs Sample Size, 7 Node, Degree 4, Ancestral Graphs")
     plt.savefig("diagrams/fractional_excess_bic_vs_sample_size.png")
 
+def check_bic_variance_num_nodes():
+    # this function I am essentially checking how the true and predicted bic values (or rather the difference between them) vary as the sample size increases
+    with open(r'runs/run_011_stdout.json', 'r') as f:
+        data = json.load(f)
+    num_nodes = [5, 10, 15, 20, 30]
+    true_bic = {nn: 0 for nn in num_nodes} # the list for each num nodes will contain the 10 ground truth bic values for that sample size
+    pred_bic = {nn: 0 for nn in num_nodes} # the list for each num nodes will contain the 10 predicted bic values for that sample size
+    for single_run in data:
+        true_bic[single_run['num_nodes']] += single_run['ground_truth_bic'] / 5  # divide by 5 to average things out since there were 5 runs
+        pred_bic[single_run['num_nodes']] += single_run['relcadilac_pred_bic'] / 5  # divide by 5 to average things out since there were 5 runs
+    true_bic_list = [true_bic[nn] for nn in num_nodes]
+    pred_bic_list = [pred_bic[nn] for nn in num_nodes]
+    frac_diff = [(pred_bic[nn] - true_bic[nn]) / true_bic[nn] for nn in num_nodes]
+    # plt.plot(sample_sizes, true_bic_list, label='true bic')
+    # plt.plot(sample_sizes, pred_bic_list, label='pred bic')
+    plt.plot(num_nodes, frac_diff, label='frac diff')
+    plt.xlabel("Sample Sizes")
+    plt.ylabel("BIC Values")
+    plt.legend()
+    plt.title("Fractional Excess of predicted BIC values over true BIC values vs Num Nodes,\n2000 samples, Degree 4, Bow-free Graphs, 5 runs each")
+    plt.savefig("diagrams/num_nodes_variation_bowfree_fractional_excess_bic_vs_sample_size.png")
+    # plt.show()
+
+def test_longer_timesteps(seed):
+    # the 15 (might be arguable), 20 node and 30 node graphs have not converged and would likely do better if they had more steps
+    # due to time constraint, we'll just check 15 node graphs
+    experiment_data = []
+    for steps_per_env in [2000, 3000, 4000]:
+        for i in range(3):
+            params = {'num_nodes': 15, 'avg_degree': 4, 'frac_directed': 0.6, 'degree_variance': 0.2, 'num_samples': 2000, 'admg_model': 'ancestral', 'beta_low': 0.5, 'beta_high': 2.0, 'omega_offdiag_low': 0.4, 'omega_offdiag_high': 0.7, 'omega_diag_low': 0.7, 'omega_diag_high': 1.2, 'standardize_data': False, 'center_data': True, 'steps_per_env': 2000, 'n_envs': 8, 'normalize_advantage': True, 'n_epochs': 1, 'device': 'cuda', 'n_steps': 16, 'ent_coef': 0.05, 'dcd_num_restarts': 1, 'vec_envs_random_state': 0, 'do_thresholding': True, 'threshold': 0.05, 'generator_seed': seed}
+            D, B, X, S, bic, pag = generator.get_admg(
+                    num_nodes=params['num_nodes'],
+                    avg_degree=params['avg_degree'],
+                    frac_directed=params['frac_directed'],
+                    degree_variance=params['degree_variance'],
+                    admg_model=params['admg_model'],
+                    plot=False,
+                    do_sampling=True,
+                    num_samples=params['num_samples']
+                )
+            # relcadilac
+            rl_params = {'normalize_advantage': params['normalize_advantage'], 'n_epochs': params['n_epochs'], 'device': params['device'], 'n_steps': params['n_steps'], 'verbose': 0, 'ent_coef': params['ent_coef']}
+            start = time.perf_counter()
+            pred_D, pred_B, pred_pag, avg_rewards, pred_bic = rel_admg(X, S, params['admg_model'], steps_per_env=params['steps_per_env'], n_envs=params['n_envs'], rl_params=rl_params, random_state=params['vec_envs_random_state'], verbose=0)
+            params['relcadilac_time_sec'] = time.perf_counter() - start
+            if params['do_thresholding']:
+                thresh_D, thresh_B = get_thresholded_admg(pred_D, pred_B, X, S, threshold=params['threshold'])
+                thresh_pag = convert_admg_to_pag(thresh_D, thresh_B)
+                params['relcadilac_directed_thresh_adj'] = np.array2string(thresh_D)
+                params['relcadilac_bidirected_thresh_adj'] = np.array2string(thresh_B)
+                params['relcadilac_thresh_admg_metrics'] = get_admg_metrics((D, B), (thresh_D, thresh_B))
+                params['relcadilac_thresh_pag_metrics'] = get_pag_metrics(pag, thresh_pag)
+            params['relcadilac_admg_metrics'] = get_admg_metrics((D, B), (pred_D, pred_B))
+            params['relcadilac_pag_metrics'] = get_pag_metrics(pag, pred_pag)
+            params['ground_truth_bic'] = bic
+            params['relcadilac_avg_rewards'] = list(map(str, avg_rewards['average_rewards']))
+            params['relcadilac_pred_bic'] = pred_bic
+            params['ground_truth_directed_adj'] = np.array2string(D)
+            params['ground_truth_bidirected_adj'] = np.array2string(B)
+            params['relcadilac_directed_pred_adj'] = np.array2string(pred_D)
+            params['relcadilac_bidirected_pred_adj'] = np.array2string(pred_B)
+            print(f'\trelcadilac done')
+            # dcd
+            df_X = pd.DataFrame({f'{i}': X[:, i] for i in range(n_nodes)})
+            admg_class = 'bowfree' if params['admg_model'] == 'bow-free' else 'ancestral'
+            learn = Discovery()  # using all default parameters - except for single restart
+            start = time.perf_counter()
+            pred_D, pred_B, pred_pag = learn.discover_admg(df_X, admg_class=admg_class, local=False, num_restarts=params['dcd_num_restarts'])
+            params['dcd_time_sec'] = time.perf_counter() - start
+            params['dcd_admg_metrics'] = get_admg_metrics((D, B), (pred_D, pred_B))
+            params['dcd_pag_metrics'] = get_pag_metrics(pag, pred_pag)
+            # params['dcd_pred_bic']
+            print(f'\tdcd done')
+            experiment_data.append(params)
+            print(params)  # so as not to lose data if a run fails
+    with open(r"runs/run_011.json", "w") as f:
+        json.dump(experiment_data, f, indent=2)
+
+def single_test_02(seed):
+    print("\n\nSINGLE TEST 02\n\ni am running an ancestral node 15, 2000 samples, 4000 steps_per_env, 4 degree run to see how long it takes and if the non-convergence issue is still present - only comparing dcd and relcadilac")
+    params = {'num_nodes': 15, 'avg_degree': 4, 'frac_directed': 0.6, 'degree_variance': 0.2, 'num_samples': 2000, 'admg_model': 'ancestral', 'beta_low': 0.5, 'beta_high': 2.0, 'omega_offdiag_low': 0.4, 'omega_offdiag_high': 0.7, 'omega_diag_low': 0.7, 'omega_diag_high': 1.2, 'standardize_data': False, 'center_data': True, 'steps_per_env': 4000, 'n_envs': 8, 'normalize_advantage': True, 'n_epochs': 1, 'device': 'cuda', 'n_steps': 16, 'ent_coef': 0.05, 'dcd_num_restarts': 1, 'vec_envs_random_state': 0, 'do_thresholding': True, 'threshold': 0.05, 'generator_seed': seed}
+    D, B, X, S, bic, pag = generator.get_admg(
+            num_nodes=params['num_nodes'],
+            avg_degree=params['avg_degree'],
+            frac_directed=params['frac_directed'],
+            degree_variance=params['degree_variance'],
+            admg_model=params['admg_model'],
+            plot=False,
+            do_sampling=True,
+            num_samples=params['num_samples']
+        )
+    # relcadilac
+    rl_params = {'normalize_advantage': params['normalize_advantage'], 'n_epochs': params['n_epochs'], 'device': params['device'], 'n_steps': params['n_steps'], 'verbose': 0, 'ent_coef': params['ent_coef']}
+    start = time.perf_counter()
+    pred_D, pred_B, pred_pag, avg_rewards, pred_bic = rel_admg(X, S, params['admg_model'], steps_per_env=params['steps_per_env'], n_envs=params['n_envs'], rl_params=rl_params, random_state=params['vec_envs_random_state'], verbose=0)
+    params['relcadilac_time_sec'] = time.perf_counter() - start
+    if params['do_thresholding']:
+        thresh_D, thresh_B = get_thresholded_admg(pred_D, pred_B, X, S, threshold=params['threshold'])
+        thresh_pag = convert_admg_to_pag(thresh_D, thresh_B)
+        params['relcadilac_directed_thresh_adj'] = np.array2string(thresh_D)
+        params['relcadilac_bidirected_thresh_adj'] = np.array2string(thresh_B)
+        params['relcadilac_thresh_admg_metrics'] = get_admg_metrics((D, B), (thresh_D, thresh_B))
+        params['relcadilac_thresh_pag_metrics'] = get_pag_metrics(pag, thresh_pag)
+    params['relcadilac_admg_metrics'] = get_admg_metrics((D, B), (pred_D, pred_B))
+    params['relcadilac_pag_metrics'] = get_pag_metrics(pag, pred_pag)
+    params['ground_truth_bic'] = bic
+    params['relcadilac_avg_rewards'] = list(map(str, avg_rewards['average_rewards']))
+    params['relcadilac_pred_bic'] = pred_bic
+    params['ground_truth_directed_adj'] = np.array2string(D)
+    params['ground_truth_bidirected_adj'] = np.array2string(B)
+    params['relcadilac_directed_pred_adj'] = np.array2string(pred_D)
+    params['relcadilac_bidirected_pred_adj'] = np.array2string(pred_B)
+    print(f'\trelcadilac done')
+    # dcd
+    df_X = pd.DataFrame({f'{i}': X[:, i] for i in range(params['num_nodes'])})
+    admg_class = 'bowfree' if params['admg_model'] == 'bow-free' else 'ancestral'
+    learn = Discovery()  # using all default parameters - except for single restart
+    start = time.perf_counter()
+    pred_D, pred_B, pred_pag = learn.discover_admg(df_X, admg_class=admg_class, local=False, num_restarts=params['dcd_num_restarts'])
+    params['dcd_time_sec'] = time.perf_counter() - start
+    params['dcd_admg_metrics'] = get_admg_metrics((D, B), (pred_D, pred_B))
+    params['dcd_pag_metrics'] = get_pag_metrics(pag, pred_pag)
+    params['dcd_pred_bic'] = get_bic(pred_D, pred_B, X, S)
+    print(f'\tdcd done')
+    print(params)  # so as not to lose data if a run fails
+    with open(r"runs/run_013.json", "w") as f:
+        json.dump(params, f, indent=2)
+
+def single_test_03(seed):
+    print("\n\nSINGLE TEST 03\n\ni am running an ancestral node 10, 4000 samples, 4000 steps_per_env, 4 degree run to see if it is possible to recover the true graph - and to see if it is possible to get a better bic than dcd\n\n")
+    params = {'num_nodes': 10, 'avg_degree': 4, 'frac_directed': 0.6, 'degree_variance': 0.2, 'num_samples': 4000, 'admg_model': 'ancestral', 'beta_low': 0.5, 'beta_high': 2.0, 'omega_offdiag_low': 0.4, 'omega_offdiag_high': 0.7, 'omega_diag_low': 0.7, 'omega_diag_high': 1.2, 'standardize_data': False, 'center_data': True, 'steps_per_env': 8000, 'n_envs': 8, 'normalize_advantage': True, 'n_epochs': 1, 'device': 'cuda', 'n_steps': 16, 'ent_coef': 0.05, 'dcd_num_restarts': 1, 'vec_envs_random_state': 0, 'do_thresholding': True, 'threshold': 0.05, 'generator_seed': seed, 'explanation': "i am running an ancestral node 10, 4000 samples, 8000 steps_per_env, 4 degree run to see if it is possible to recover the true graph"}
+    D, B, X, S, bic, pag = generator.get_admg(
+            num_nodes=params['num_nodes'],
+            avg_degree=params['avg_degree'],
+            frac_directed=params['frac_directed'],
+            degree_variance=params['degree_variance'],
+            admg_model=params['admg_model'],
+            plot=False,
+            do_sampling=True,
+            num_samples=params['num_samples']
+        )
+    # relcadilac
+    rl_params = {'normalize_advantage': params['normalize_advantage'], 'n_epochs': params['n_epochs'], 'device': params['device'], 'n_steps': params['n_steps'], 'verbose': 0, 'ent_coef': params['ent_coef']}
+    start = time.perf_counter()
+    pred_D, pred_B, pred_pag, avg_rewards, pred_bic = rel_admg(X, S, params['admg_model'], steps_per_env=params['steps_per_env'], n_envs=params['n_envs'], rl_params=rl_params, random_state=params['vec_envs_random_state'], verbose=0)
+    params['relcadilac_time_sec'] = time.perf_counter() - start
+    if params['do_thresholding']:
+        thresh_D, thresh_B = get_thresholded_admg(pred_D, pred_B, X, S, threshold=params['threshold'])
+        thresh_pag = convert_admg_to_pag(thresh_D, thresh_B)
+        params['relcadilac_directed_thresh_adj'] = np.array2string(thresh_D)
+        params['relcadilac_bidirected_thresh_adj'] = np.array2string(thresh_B)
+        params['relcadilac_thresh_admg_metrics'] = get_admg_metrics((D, B), (thresh_D, thresh_B))
+        params['relcadilac_thresh_pag_metrics'] = get_pag_metrics(pag, thresh_pag)
+    params['relcadilac_admg_metrics'] = get_admg_metrics((D, B), (pred_D, pred_B))
+    params['relcadilac_pag_metrics'] = get_pag_metrics(pag, pred_pag)
+    params['ground_truth_bic'] = bic
+    print(f"\n\nGround truth bic {bic}\n\n")
+    params['relcadilac_avg_rewards'] = list(map(str, avg_rewards['average_rewards']))
+    params['relcadilac_pred_bic'] = pred_bic
+    print(f"\n\nRelcadilac pred bic {pred_bic}\n\n")
+    params['ground_truth_directed_adj'] = np.array2string(D)
+    params['ground_truth_bidirected_adj'] = np.array2string(B)
+    params['relcadilac_directed_pred_adj'] = np.array2string(pred_D)
+    params['relcadilac_bidirected_pred_adj'] = np.array2string(pred_B)
+    print(f'\trelcadilac done')
+    print(params)  # so as not to lose data if a run fails
+    with open(r"runs/run_015.json", "w") as f:
+        json.dump(params, f, indent=2)
+
+def known_causal_ordering(seed):
+    # I want to do an experiment where we already know the causal ordering and are just trying to find the matrix values and edge existence
+    print("\n\nKNOWN CAUSAL ORDERING\n\nWe know the causal ordering and just want to find the matrices and edge existence, 10 nodes, 4 degree, 2000 samples, ancestral model, 4000 steps_per_env.")
+    experiment_data = []
+    for i in range(5):
+        print(f"\n\n RUN {i}")
+        params = {'num_nodes': 10, 'avg_degree': 4, 'frac_directed': 0.6, 'degree_variance': 0.2, 'num_samples': 2000, 'admg_model': 'ancestral', 'beta_low': 0.5, 'beta_high': 2.0, 'omega_offdiag_low': 0.4, 'omega_offdiag_high': 0.7, 'omega_diag_low': 0.7, 'omega_diag_high': 1.2, 'standardize_data': False, 'center_data': True, 'steps_per_env': 2000, 'n_envs': 8, 'normalize_advantage': True, 'n_epochs': 1, 'device': 'cuda', 'n_steps': 16, 'ent_coef': 0.05, 'dcd_num_restarts': 1, 'vec_envs_random_state': 0, 'do_thresholding': True, 'threshold': 0.05, 'generator_seed': seed, 'explanation': "We know the causal ordering and just want to find the matrices and edge existence, 10 nodes, 4 degree, 2000 samples, ancestral model, 4000 steps_per_env.", 'topo_order_known': True}
+        D, B, X, S, bic, pag = generator.get_admg(
+                num_nodes=params['num_nodes'],
+                avg_degree=params['avg_degree'],
+                frac_directed=params['frac_directed'],
+                degree_variance=params['degree_variance'],
+                admg_model=params['admg_model'],
+                plot=False,
+                do_sampling=True,
+                num_samples=params['num_samples']
+            )
+        # relcadilac
+        nx_graph = nx.from_numpy_array(D.T, create_using=nx.DiGraph)
+        topo_order = np.array(list(nx.topological_sort(nx_graph)))
+        rl_params = {'normalize_advantage': params['normalize_advantage'], 'n_epochs': params['n_epochs'], 'device': params['device'], 'n_steps': params['n_steps'], 'verbose': 0, 'ent_coef': params['ent_coef']}
+        start = time.perf_counter()
+        pred_D, pred_B, pred_pag, avg_rewards, pred_bic = rel_admg(X, S, params['admg_model'], steps_per_env=params['steps_per_env'], n_envs=params['n_envs'], rl_params=rl_params, random_state=params['vec_envs_random_state'], verbose=0, topo_order=topo_order)
+        params['relcadilac_time_sec'] = time.perf_counter() - start
+        if params['do_thresholding']:
+            thresh_D, thresh_B = get_thresholded_admg(pred_D, pred_B, X, S, threshold=params['threshold'])
+            thresh_pag = convert_admg_to_pag(thresh_D, thresh_B)
+            params['relcadilac_directed_thresh_adj'] = np.array2string(thresh_D)
+            params['relcadilac_bidirected_thresh_adj'] = np.array2string(thresh_B)
+            params['relcadilac_thresh_admg_metrics'] = get_admg_metrics((D, B), (thresh_D, thresh_B))
+            params['relcadilac_thresh_pag_metrics'] = get_pag_metrics(pag, thresh_pag)
+        params['relcadilac_admg_metrics'] = get_admg_metrics((D, B), (pred_D, pred_B))
+        params['relcadilac_pag_metrics'] = get_pag_metrics(pag, pred_pag)
+        params['ground_truth_bic'] = bic
+        print(f"\n\nGround truth bic {bic}\n\n")
+        params['relcadilac_avg_rewards'] = list(map(str, avg_rewards['average_rewards']))
+        params['relcadilac_pred_bic'] = pred_bic
+        print(f"\n\nRelcadilac pred bic {pred_bic}\n\n")
+        params['ground_truth_directed_adj'] = np.array2string(D)
+        params['ground_truth_bidirected_adj'] = np.array2string(B)
+        params['relcadilac_directed_pred_adj'] = np.array2string(pred_D)
+        params['relcadilac_bidirected_pred_adj'] = np.array2string(pred_B)
+        print(f'\trelcadilac done 1')
+        # relcadilac - without topo order
+        start = time.perf_counter()
+        pred_D, pred_B, pred_pag, avg_rewards, pred_bic = rel_admg(X, S, params['admg_model'], steps_per_env=params['steps_per_env'], n_envs=params['n_envs'], rl_params=rl_params, random_state=params['vec_envs_random_state'], verbose=0, topo_order=None)
+        params['topo_order_relcadilac_time_sec'] = time.perf_counter() - start
+        if params['do_thresholding']:
+            thresh_D, thresh_B = get_thresholded_admg(pred_D, pred_B, X, S, threshold=params['threshold'])
+            thresh_pag = convert_admg_to_pag(thresh_D, thresh_B)
+            params['topo_order_relcadilac_directed_thresh_adj'] = np.array2string(thresh_D)
+            params['topo_order_relcadilac_bidirected_thresh_adj'] = np.array2string(thresh_B)
+            params['topo_order_relcadilac_thresh_admg_metrics'] = get_admg_metrics((D, B), (thresh_D, thresh_B))
+            params['topo_order_relcadilac_thresh_pag_metrics'] = get_pag_metrics(pag, thresh_pag)
+        params['topo_order_relcadilac_admg_metrics'] = get_admg_metrics((D, B), (pred_D, pred_B))
+        params['topo_order_relcadilac_pag_metrics'] = get_pag_metrics(pag, pred_pag)
+        params['topo_order_relcadilac_avg_rewards'] = list(map(str, avg_rewards['average_rewards']))
+        params['topo_order_relcadilac_pred_bic'] = pred_bic
+        print(f"\n\nTopo Order Relcadilac pred bic {pred_bic}\n\n")
+        params['topo_order_relcadilac_directed_pred_adj'] = np.array2string(pred_D)
+        params['topo_order_relcadilac_bidirected_pred_adj'] = np.array2string(pred_B)
+        print(f'\trelcadilac done 2')
+        print(params)  # so as not to lose data if a run fails
+        experiment_data.append(params)
+    with open(r"runs/run_016.json", "w") as f:
+        json.dump(experiment_data, f, indent=2)
+
+def plot_bic_with_and_without_topo_order():
+    with open('runs/run_016.json') as f:
+        data = json.load(f)
+    true_bic, pred_bic, topo_order_pred_bic = [], [], []
+    for exp in data:
+        # true_bic.append(exp['ground_truth_bic'])
+        tb, pb, topb = exp['ground_truth_bic'], exp['relcadilac_pred_bic'], exp['topo_order_relcadilac_pred_bic']
+        pred_bic.append((pb - tb) / tb)
+        topo_order_pred_bic.append((topb - tb) / tb)
+    # plt.plot(true_bic, label='True BIC')
+    plt.plot(pred_bic, label='Predicted BIC Fractional Excess (without topo order)')
+    plt.plot(topo_order_pred_bic, label='Predicted BIC Fractional Excess (with topo order)')
+    plt.xlabel('Run Number')
+    plt.ylabel('BIC')
+    plt.title('Performance of Relcadilac with and without Topological Order')
+    plt.show()
+
+
 if __name__ == '__main__':
-    seed = 32
-    # generator = GraphGenerator(seed)
-    # num_nodes_variation(seed)
-    check_bic_variance()
+    seed = 11
+    generator = GraphGenerator(seed)
+    plot_bic_with_and_without_topo_order()
