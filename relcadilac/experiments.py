@@ -7,6 +7,7 @@ os.environ["NUMEXPR_NUM_THREADS"] = "1"
 
 import time
 import json
+import random
 import warnings
 warnings.simplefilter("ignore")
 os.environ["PYTHONWARNINGS"] = "ignore"
@@ -20,7 +21,7 @@ from matplotlib.lines import Line2D
 from relcadilac.data_generator import GraphGenerator
 from relcadilac.relcadilac import relcadilac as rel_admg
 from relcadilac.metrics import get_admg_metrics, get_pag_metrics
-from relcadilac.utils import draw_admg, get_ananke_bic, plot_rewards, get_thresholded_admg, convert_admg_to_pag, get_bic
+from relcadilac.utils import draw_admg, get_ananke_bic, plot_rewards, get_thresholded_admg, convert_admg_to_pag, get_bic, vec_2_bow_free_admg
 from gfci.gfci import gfci_search
 from dcd.admg_discovery import Discovery
 
@@ -823,11 +824,11 @@ def single_test_03(seed):
 
 def known_causal_ordering(seed):
     # I want to do an experiment where we already know the causal ordering and are just trying to find the matrix values and edge existence
-    print("\n\nKNOWN CAUSAL ORDERING\n\nWe know the causal ordering and just want to find the matrices and edge existence, 10 nodes, 4 degree, 2000 samples, ancestral model, 4000 steps_per_env.")
+    print("\n\nKNOWN CAUSAL ORDERING\n\nWe know the causal ordering and just want to find the matrices and edge existence, 10 nodes, 4 degree, 2000 samples, ancestral model, 4000 steps_per_env. 3 runs.")
     experiment_data = []
-    for i in range(5):
+    for i in range(3):
         print(f"\n\n RUN {i}")
-        params = {'num_nodes': 10, 'avg_degree': 4, 'frac_directed': 0.6, 'degree_variance': 0.2, 'num_samples': 2000, 'admg_model': 'ancestral', 'beta_low': 0.5, 'beta_high': 2.0, 'omega_offdiag_low': 0.4, 'omega_offdiag_high': 0.7, 'omega_diag_low': 0.7, 'omega_diag_high': 1.2, 'standardize_data': False, 'center_data': True, 'steps_per_env': 2000, 'n_envs': 8, 'normalize_advantage': True, 'n_epochs': 1, 'device': 'cuda', 'n_steps': 16, 'ent_coef': 0.05, 'dcd_num_restarts': 1, 'vec_envs_random_state': 0, 'do_thresholding': True, 'threshold': 0.05, 'generator_seed': seed, 'explanation': "We know the causal ordering and just want to find the matrices and edge existence, 10 nodes, 4 degree, 2000 samples, ancestral model, 4000 steps_per_env.", 'topo_order_known': True}
+        params = {'num_nodes': 10, 'avg_degree': 4, 'frac_directed': 0.6, 'degree_variance': 0.2, 'num_samples': 2000, 'admg_model': 'ancestral', 'beta_low': 0.5, 'beta_high': 2.0, 'omega_offdiag_low': 0.4, 'omega_offdiag_high': 0.7, 'omega_diag_low': 0.7, 'omega_diag_high': 1.2, 'standardize_data': False, 'center_data': True, 'steps_per_env': 2000, 'n_envs': 8, 'normalize_advantage': True, 'n_epochs': 1, 'device': 'cuda', 'n_steps': 16, 'ent_coef': 0.05, 'dcd_num_restarts': 1, 'vec_envs_random_state': 0, 'do_thresholding': True, 'threshold': 0.05, 'generator_seed': seed, 'explanation': "We know the causal ordering and just want to find the matrices and edge existence, 10 nodes, 4 degree, 2000 samples, ancestral model, 4000 steps_per_env. 3 runs.", 'topo_order_known': True}
         D, B, X, S, bic, pag = generator.get_admg(
                 num_nodes=params['num_nodes'],
                 avg_degree=params['avg_degree'],
@@ -843,7 +844,7 @@ def known_causal_ordering(seed):
         topo_order = np.array(list(nx.topological_sort(nx_graph)))
         rl_params = {'normalize_advantage': params['normalize_advantage'], 'n_epochs': params['n_epochs'], 'device': params['device'], 'n_steps': params['n_steps'], 'verbose': 0, 'ent_coef': params['ent_coef']}
         start = time.perf_counter()
-        pred_D, pred_B, pred_pag, avg_rewards, pred_bic = rel_admg(X, S, params['admg_model'], steps_per_env=params['steps_per_env'], n_envs=params['n_envs'], rl_params=rl_params, random_state=params['vec_envs_random_state'], verbose=0, topo_order=topo_order)
+        pred_D, pred_B, pred_pag, avg_rewards, pred_bic = rel_admg(X, S, params['admg_model'], steps_per_env=params['steps_per_env'], n_envs=params['n_envs'], rl_params=rl_params, random_state=params['vec_envs_random_state'], verbose=0, topo_order=None)
         params['relcadilac_time_sec'] = time.perf_counter() - start
         if params['do_thresholding']:
             thresh_D, thresh_B = get_thresholded_admg(pred_D, pred_B, X, S, threshold=params['threshold'])
@@ -866,7 +867,7 @@ def known_causal_ordering(seed):
         print(f'\trelcadilac done 1')
         # relcadilac - without topo order
         start = time.perf_counter()
-        pred_D, pred_B, pred_pag, avg_rewards, pred_bic = rel_admg(X, S, params['admg_model'], steps_per_env=params['steps_per_env'], n_envs=params['n_envs'], rl_params=rl_params, random_state=params['vec_envs_random_state'], verbose=0, topo_order=None)
+        pred_D, pred_B, pred_pag, avg_rewards, pred_bic = rel_admg(X, S, params['admg_model'], steps_per_env=params['steps_per_env'], n_envs=params['n_envs'], rl_params=rl_params, random_state=params['vec_envs_random_state'], verbose=0, topo_order=topo_order)
         params['topo_order_relcadilac_time_sec'] = time.perf_counter() - start
         if params['do_thresholding']:
             thresh_D, thresh_B = get_thresholded_admg(pred_D, pred_B, X, S, threshold=params['threshold'])
@@ -882,7 +883,7 @@ def known_causal_ordering(seed):
         print(f"\n\nTopo Order Relcadilac pred bic {pred_bic}\n\n")
         params['topo_order_relcadilac_directed_pred_adj'] = np.array2string(pred_D)
         params['topo_order_relcadilac_bidirected_pred_adj'] = np.array2string(pred_B)
-        print(f'\trelcadilac done 2')
+        print(f'\trelcadilac topo order done')
         print(params)  # so as not to lose data if a run fails
         experiment_data.append(params)
     with open(r"runs/run_016.json", "w") as f:
@@ -901,9 +902,10 @@ def plot_bic_with_and_without_topo_order():
     plt.plot(pred_bic, label='Predicted BIC Fractional Excess (without topo order)')
     plt.plot(topo_order_pred_bic, label='Predicted BIC Fractional Excess (with topo order)')
     plt.xlabel('Run Number')
-    plt.ylabel('BIC')
+    plt.ylabel('Fractional Excess BIC\n(pred - true) / true')
+    plt.legend()
     plt.title('Performance of Relcadilac with and without Topological Order')
-    plt.show()
+    plt.savefig('diagrams/ancestral_fraction_excess_bic_with_without_topo_order.png')
 
 def compare_logits_vs_heirarchical_vec2_bowfree_admg(seed):
     # I have two vec2bowfree ADMG functions - one where I use logits and the other which is hierarchical - gives preference to directed edges
@@ -978,35 +980,26 @@ def string_to_numpy_array(array_string):
     return np.array(arr)
 
 def get_action_vector_for_admg():
-    # below string are taken from run 17 - ground truth
+    # below string are taken from run 17 - ground truth - first element in the list
     d_str = "[[0. 0. 0. 0. 1. 0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0. 0. 1. 0. 0. 0.]\n [0. 1. 0. 0. 1. 0. 0. 1. 0. 0.]\n [0. 1. 0. 0. 0. 0. 0. 0. 0. 0.]\n [0. 0. 1. 1. 1. 0. 0. 0. 0. 1.]\n [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0. 0. 0. 1. 0. 0.]\n [0. 0. 1. 0. 1. 0. 0. 0. 0. 0.]]"
     b_str = "[[0. 1. 0. 1. 0. 0. 0. 0. 0. 0.]\n [1. 0. 0. 0. 0. 0. 0. 1. 0. 0.]\n [0. 0. 0. 1. 1. 0. 0. 0. 0. 0.]\n [1. 0. 1. 0. 0. 0. 0. 0. 1. 0.]\n [0. 0. 1. 0. 0. 0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0. 0. 0. 1. 0. 0.]\n [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]\n [0. 1. 0. 0. 0. 1. 0. 0. 0. 0.]\n [0. 0. 0. 1. 0. 0. 0. 0. 0. 1.]\n [0. 0. 0. 0. 0. 0. 0. 0. 1. 0.]]"
     D = string_to_numpy_array(d_str)
     B = string_to_numpy_array(b_str)
     nx_graph = nx.from_numpy_array(D.T, create_using=nx.DiGraph)
-    topo_order = np.array(list(nx.topological_sort(nx_graph)))
-    p_matrix = (topo_order[:, None] > topo_order[None, :]).astype(int)
-    nx.draw(nx_graph, with_labels=True, alpha=0.5, pos=nx.kamada_kawai_layout(nx_graph))
-    plt.show()
+    p = np.argsort(np.array(list(nx.topological_sort(nx_graph))))
     d = 10
-    print('d=\n', D)
-    print('p=\n', p_matrix)
-    row_ind, col_ind = np.tril_indices(d, -1)
-    diE_matrix = np.zeros((d, d))
-    for i in range((d * (d-1)) // 2):
-        x, y = row_ind[i], col_ind[i]
-        if D[x, y] == p_matrix[x, y] and D[y, x] == p_matrix[y, x]:
-            diE_matrix[x, y] = 1
-            diE_matrix[y, x] = 1
-        elif D[row_ind[i], col_ind[i]] == 0 and D[col_ind[i], row_ind[i]] == 0:
-            diE_matrix[x, y] = -1
-            diE_matrix[y, x] = -1
-        else:
-            print("D[x, y], D[y, x], p_matrix[x, y], p_matrix[y, x], x, y")
-            print(D[x, y], D[y, x], p_matrix[x, y], p_matrix[y, x], x, y)
-            print('some issue - logic wrong\n')
+    tril_ind = np.tril_indices(d, -1)
+    D_sym = D + D.T
+    diE = np.where(D_sym[tril_ind] > 0, 1, -1)
+    B_sym = B + B.T  # should not be needed since B should be symmetric, but no harm even if it is
+    biE = np.where(B_sym[tril_ind] > 0, 1, -1)
+    z = np.concatenate([p, diE, biE])
+    pred_D, pred_B = vec_2_bow_free_admg(z, d, tril_ind, None)
+    assert np.array_equal(pred_D.astype(int), D), "pred_D and D are different"
+    assert np.array_equal(pred_B, B), "pred_B and B are different"
+    print('ground truth bic', 22982.04935524732)
 
 if __name__ == '__main__':
-    seed = 11
+    seed = random.randint(1, 100)
     generator = GraphGenerator(seed)
     get_action_vector_for_admg()

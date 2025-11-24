@@ -121,9 +121,10 @@ def vec_2_ancestral_admg(z, d, tril_ind, topo_order):  # still takes the topo_or
     return D, B
 
 def vec_2_ancestral_admg_known_topo_order(z, d, tril_ind, topo_order):
+    p = np.argsort(topo_order)
     diE = np.zeros((d, d))
     diE[tril_ind] = z[: (d * (d-1)) // 2]
-    D = (diE + diE.T > 0) * (topo_order[:, None] > topo_order[None, :])
+    D = (diE + diE.T > 0) * (p[:, None] > p[None, :])
     # get transitive closure matrix R
     # create adj list - cols=sources, rows=targets
     rows, cols = np.nonzero(D)
