@@ -970,8 +970,43 @@ def compare_logits_vs_heirarchical_vec2_bowfree_admg(seed):
     with open(r"runs/run_017.json", "w") as f:
         json.dump(experiment_data, f, indent=2)
 
+def string_to_numpy_array(array_string):
+    split_string = array_string.replace('.', '').replace("[", "").replace("]", "").split("\n ")
+    arr = []
+    for row in split_string:
+        arr.append(list(map(int, row.split(" "))))
+    return np.array(arr)
+
+def get_action_vector_for_admg():
+    # below string are taken from run 17 - ground truth
+    d_str = "[[0. 0. 0. 0. 1. 0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0. 0. 1. 0. 0. 0.]\n [0. 1. 0. 0. 1. 0. 0. 1. 0. 0.]\n [0. 1. 0. 0. 0. 0. 0. 0. 0. 0.]\n [0. 0. 1. 1. 1. 0. 0. 0. 0. 1.]\n [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0. 0. 0. 1. 0. 0.]\n [0. 0. 1. 0. 1. 0. 0. 0. 0. 0.]]"
+    b_str = "[[0. 1. 0. 1. 0. 0. 0. 0. 0. 0.]\n [1. 0. 0. 0. 0. 0. 0. 1. 0. 0.]\n [0. 0. 0. 1. 1. 0. 0. 0. 0. 0.]\n [1. 0. 1. 0. 0. 0. 0. 0. 1. 0.]\n [0. 0. 1. 0. 0. 0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0. 0. 0. 1. 0. 0.]\n [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]\n [0. 1. 0. 0. 0. 1. 0. 0. 0. 0.]\n [0. 0. 0. 1. 0. 0. 0. 0. 0. 1.]\n [0. 0. 0. 0. 0. 0. 0. 0. 1. 0.]]"
+    D = string_to_numpy_array(d_str)
+    B = string_to_numpy_array(b_str)
+    nx_graph = nx.from_numpy_array(D.T, create_using=nx.DiGraph)
+    topo_order = np.array(list(nx.topological_sort(nx_graph)))
+    p_matrix = (topo_order[:, None] > topo_order[None, :]).astype(int)
+    nx.draw(nx_graph, with_labels=True, alpha=0.5, pos=nx.kamada_kawai_layout(nx_graph))
+    plt.show()
+    d = 10
+    print('d=\n', D)
+    print('p=\n', p_matrix)
+    row_ind, col_ind = np.tril_indices(d, -1)
+    diE_matrix = np.zeros((d, d))
+    for i in range((d * (d-1)) // 2):
+        x, y = row_ind[i], col_ind[i]
+        if D[x, y] == p_matrix[x, y] and D[y, x] == p_matrix[y, x]:
+            diE_matrix[x, y] = 1
+            diE_matrix[y, x] = 1
+        elif D[row_ind[i], col_ind[i]] == 0 and D[col_ind[i], row_ind[i]] == 0:
+            diE_matrix[x, y] = -1
+            diE_matrix[y, x] = -1
+        else:
+            print("D[x, y], D[y, x], p_matrix[x, y], p_matrix[y, x], x, y")
+            print(D[x, y], D[y, x], p_matrix[x, y], p_matrix[y, x], x, y)
+            print('some issue - logic wrong\n')
 
 if __name__ == '__main__':
     seed = 11
     generator = GraphGenerator(seed)
-    compare_logits_vs_heirarchical_vec2_bowfree_admg(seed)
+    get_action_vector_for_admg()

@@ -18,9 +18,10 @@ def vec_2_bow_free_admg(z, d, tril_ind, topo_order):  # still takes the argument
     return D, B
 
 def vec_2_bow_free_admg_known_topo_order(z, d, tril_ind, topo_order):
+    p = np.argsort(topo_order)
     diE = np.zeros((d, d))
     diE[tril_ind] = z[: (d * (d-1)) // 2]
-    D = (diE + diE.T > 0) * (topo_order[:, None] > topo_order[None, :])
+    D = (diE + diE.T > 0) * (p[:, None] > p[None, :])
     biE = np.zeros((d, d))
     biE[tril_ind] = z[(d * (d-1)) // 2:]
     B = (biE + biE.T > 0) * (1 - D) * (1 - D.T)
