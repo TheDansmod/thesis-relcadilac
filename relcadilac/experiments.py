@@ -905,8 +905,73 @@ def plot_bic_with_and_without_topo_order():
     plt.title('Performance of Relcadilac with and without Topological Order')
     plt.show()
 
+def compare_logits_vs_heirarchical_vec2_bowfree_admg(seed):
+    # I have two vec2bowfree ADMG functions - one where I use logits and the other which is hierarchical - gives preference to directed edges
+    print("\n\nLOGITS VS HIERARCHICAL\n\nI have two vec2bowfree ADMG functions - one where I use logits and the other which is hierarchical - gives preference to directed edges. Everything is default otherwise. 5 runs. Bow-free ADMGs only.\n\n")
+    experiment_data = []
+    for i in range(1):
+        print(f"\n\n RUN {i}")
+        params = {'num_nodes': 10, 'avg_degree': 4, 'frac_directed': 0.6, 'degree_variance': 0.2, 'num_samples': 2000, 'admg_model': 'bow-free', 'beta_low': 0.5, 'beta_high': 2.0, 'omega_offdiag_low': 0.4, 'omega_offdiag_high': 0.7, 'omega_diag_low': 0.7, 'omega_diag_high': 1.2, 'standardize_data': False, 'center_data': True, 'steps_per_env': 2000, 'n_envs': 8, 'normalize_advantage': True, 'n_epochs': 1, 'device': 'cuda', 'n_steps': 16, 'ent_coef': 0.05, 'dcd_num_restarts': 1, 'vec_envs_random_state': 0, 'do_thresholding': True, 'threshold': 0.05, 'generator_seed': seed, 'explanation': "I have two vec2bowfree ADMG functions - one where I use logits and the other which is hierarchical - gives preference to directed edges. Everything is default otherwise. 5 runs", 'topo_order_known': False, 'use_logits_partition': True}
+        D, B, X, S, bic, pag = generator.get_admg(
+                num_nodes=params['num_nodes'],
+                avg_degree=params['avg_degree'],
+                frac_directed=params['frac_directed'],
+                degree_variance=params['degree_variance'],
+                admg_model=params['admg_model'],
+                plot=False,
+                do_sampling=True,
+                num_samples=params['num_samples']
+            )
+        # relcadilac - logits partition
+        rl_params = {'normalize_advantage': params['normalize_advantage'], 'n_epochs': params['n_epochs'], 'device': params['device'], 'n_steps': params['n_steps'], 'verbose': 0, 'ent_coef': params['ent_coef']}
+        start = time.perf_counter()
+        pred_D, pred_B, pred_pag, avg_rewards, pred_bic = rel_admg(X, S, params['admg_model'], steps_per_env=params['steps_per_env'], n_envs=params['n_envs'], rl_params=rl_params, random_state=params['vec_envs_random_state'], verbose=0, topo_order=None, use_logits_partition=True)
+        params['logits_relcadilac_time_sec'] = time.perf_counter() - start
+        if params['do_thresholding']:
+            thresh_D, thresh_B = get_thresholded_admg(pred_D, pred_B, X, S, threshold=params['threshold'])
+            thresh_pag = convert_admg_to_pag(thresh_D, thresh_B)
+            params['logits_relcadilac_directed_thresh_adj'] = np.array2string(thresh_D)
+            params['logits_relcadilac_bidirected_thresh_adj'] = np.array2string(thresh_B)
+            params['logits_relcadilac_thresh_admg_metrics'] = get_admg_metrics((D, B), (thresh_D, thresh_B))
+            params['logits_relcadilac_thresh_pag_metrics'] = get_pag_metrics(pag, thresh_pag)
+        params['logits_relcadilac_admg_metrics'] = get_admg_metrics((D, B), (pred_D, pred_B))
+        params['logits_relcadilac_pag_metrics'] = get_pag_metrics(pag, pred_pag)
+        params['ground_truth_bic'] = bic
+        print(f"\n\nGround truth bic {bic}\n\n")
+        params['logits_relcadilac_avg_rewards'] = list(map(str, avg_rewards['average_rewards']))
+        params['logits_relcadilac_pred_bic'] = pred_bic
+        print(f"\n\nLogits Relcadilac pred bic {pred_bic}\n\n")
+        params['ground_truth_directed_adj'] = np.array2string(D)
+        params['ground_truth_bidirected_adj'] = np.array2string(B)
+        params['logits_relcadilac_directed_pred_adj'] = np.array2string(pred_D)
+        params['logits_relcadilac_bidirected_pred_adj'] = np.array2string(pred_B)
+        print(f'\trelcadilac done logits')
+        # relcadilac - normal
+        start = time.perf_counter()
+        pred_D, pred_B, pred_pag, avg_rewards, pred_bic = rel_admg(X, S, params['admg_model'], steps_per_env=params['steps_per_env'], n_envs=params['n_envs'], rl_params=rl_params, random_state=params['vec_envs_random_state'], verbose=0, topo_order=None, use_logits_partition=False)
+        params['relcadilac_time_sec'] = time.perf_counter() - start
+        if params['do_thresholding']:
+            thresh_D, thresh_B = get_thresholded_admg(pred_D, pred_B, X, S, threshold=params['threshold'])
+            thresh_pag = convert_admg_to_pag(thresh_D, thresh_B)
+            params['relcadilac_directed_thresh_adj'] = np.array2string(thresh_D)
+            params['relcadilac_bidirected_thresh_adj'] = np.array2string(thresh_B)
+            params['relcadilac_thresh_admg_metrics'] = get_admg_metrics((D, B), (thresh_D, thresh_B))
+            params['relcadilac_thresh_pag_metrics'] = get_pag_metrics(pag, thresh_pag)
+        params['relcadilac_admg_metrics'] = get_admg_metrics((D, B), (pred_D, pred_B))
+        params['relcadilac_pag_metrics'] = get_pag_metrics(pag, pred_pag)
+        params['relcadilac_avg_rewards'] = list(map(str, avg_rewards['average_rewards']))
+        params['relcadilac_pred_bic'] = pred_bic
+        print(f"\n\nRelcadilac pred bic {pred_bic}\n\n")
+        params['relcadilac_directed_pred_adj'] = np.array2string(pred_D)
+        params['relcadilac_bidirected_pred_adj'] = np.array2string(pred_B)
+        print(f'\trelcadilac done normal')
+        print(params)  # so as not to lose data if a run fails
+        experiment_data.append(params)
+    with open(r"runs/run_017.json", "w") as f:
+        json.dump(experiment_data, f, indent=2)
+
 
 if __name__ == '__main__':
     seed = 11
     generator = GraphGenerator(seed)
-    plot_bic_with_and_without_topo_order()
+    compare_logits_vs_heirarchical_vec2_bowfree_admg(seed)

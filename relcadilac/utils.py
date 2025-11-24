@@ -59,14 +59,14 @@ def vec_2_bow_free_admg_logits(z, d, tril_ind, topo_order):
 
     # Expand p to compare all pairs
     # P_diff[i, j] = p[i] - p[j]
-    P_diff = p[:, None] - p[None, :]
+    # P_diff = p[:, None] - p[None, :]
 
     # The tril_ind usually maps to indices (i, j) where i > j.
     # We populate the full matrix by adding the transpose (symmetrizing the existence decision)
     # then masking by ordering.
 
     # "Raw" existence based on logits (ignoring direction for a moment)
-    adj_existence_dir = D + D.T
+    # adj_existence_dir = D + D.T
 
     # Final D: Keep edge if existence is predicted AND ordering agrees
     D = (D + D.T) * (p[:, None] > p[None, :])

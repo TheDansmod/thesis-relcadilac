@@ -30,13 +30,19 @@ def relcadilac(
         verbose=1,
         random_state=0,
         topo_order=None,  # should be a numpy array of shape (d,)
+        use_logits_partition=False,  # if this is true then we use the vec_2_bow_free_admg_logits function instead of the vec_2_bow_free_admg
         **unused
     ):
     if not admg_model in ['bow-free', 'ancestral']:
         raise ValueError("admg_model must either be `bow-free` or `ancestral`")
     rl_params = deepcopy(rl_params or {})
     if admg_model == 'bow-free':
-        vec2admg = vec_2_bow_free_admg_known_topo_order if topo_order is not None else vec_2_bow_free_admg
+        if topo_order is not None:
+            vec2admg = vec_2_bow_free_admg_known_topo_order 
+        elif use_logits_partition:
+            vec2admg = vec_2_bow_free_admg_logits
+        else:
+            vec2admg = vec_2_bow_free_admg
     if admg_model == 'ancestral':
         vec2admg = vec_2_ancestral_admg_known_topo_order if topo_order is not None else vec_2_ancestral_admg
     n, d = X.shape
