@@ -848,7 +848,7 @@ def update_algo_params(algo, params, D, B, pred_D, pred_B, X, S, bic, pred_bic, 
     return params
 
 def single_test_04(seed):
-    explanation = "40,000 steps was also not enough. I am going to try 80,000 steps. I think this will be the last jump I make. Continuation from run 22\nExplanation for run 23: Continuation from run 22, 20_000 steps was not sufficient. I will be running for 40_000 steps and see if that has an impact. I will also be raising the LRU cache size. I will also be outputting the step at which the next best BIC was found so that I can see if better BICs are being found even later. For this run I am fixing the seed to be the same as the seed for run 21.\nExplanation for run 22: I have just figured out that the search capability of my implementation (through PPO) is not lacking. The only reason we weren't able to reach the minimum BIC score was that we weren't searching long enough. I have also learnt that using n_steps=16 is harming my setup. So I will be trying 10 node, 4 degree, 2000 samples, with 20_000 steps_per_env to see if the performance improves - can we reach the ground truth BIC score? The ALIAS implementation actually runs for 64 * 20_000 total timesteps just for the DAGs while I will only be running for 8 * 20_000 total timesteps for ADMGS. I will be using ancestral ADMGs."
+    explanation = "I am trying to see if entropy annealing will help us escape the premature variance collapse problem. I have enabled entropy annealing by default currently, but will add parameters to control it later. For now the parameter values are initial_entropy=0.3, min_entropy=0.005, cycle_length=35_000, damping_factor=0.5, do_entropy_annealing=True. We will go for 40_000 steps_per_env and same seed as run 22. Hopefully we reach the minimum bic score."
     print(f" \n\n SINGLE TEST 04 \n\n {explanation}\n\n")
     params = {'num_nodes': 10, 'avg_degree': 4, 'frac_directed': 0.6, 'degree_variance': 0.2, 'num_samples': 2000, 'admg_model': 'ancestral', 'beta_low': 0.5, 'beta_high': 2.0, 'omega_offdiag_low': 0.4, 'omega_offdiag_high': 0.7, 'omega_diag_low': 0.7, 'omega_diag_high': 1.2, 'standardize_data': False, 'center_data': True, 'steps_per_env': 40_000, 'n_envs': 8, 'normalize_advantage': True, 'n_epochs': 1, 'device': 'cuda', 'n_steps': 1, 'ent_coef': 0.05, 'dcd_num_restarts': 1, 'vec_envs_random_state': 0, 'do_thresholding': True, 'threshold': 0.05, 'generator_seed': seed, 'explanation': explanation, 'topo_order_known': False, 'use_logits_partition': False, 'get_pag': True, 'require_connected': False}
     D, B, X, S, bic, pag = generator.get_admg(
@@ -871,7 +871,7 @@ def single_test_04(seed):
     pred_D, pred_B, pred_pag, avg_rewards, pred_bic = rel_admg(X, S, params['admg_model'], steps_per_env=params['steps_per_env'], n_envs=params['n_envs'], rl_params=rl_params, random_state=params['vec_envs_random_state'], verbose=1, topo_order=None, use_logits_partition=params['use_logits_partition'])
     params['logits_relcadilac_time_sec'] = time.perf_counter() - start
     params = update_algo_params('relcadilac', params, D, B, pred_D, pred_B, X, S, bic, pred_bic, pag, pred_pag, avg_rewards=avg_rewards)
-    with open('runs/run_024.json', 'w') as f:
+    with open('runs/run_025.json', 'w') as f:
         json.dump([params], f, indent=2)
     print(f'\trelcadilac done')
 

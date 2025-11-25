@@ -3,7 +3,7 @@ from tqdm import tqdm
 from stable_baselines3.common.callbacks import BaseCallback
 
 class TrackingCallback(BaseCallback):
-    def __init__(self, total_timesteps, num_samples, verbose = 0):
+    def __init__(self, total_timesteps, num_samples, verbose = 0, do_entropy_annealing=True, initial_entropy=0.3, min_entropy=0.005, cycle_length=35000, damping_factor=0.5):
         super(TrackingCallback, self).__init__(verbose)
         self.total_timesteps = total_timesteps
         # all rewards are negative of the bic - scaled due to reward normalization
@@ -14,10 +14,20 @@ class TrackingCallback(BaseCallback):
         self.average_rewards = []  # in order to track the rewards
         # self.action_values = np.empty((total_timesteps, self.training_env.num_envs, self.training_env.action_space.shape[0]), dtype=np.float32)
         # self.action_cursor = 0  # to track the actions that have been inserted
+        # entropy calculation variables
+        self.do_entropy_annealing = do_entropy_annealing
+        if do_entropy_annealing:
+            self.initial_entropy = initial_entropy
+            self.min_entropy = min_entropy
+            self.cycle_length = cycle_length
+            self.damping_factor = damping_factor
+            self.curr_ent_coef = initial_entropy
 
     def _on_training_start(self) -> None:
         """ Initialize the progress bar. """
         self.pbar = tqdm(total=self.total_timesteps, desc="RL Training Progress", unit="step")
+        if self.verbose > 0 and self.do_entropy_annealing:
+            self.pbar.write(f"Starting Entropy Coefficient Annealing: \n\t{self.initial_entropy =}\n\t{self.min_entropy=}\n\t{self.cycle_length=}\n\t{self.damping_factor=}")
 
     def _on_step(self) -> bool:
         # This method will be called by the model after each call to `env.step()`.
@@ -31,12 +41,23 @@ class TrackingCallback(BaseCallback):
             self.best_reward = batch_best_reward
             self.best_action = infos[batch_best_idx]['action_vector']
             if self.verbose > 0:
-                self.pbar.write(f"Num Calls * Num Envs: {self.n_calls * self.training_env.num_envs}; New least BIC found: {- self.best_reward * self.num_samples}")
+                self.pbar.write(f"Num timesteps value {self.num_timesteps}\nNum Calls * Num Envs: {self.n_calls * self.training_env.num_envs}; New least BIC found: {- self.best_reward * self.num_samples}")
         if self.n_calls % 50 == 0:
             self.pbar.update(self.training_env.num_envs * 50)
         # if curr_actions is not None and self.action_cursor < self.total_timesteps:
         #     self.action_buffer[self.cursor] = curr_actions
         #     self.cursor += 1
+        if self.do_entropy_annealing:
+            # e = min + 0.5 * (max - min) * (1 + cos(2 pi (t mod T)/ T)) * exp(-lambda * t / kT)
+            current_step = self.num_timesteps
+            cycle_progress = (current_step % self.cycle_length) / self.cycle_length
+            cosine_val = 0.5 * (1 + np.cos(2 * np.pi * cycle_progress))
+            decay_val = np.exp(-self.damping_factor * (current_step / (self.cycle_length * 10)))
+            entropy_range = self.initial_entropy - self.min_entropy
+            new_ent_coef = self.min_entropy + (entropy_range * cosine_component * decay_component)
+            self.current_ent_coef = new_ent_coef
+            if hasattr(self.model, 'ent_coef'):
+                self.model.ent_coef = torch.tensor(new_ent_coef, device=self.model.device)
         return True  # continue training
 
     def _on_training_end(self) -> None:
