@@ -834,8 +834,10 @@ def update_algo_params(algo, params, D, B, pred_D, pred_B, X, S, bic, pred_bic, 
     params[f'{algo}_pag_metrics'] = get_pag_metrics(pag, pred_pag)
     params['ground_truth_bic'] = bic
     params[f'{algo}_pred_bic'] = pred_bic
-    print(f"\n\nGround truth bic {bic}\n\n")
-    print(f"\n\n{algo} pred bic {pred_bic}\n\n")
+    print(f"\n\nGround truth bic {bic}\n")
+    print(f"\n{algo} pred bic {pred_bic}\n")
+    print(f"\n{algo} admg thresh shd {params[f'{algo}_thresh_admg_metrics']['admg']['shd']}\n")
+    print(f"\n{algo} admg shd {params[f'{algo}_admg_metrics']['admg']['shd']}\n\n")
     params['ground_truth_directed_adj'] = np.array2string(D)
     params['ground_truth_bidirected_adj'] = np.array2string(B)
     params[f'{algo}_directed_pred_adj'] = np.array2string(pred_D)
@@ -848,9 +850,9 @@ def update_algo_params(algo, params, D, B, pred_D, pred_B, X, S, bic, pred_bic, 
     return params
 
 def single_test_04(seed):
-    explanation = "I am re-doing run 25 (since the min bic score was not found as was hoped), and this time I will be capturing the action values as well. This will allow me to see if I should add a weight vector to BIC which will create a gradient towards the center of the search space. \nExplanation for previous run 25: I am trying to see if entropy annealing will help us escape the premature variance collapse problem. I have enabled entropy annealing by default currently, but will add parameters to control it later. For now the parameter values are initial_entropy=0.3, min_entropy=0.005, cycle_length=35_000, damping_factor=0.5, do_entropy_annealing=True. We will go for 40_000 steps_per_env and same seed as run 22. Hopefully we reach the minimum bic score."
+    explanation = "I will be trying to restrict the range of the action space to -1, 1 rather than -10, 10 (which is what it was before)."
     print(f" \n\n SINGLE TEST 04 \n\n {explanation}\n\n")
-    params = {'num_nodes': 10, 'avg_degree': 4, 'frac_directed': 0.6, 'degree_variance': 0.2, 'num_samples': 2000, 'admg_model': 'ancestral', 'beta_low': 0.5, 'beta_high': 2.0, 'omega_offdiag_low': 0.4, 'omega_offdiag_high': 0.7, 'omega_diag_low': 0.7, 'omega_diag_high': 1.2, 'standardize_data': False, 'center_data': True, 'steps_per_env': 10_000, 'n_envs': 8, 'normalize_advantage': True, 'n_epochs': 1, 'device': 'cuda', 'n_steps': 1, 'ent_coef': 0.05, 'dcd_num_restarts': 1, 'vec_envs_random_state': 0, 'do_thresholding': True, 'threshold': 0.05, 'generator_seed': seed, 'explanation': explanation, 'topo_order_known': False, 'use_logits_partition': False, 'get_pag': True, 'require_connected': False}
+    params = {'num_nodes': 10, 'avg_degree': 4, 'frac_directed': 0.6, 'degree_variance': 0.2, 'num_samples': 2000, 'admg_model': 'ancestral', 'beta_low': 0.5, 'beta_high': 2.0, 'omega_offdiag_low': 0.4, 'omega_offdiag_high': 0.7, 'omega_diag_low': 0.7, 'omega_diag_high': 1.2, 'standardize_data': False, 'center_data': True, 'steps_per_env': 20_000, 'n_envs': 8, 'normalize_advantage': True, 'n_epochs': 1, 'device': 'cuda', 'n_steps': 1, 'ent_coef': 0.05, 'dcd_num_restarts': 1, 'vec_envs_random_state': 0, 'do_thresholding': True, 'threshold': 0.05, 'generator_seed': seed, 'explanation': explanation, 'topo_order_known': False, 'use_logits_partition': False, 'get_pag': True, 'require_connected': False}
     D, B, X, S, bic, pag = generator.get_admg(
             num_nodes=params['num_nodes'],
             avg_degree=params['avg_degree'],
@@ -1139,7 +1141,6 @@ def plot_get_dag_rewards():
     plt.show()
 
 if __name__ == '__main__':
-    # seed = random.randint(1, 100)
-    seed = 28
+    seed = random.randint(1, 100)
     generator = GraphGenerator(seed)
     single_test_04(seed)

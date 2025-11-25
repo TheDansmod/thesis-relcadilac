@@ -22,7 +22,8 @@
 22. In run 22 I am trying to figure out if using n_steps = 1 and steps_per_env = 20_000 is sufficient to find the ground truth ADMG - at least for ancestral ADMG. But that is not the case - I got closer - but not able to find the actual ground truth ADMG. truth = 22,616.something and relcadilac BIC = 22,623.something - so only a difference of 7 points. It took 2 minutes 21 seconds to complete.
 23. In run 23 I am continuing the experiment from run 22 - how many steps_per_env needed to get the ground truth ancestral ADMG - with this time using 40,000 = steps_per_env, n_step = 1 (still), n_envs = 8
 24. In run 24 I am continuing the experiment from run 22 - how many steps_per_env needed to get the ground truth ancestral ADMG - with this time using 80_000 = steps_per_env, n_step = 1 (still), n_envs = 8 - It could not find the ground truth BIC even with this intensive search
-25. In run 25, I tried to use entropy annealing to see if it might help me find the true min bic graph, but it also, only got to the same value that previous runs got. I will be deleting it and creating a new run 25 where I will also be capturing action values since I want to see what the magnitude of the action values is throughout the run.
+25. In run 25, I tried to use entropy annealing to see if it might help me find the true min bic graph, but it also, only got to the same value that previous runs got. I will be deleting it and creating a new run 25 where I will also be capturing action values since I want to see what the magnitude of the action values is throughout the run. - the bic found was lower than the bic of the true graph. the length of the z vector rose nearly linearly to over 100 (which should not be possible since the graph is 10 node) and then plumetted nearly vertically to nearly 0 at around 20k steps and stayed there for the rest of the run. I don't entirely understand this behaviour. The most likely cause of the behaviour is that I was capturing the unclipped action values rather than the clipped ones. I am not sure why it plummetted to 0.
+26. In run 26, I will be trying to restrict the range of the action space to -1, 1 since -10, 10 does not seem necessary
 
 
 
@@ -39,4 +40,4 @@
 
 
 
-26. In run 15 I am trying to figure out the impact of more steps_per_env (2000, 3000, 4000) on the excess bic value - how much the predicted bic is larger than the true bic - I am doing 3 runs per steps_per_env value. This is for 15 node, 4 degree, 2000 samples - this is only for dcd and relcadilac. This is for ancestral graphs.
+27. In run 15 I am trying to figure out the impact of more steps_per_env (2000, 3000, 4000) on the excess bic value - how much the predicted bic is larger than the true bic - I am doing 3 runs per steps_per_env value. This is for 15 node, 4 degree, 2000 samples - this is only for dcd and relcadilac. This is for ancestral graphs.
