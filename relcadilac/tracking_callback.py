@@ -12,6 +12,8 @@ class TrackingCallback(BaseCallback):
         self.pbar = None  # this is the progress bar
         self.num_samples = num_samples
         self.average_rewards = []  # in order to track the rewards
+        # self.action_values = np.empty((total_timesteps, self.training_env.num_envs, self.training_env.action_space.shape[0]), dtype=np.float32)
+        # self.action_cursor = 0  # to track the actions that have been inserted
 
     def _on_training_start(self) -> None:
         """ Initialize the progress bar. """
@@ -24,6 +26,7 @@ class TrackingCallback(BaseCallback):
         self.average_rewards.append(np.mean(rewards))
         batch_best_idx = np.argmax(rewards)
         batch_best_reward = rewards[batch_best_idx]
+        # curr_actions = self.locals['action_vector']
         if batch_best_reward > self.best_reward:
             self.best_reward = batch_best_reward
             self.best_action = infos[batch_best_idx]['action_vector']
@@ -31,6 +34,9 @@ class TrackingCallback(BaseCallback):
                 self.pbar.write(f"New least BIC found: {- self.best_reward * self.num_samples}")
         if self.n_calls % 50 == 0:
             self.pbar.update(self.training_env.num_envs * 50)
+        # if curr_actions is not None and self.action_cursor < self.total_timesteps:
+        #     self.action_buffer[self.cursor] = curr_actions
+        #     self.cursor += 1
         return True  # continue training
 
     def _on_training_end(self) -> None:
