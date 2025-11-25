@@ -822,7 +822,7 @@ def single_test_03(seed):
     with open(r"runs/run_015.json", "w") as f:
         json.dump(params, f, indent=2)
 
-def update_algo_params(algo, params, D, B, pred_D, pred_B, X, S, bic, pred_bic, pag, pred_pag, avg_rewards=None):
+def update_algo_params(algo, params, D, B, pred_D, pred_B, X, S, bic, pred_bic, pag, pred_pag, captured_metrics=None):
     # algo could be one of relcadilac, gfci, dcd
     # for other algos there won't be a avg_rewards dictionary
     if params['do_thresholding']:
@@ -843,14 +843,14 @@ def update_algo_params(algo, params, D, B, pred_D, pred_B, X, S, bic, pred_bic, 
     if params['do_thresholding']:
         params[f'{algo}_directed_thresh_adj'] = np.array2string(thresh_D)
         params[f'{algo}_bidirected_thresh_adj'] = np.array2string(thresh_B)
-    if avg_rewards is not None:
-        params[f'{algo}_avg_rewards'] = list(map(str, avg_rewards['average_rewards']))
+    if captured_metrics is not None:
+        params[f'{algo}_avg_rewards'] = list(map(str, captured_metrics['average_rewards']))
     return params
 
 def single_test_04(seed):
-    explanation = "I am trying to see if entropy annealing will help us escape the premature variance collapse problem. I have enabled entropy annealing by default currently, but will add parameters to control it later. For now the parameter values are initial_entropy=0.3, min_entropy=0.005, cycle_length=35_000, damping_factor=0.5, do_entropy_annealing=True. We will go for 40_000 steps_per_env and same seed as run 22. Hopefully we reach the minimum bic score."
+    explanation = "I am re-doing run 25 (since the min bic score was not found as was hoped), and this time I will be capturing the action values as well. This will allow me to see if I should add a weight vector to BIC which will create a gradient towards the center of the search space. \nExplanation for previous run 25: I am trying to see if entropy annealing will help us escape the premature variance collapse problem. I have enabled entropy annealing by default currently, but will add parameters to control it later. For now the parameter values are initial_entropy=0.3, min_entropy=0.005, cycle_length=35_000, damping_factor=0.5, do_entropy_annealing=True. We will go for 40_000 steps_per_env and same seed as run 22. Hopefully we reach the minimum bic score."
     print(f" \n\n SINGLE TEST 04 \n\n {explanation}\n\n")
-    params = {'num_nodes': 10, 'avg_degree': 4, 'frac_directed': 0.6, 'degree_variance': 0.2, 'num_samples': 2000, 'admg_model': 'ancestral', 'beta_low': 0.5, 'beta_high': 2.0, 'omega_offdiag_low': 0.4, 'omega_offdiag_high': 0.7, 'omega_diag_low': 0.7, 'omega_diag_high': 1.2, 'standardize_data': False, 'center_data': True, 'steps_per_env': 40_000, 'n_envs': 8, 'normalize_advantage': True, 'n_epochs': 1, 'device': 'cuda', 'n_steps': 1, 'ent_coef': 0.05, 'dcd_num_restarts': 1, 'vec_envs_random_state': 0, 'do_thresholding': True, 'threshold': 0.05, 'generator_seed': seed, 'explanation': explanation, 'topo_order_known': False, 'use_logits_partition': False, 'get_pag': True, 'require_connected': False}
+    params = {'num_nodes': 10, 'avg_degree': 4, 'frac_directed': 0.6, 'degree_variance': 0.2, 'num_samples': 2000, 'admg_model': 'ancestral', 'beta_low': 0.5, 'beta_high': 2.0, 'omega_offdiag_low': 0.4, 'omega_offdiag_high': 0.7, 'omega_diag_low': 0.7, 'omega_diag_high': 1.2, 'standardize_data': False, 'center_data': True, 'steps_per_env': 10_000, 'n_envs': 8, 'normalize_advantage': True, 'n_epochs': 1, 'device': 'cuda', 'n_steps': 1, 'ent_coef': 0.05, 'dcd_num_restarts': 1, 'vec_envs_random_state': 0, 'do_thresholding': True, 'threshold': 0.05, 'generator_seed': seed, 'explanation': explanation, 'topo_order_known': False, 'use_logits_partition': False, 'get_pag': True, 'require_connected': False}
     D, B, X, S, bic, pag = generator.get_admg(
             num_nodes=params['num_nodes'],
             avg_degree=params['avg_degree'],
@@ -868,12 +868,21 @@ def single_test_04(seed):
     # relcadilac - logits partition
     rl_params = {'normalize_advantage': params['normalize_advantage'], 'n_epochs': params['n_epochs'], 'device': params['device'], 'n_steps': params['n_steps'], 'verbose': 0, 'ent_coef': params['ent_coef']}
     start = time.perf_counter()
-    pred_D, pred_B, pred_pag, avg_rewards, pred_bic = rel_admg(X, S, params['admg_model'], steps_per_env=params['steps_per_env'], n_envs=params['n_envs'], rl_params=rl_params, random_state=params['vec_envs_random_state'], verbose=1, topo_order=None, use_logits_partition=params['use_logits_partition'])
+    pred_D, pred_B, pred_pag, captured_metrics, pred_bic = rel_admg(X, S, params['admg_model'], steps_per_env=params['steps_per_env'], n_envs=params['n_envs'], rl_params=rl_params, random_state=params['vec_envs_random_state'], verbose=1, topo_order=None, use_logits_partition=params['use_logits_partition'])
     params['logits_relcadilac_time_sec'] = time.perf_counter() - start
-    params = update_algo_params('relcadilac', params, D, B, pred_D, pred_B, X, S, bic, pred_bic, pag, pred_pag, avg_rewards=avg_rewards)
+    params = update_algo_params('relcadilac', params, D, B, pred_D, pred_B, X, S, bic, pred_bic, pag, pred_pag, captured_metrics=captured_metrics)
+    plot_z_length(captured_metrics['action_values'])
     with open('runs/run_025.json', 'w') as f:
         json.dump([params], f, indent=2)
     print(f'\trelcadilac done')
+
+def plot_z_length(action_values):
+    # action values is of shape (total_timesteps, n_envs, d ** 2) where d is the number of nodes
+    mean_len_z = np.mean(np.linalg.norm(action_values, axis=2), axis=1)
+    plt.plot(mean_len_z)
+    plt.xlabel('timesteps')
+    plt.ylabel('action vector (z) length averaged over 8 steps - 1 per env')
+    plt.savefig('diagrams/ancestral_z_length.png')
 
 def known_causal_ordering(seed):
     # I want to do an experiment where we already know the causal ordering and are just trying to find the matrix values and edge existence

@@ -73,7 +73,7 @@ def relcadilac(
         if verbose:
             logger.info(f'\nBest BIC = {best_bic}')
             logger.info(f'Predicted ADMG (parents on columns) = \nDirected Edges:\n{pred_D.astype(int)}\nBidirected Edges:\n{pred_B}')
-        return pred_D, pred_B, pag_matrix, {'average_rewards': tracking.average_rewards}, best_bic
+        return pred_D, pred_B, pag_matrix, {'average_rewards': tracking.average_rewards, 'action_values': tracking.action_values}, best_bic
     finally:
         vec_env.close()
         if 'model' in locals():
