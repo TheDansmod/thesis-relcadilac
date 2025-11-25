@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from ananke.graphs.admg import ADMG
 from ananke.models.linear_gaussian_sem import LinearGaussianSEM as LGSem
+from sklearn.linear_model import LinearRegression
 
 from relcadilac.optim_linear_gaussian_sem import LinearGaussianSEM as myLGSem
 from dcd.utils.admg2pag import get_graph_from_adj, admg_to_pag, get_pag_matrix
@@ -222,3 +223,29 @@ def get_adj_from_ananke_graph(G):
 
 def convert_admg_to_pag(D, B):
         return get_pag_matrix(admg_to_pag(get_graph_from_adj(D, B)))
+
+def get_dag_bic(D, X):
+    # assume X is centered, D[i, j]=1 => j->i edge exists
+    n, d = X.shape  # num_samples, num_nodes
+    stability_threshold = pow(10, -16)
+    ll_const = -(n/2) * (1 + np.log(2 * np.pi))
+    log_like, bic_params = 0, 0
+    for i in range(d):
+        parents_indices = np.where(D[i, :] == 1)[0]
+        ssr = 0
+        if len(parents_indices) == 0:
+            residual = X[:, i]
+            rss = np.sum(residual ** 2)
+        else:
+            X_pa = X[:, parents_indices]
+            y_true = X[:, i]
+            reg = LinearRegression(fit_intercept=False)  # assuming centered
+            reg.fit(X_pa, y_true)
+            residuals = y_true - reg.predict(X_pa)
+            ssr = np.sum(residuals ** 2)
+        var_mle = max(ssr / n, stability_threshold)
+        lld = -(n/2) * np.log(var_mle) + ll_const
+        log_like += lld
+        bic_params += len(parents_indices) + 1  # for node
+    bic = bic_params * np.log(n) - 2 * log_like
+    return bic

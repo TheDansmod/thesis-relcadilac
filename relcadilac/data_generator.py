@@ -2,8 +2,9 @@ import os
 import logging
 
 import numpy as np
+from ananke.graphs import ADMG
 
-from relcadilac.utils import get_transitive_closure, get_bic, convert_admg_to_pag
+from relcadilac.utils import get_transitive_closure, get_bic, convert_admg_to_pag, get_dag_bic
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -89,8 +90,9 @@ class GraphGenerator:
         do_sampling = False, 
         num_samples = 2000, 
         sampling_params = None,
-        get_pag = True
-    ):
+        get_pag = True,
+        require_connected = False,
+    ):  # you will get around num_nodes * avg_degree / 2 edges in the skeleton
         # generates a random bow-free ADMG.
         # num_nodes: number of nodes in the ADMG
         # avg_degree: expected average degree of a node in the graph skeleton
@@ -181,7 +183,7 @@ class GraphGenerator:
             adj_bidir = adj_bidir[perm, :][:, perm]
             
             # if not connected repeat
-            if self._is_connected(adj_dir, adj_bidir):
+            if (not require_connected) or self._is_connected(adj_dir, adj_bidir):
                 break
 
         # log num nodes and edges
@@ -191,9 +193,7 @@ class GraphGenerator:
 
         # plotting
         if plot:
-            raise NotImplementedError("plotting is currently not implemented due to requirement of ananke-library which needs python 3.10, but since I am using arch linux, the python version for graph-tool is 3.13")
-            print('plotting is currently disabled')
-            # self.plot_admg(adj_dir, adj_bidir, plot_filename, plot_directory)
+            self.plot_admg(adj_dir, adj_bidir, plot_filename, plot_directory)
             
         # Sampling
         samples, data_cov_matrix, bic, pag_matrix = None, None, None, None
@@ -210,10 +210,41 @@ class GraphGenerator:
             pag_matrix = convert_admg_to_pag(adj_dir, adj_bidir)
         return adj_dir, adj_bidir, samples, data_cov_matrix, bic, pag_matrix
 
+    def get_lin_gauss_ev_dag(self, num_nodes, avg_degree, plot=False, plot_filename='lin_gauss_ev_dag', plot_directory=os.getcwd(), do_sampling=False, num_samples=2000, sampling_params=None):
+        if avg_degree > num_nodes - 1:
+            raise ValueError(f"Avg degree {avg_degree} too high for {num_nodes} nodes.")
+        p_edge = avg_degree / (num_nodes - 1)
+        adj = np.zeros((num_nodes, num_nodes))
+        triu_ind = np.triu_indices(num_nodes, k=1)
+        num_vals = len(triu_ind[0])
+        rnd = self.rng.uniform(low=0.0, high=1.0, size=num_vals)
+        edge_idx = np.where(rnd < p_edge)[0]
+        u = triu_ind[0][edge_idx]
+        v = triu_ind[1][edge_idx]
+        adj[v, u] = 1 
+        perm = self.rng.permutation(num_nodes)
+        adj = adj[perm, :][:, perm]
+        if plot:
+            self.plot_admg(adj, np.zeros((num_nodes, num_nodes)), plot_filename, plot_directory)
+        X, bic = None, None
+        if do_sampling:
+            if sampling_params is None:
+                sampling_params = {}
+            defaults = {'beta_low': 0.5, 'beta_high': 2.0, 'num_samples': num_samples, 'standardize_data': False, 'center_data': True}
+            params = {**defaults, **sampling_params}
+            W = self._sample_pm_uniform(low=params['beta_low'], high=params['beta_high'], size=(num_nodes, num_nodes)) * adj
+            E = self.rng.standard_normal(size=(num_nodes, params['num_samples']))
+            X = np.linalg.solve((np.eye(num_nodes) - W), E).T
+            if params['standardize_data']:
+                X = (X - np.mean(X, axis=0)) / np.std(X, axis=0)
+            elif params['center_data']:
+                X = X - np.mean(X, axis=0)
+            bic = get_dag_bic(adj, X)
+        return adj, X, bic
 
 if __name__ == '__main__':
     logger.setLevel(logging.INFO)
-    SEED = None
+    SEED = 22
     generator = GraphGenerator(seed=SEED)
     
     num_nodes = 7
@@ -228,3 +259,4 @@ if __name__ == '__main__':
         plot=True,
         do_sampling=False,
     )
+    D, X, bic = generator.get_lin_gauss_ev_dag(num_nodes=10, avg_degree=4, plot=True, plot_filename='test_dag_can_del', plot_directory='diagrams/', do_sampling=True, num_samples=2000)

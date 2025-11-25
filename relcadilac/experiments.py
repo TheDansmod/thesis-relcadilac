@@ -973,7 +973,7 @@ def compare_logits_vs_heirarchical_vec2_bowfree_admg(seed):
         json.dump(experiment_data, f, indent=2)
 
 def string_to_numpy_array(array_string):
-    split_string = array_string.replace('.', '').replace("[", "").replace("]", "").split("\n ")
+    split_string = array_string.replace("\n  ", " ").replace('.', '').replace("[", "").replace("]", "").split("\n ")
     arr = []
     for row in split_string:
         arr.append(list(map(int, row.split(" "))))
@@ -999,7 +999,52 @@ def get_action_vector_for_admg():
     assert np.array_equal(pred_B, B), "pred_B and B are different"
     print('ground truth bic', 22982.04935524732)
 
+def plot_some_pred_true_graphs():
+    # i want to see what the graphs look like - how are the predicted graphs wrong - is there some pattern to them? - so I will be trying to plot some 10 graphs from somewhere - hopefully with good variety for num nodes and sample size
+    # run 11 - 5 node, 15 node, 30 node, 2000 samples, bow-free
+    # run 12 - 500 samples, 4000 samples, 10 node, bow-free
+    # run 13 - 15 node, 2000 samples, ancestral
+    # pred_D = string_to_numpy_array("[[0. 0. 0. 0. 0.]\n [1. 0. 0. 0. 0.]\n [1. 0. 0. 1. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 1. 1. 0.]]")
+    # pred_B = string_to_numpy_array("[[1. 0. 0. 1. 1.]\n [0. 1. 0. 1. 0.]\n [0. 0. 1. 0. 0.]\n [1. 1. 0. 1. 0.]\n [1. 0. 0. 0. 1.]]")
+    # true_D = string_to_numpy_array("[[0. 1. 0. 1. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 1. 0.]]")
+    # true_B = string_to_numpy_array("[[0. 0. 1. 0. 1.]\n [0. 0. 1. 1. 1.]\n [1. 1. 0. 1. 1.]\n [0. 1. 1. 0. 0.]\n [1. 1. 1. 0. 0.]]")
+    with open('runs/run_011_stdout.json', 'r') as f:
+        data = json.load(f)
+    dones = {5: False, 10: False, 15: False, 30: False}
+    for exp in data:
+        if exp['num_nodes'] in dones and not dones[exp['num_nodes']]:
+            pred_D = string_to_numpy_array(exp['relcadilac_directed_thresh_adj'])
+            pred_B = string_to_numpy_array(exp['relcadilac_bidirected_thresh_adj'])
+            true_D = string_to_numpy_array(exp['ground_truth_directed_adj'])
+            true_B = string_to_numpy_array(exp['ground_truth_bidirected_adj'])
+            draw_admg(pred_D, pred_B, f'run_11_nodes_{exp["num_nodes"]}_01_pred', 'diagrams/pred_true_graphs/')
+            draw_admg(true_D, true_B, f'run_11_nodes_{exp["num_nodes"]}_01_true', 'diagrams/pred_true_graphs/')
+            dones[exp['num_nodes']] = True
+    with open('runs/run_012.json', 'r') as f:
+        data = json.load(f)
+    dones = {500: False, 2000: False, 4000: False}
+    for exp in data:
+        if exp['num_samples'] in dones and not dones[exp['num_samples']]:
+            pred_D = string_to_numpy_array(exp['relcadilac_directed_thresh_adj'])
+            pred_B = string_to_numpy_array(exp['relcadilac_bidirected_thresh_adj'])
+            true_D = string_to_numpy_array(exp['ground_truth_directed_adj'])
+            true_B = string_to_numpy_array(exp['ground_truth_bidirected_adj'])
+            draw_admg(pred_D, pred_B, f'run_12_samples_{exp["num_samples"]}_01_pred', 'diagrams/pred_true_graphs/')
+            draw_admg(true_D, true_B, f'run_11_samples_{exp["num_samples"]}_01_true', 'diagrams/pred_true_graphs/')
+            dones[exp['num_samples']] = True
+
+def check_dag_recovery(seed):
+    explanation = "I will be testing if my code can recover the DAG rather than an ADMG by using linear gaussian data for the DAG with equal variances to ensure that the DAG is identifiable. I am using 10 nodes, 2 degree - to make things simpler, 2000 samples, 2000 steps_per_env, 8 envs. Single run, just to check."
+    params = {'num_nodes': 10, 'avg_degree': 4, 'num_samples': 2000, 'beta_low': 0.5, 'beta_high': 2.0, 'standardize_data': False, 'center_data': True, 'steps_per_env': 2000, 'n_envs': 8, 'normalize_advantage': True, 'n_epochs': 1, 'device': 'cuda', 'n_steps': 16, 'ent_coef': 0.05, 'vec_envs_random_state': 0, 'do_thresholding': True, 'threshold': 0.3, 'generator_seed': seed, 'explanation': explanation}
+    D, X, bic = generator.get_lin_gauss_ev_dag(num_nodes=params['num_nodes'], avg_degree=params['avg_degree'], plot=False, do_sampling=True, num_samples=params['num_samples'], sampling_params={'beta_low': params['beta_low'], 'beta_high': params['beta_high'], 'standardize_data': params['standardize_data'], 'center_data': params['center_data']})
+    rl_params = {'normalize_advantage': params['normalize_advantage'], 'n_epochs': params['n_epochs'], 'device': params['device'], 'n_steps': params['n_steps'], 'verbose': 0, 'ent_coef': params['ent_coef']}
+    start = time.perf_counter()
+    pred_D, pred_B, pred_pag, avg_rewards, pred_bic = rel_admg(X, None, params['admg_model'], steps_per_env=params['steps_per_env'], n_envs=params['n_envs'], rl_params=rl_params, random_state=params['vec_envs_random_state'], verbose=0)
+    params['relcadilac_time_sec'] = time.perf_counter() - start
+    print(pred_D)
+    print(f'\trelcadilac done')
+
 if __name__ == '__main__':
     seed = random.randint(1, 100)
     generator = GraphGenerator(seed)
-    get_action_vector_for_admg()
+    plot_some_pred_true_graphs()
