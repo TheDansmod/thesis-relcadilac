@@ -20,7 +20,7 @@ class ADMGEnv(gym.Env):
         self.action_space = spaces.Box(-10, 10, action_shape)
         self.observation_space = spaces.Discrete(1)
         self.tril_indices = np.tril_indices(nodes, -1)
-        self._cache = LRU(50_000)
+        self._cache = LRU(100_000)
         self.topo_order = topo_order
 
     def reset(self, seed=None, **kwargs):

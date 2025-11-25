@@ -13,7 +13,7 @@ from relcadilac.admg_env import ADMGEnv
 from relcadilac.tracking_callback import TrackingCallback
 from relcadilac.utils import vec_2_bow_free_admg, vec_2_ancestral_admg, convert_admg_to_pag, vec_2_bow_free_admg_known_topo_order, vec_2_ancestral_admg_known_topo_order, vec_2_bow_free_admg_logits
 from relcadilac.data_generator import GraphGenerator
-# from relcadilac.utils import vec2dag  # uncomment this line for ALIAS  (1 of 7 changes to get ALIAS behaviour - search the word ALIAS in comments)
+# from relcadilac.utils import vec2dag  # uncomment this line for ALIAS  (1 of 7 changes to get ALIAS behaviour - search the word ALIAS in comments) - need only make changes in the relcadilac.py file and admg_env.py file, but will only get the behaviour for linear gaussian data with equal variances not non-linear like the main thrust of the ALIAS paper. Check the function check_dag_recovery in experiments to see what arguments might one use and how data generation might happen for it.
 
 warnings.simplefilter("ignore")
 os.environ["PYTHONWARNINGS"] = "ignore"

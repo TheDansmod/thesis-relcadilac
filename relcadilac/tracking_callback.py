@@ -31,7 +31,7 @@ class TrackingCallback(BaseCallback):
             self.best_reward = batch_best_reward
             self.best_action = infos[batch_best_idx]['action_vector']
             if self.verbose > 0:
-                self.pbar.write(f"New least BIC found: {- self.best_reward * self.num_samples}")
+                self.pbar.write(f"Num Calls * Num Envs: {self.n_calls * self.training_env.num_envs}; New least BIC found: {- self.best_reward * self.num_samples}")
         if self.n_calls % 50 == 0:
             self.pbar.update(self.training_env.num_envs * 50)
         # if curr_actions is not None and self.action_cursor < self.total_timesteps:

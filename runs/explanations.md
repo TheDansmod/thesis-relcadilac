@@ -19,6 +19,9 @@
 19. In run 18 I am trying to see if my model is able to find the results for just a DAG rather than an ADMG, I am using linear gaussian data with equal variances since that way the DAG is identifiable. Currently it just seems to predict no edges. - I was able to get the ground truth DAG, but had to run for 20_000 steps_per_env and n_step = 1, n_env = 8, so total = 160,000. It took 2 mins to run which was incredibly fast. I will now try n_step = 16, as see if there is a difference in the runtime
 20. In run 19 and 20 I am trying to figure out the impact of the n_steps variable. When n_steps = 16, I don't get the optimal BIC, but I do when n_steps = 1. n_steps determines how frequently policy updates happen. The policy will be updated after collection n_steps of data from each environment. It seems better to keep the n_steps to 1.
 21. In run 21 I am checking the impact of n_envs = 16 to see how it performs. It seems since the buffer size that goes in for an update becomes larger, there is less stochasticity - and thus, for the same reason that n_steps = 1 > n_steps = 16, we have n_envs = 8 > n_envs = 16.
+22. In run 22 I am trying to figure out if using n_steps = 1 and steps_per_env = 20_000 is sufficient to find the ground truth ADMG - at least for ancestral ADMG. But that is not the case - I got closer - but not able to find the actual ground truth ADMG. truth = 22,616.something and relcadilac BIC = 22,623.something - so only a difference of 7 points. It took 2 minutes 21 seconds to complete.
+23. In run 23 I am continuing the experiment from run 22 - how many steps_per_env needed to get the ground truth ancestral ADMG - with this time using 40,000 = steps_per_env, n_step = 1 (still), n_envs = 8
+24. In run 24 I am continuing the experiment from run 22 - how many steps_per_env needed to get the ground truth ancestral ADMG - with this time using 80_000 = steps_per_env, n_step = 1 (still), n_envs = 8 - It could not find the ground truth BIC even with this intensive search
 
 
 
@@ -35,4 +38,4 @@
 
 
 
-22. In run 15 I am trying to figure out the impact of more steps_per_env (2000, 3000, 4000) on the excess bic value - how much the predicted bic is larger than the true bic - I am doing 3 runs per steps_per_env value. This is for 15 node, 4 degree, 2000 samples - this is only for dcd and relcadilac. This is for ancestral graphs.
+25. In run 15 I am trying to figure out the impact of more steps_per_env (2000, 3000, 4000) on the excess bic value - how much the predicted bic is larger than the true bic - I am doing 3 runs per steps_per_env value. This is for 15 node, 4 degree, 2000 samples - this is only for dcd and relcadilac. This is for ancestral graphs.

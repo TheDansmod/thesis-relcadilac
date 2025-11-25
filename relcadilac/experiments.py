@@ -822,6 +822,59 @@ def single_test_03(seed):
     with open(r"runs/run_015.json", "w") as f:
         json.dump(params, f, indent=2)
 
+def update_algo_params(algo, params, D, B, pred_D, pred_B, X, S, bic, pred_bic, pag, pred_pag, avg_rewards=None):
+    # algo could be one of relcadilac, gfci, dcd
+    # for other algos there won't be a avg_rewards dictionary
+    if params['do_thresholding']:
+        thresh_D, thresh_B = get_thresholded_admg(pred_D, pred_B, X, S, threshold=params['threshold'])
+        thresh_pag = convert_admg_to_pag(thresh_D, thresh_B)
+        params[f'{algo}_thresh_admg_metrics'] = get_admg_metrics((D, B), (thresh_D, thresh_B))
+        params[f'{algo}_thresh_pag_metrics'] = get_pag_metrics(pag, thresh_pag)
+    params[f'{algo}_admg_metrics'] = get_admg_metrics((D, B), (pred_D, pred_B))
+    params[f'{algo}_pag_metrics'] = get_pag_metrics(pag, pred_pag)
+    params['ground_truth_bic'] = bic
+    params[f'{algo}_pred_bic'] = pred_bic
+    print(f"\n\nGround truth bic {bic}\n\n")
+    print(f"\n\n{algo} pred bic {pred_bic}\n\n")
+    params['ground_truth_directed_adj'] = np.array2string(D)
+    params['ground_truth_bidirected_adj'] = np.array2string(B)
+    params[f'{algo}_directed_pred_adj'] = np.array2string(pred_D)
+    params[f'{algo}_bidirected_pred_adj'] = np.array2string(pred_B)
+    if params['do_thresholding']:
+        params[f'{algo}_directed_thresh_adj'] = np.array2string(thresh_D)
+        params[f'{algo}_bidirected_thresh_adj'] = np.array2string(thresh_B)
+    if avg_rewards is not None:
+        params[f'{algo}_avg_rewards'] = list(map(str, avg_rewards['average_rewards']))
+    return params
+
+def single_test_04(seed):
+    explanation = "40,000 steps was also not enough. I am going to try 80,000 steps. I think this will be the last jump I make. Continuation from run 22\nExplanation for run 23: Continuation from run 22, 20_000 steps was not sufficient. I will be running for 40_000 steps and see if that has an impact. I will also be raising the LRU cache size. I will also be outputting the step at which the next best BIC was found so that I can see if better BICs are being found even later. For this run I am fixing the seed to be the same as the seed for run 21.\nExplanation for run 22: I have just figured out that the search capability of my implementation (through PPO) is not lacking. The only reason we weren't able to reach the minimum BIC score was that we weren't searching long enough. I have also learnt that using n_steps=16 is harming my setup. So I will be trying 10 node, 4 degree, 2000 samples, with 20_000 steps_per_env to see if the performance improves - can we reach the ground truth BIC score? The ALIAS implementation actually runs for 64 * 20_000 total timesteps just for the DAGs while I will only be running for 8 * 20_000 total timesteps for ADMGS. I will be using ancestral ADMGs."
+    print(f" \n\n SINGLE TEST 04 \n\n {explanation}\n\n")
+    params = {'num_nodes': 10, 'avg_degree': 4, 'frac_directed': 0.6, 'degree_variance': 0.2, 'num_samples': 2000, 'admg_model': 'ancestral', 'beta_low': 0.5, 'beta_high': 2.0, 'omega_offdiag_low': 0.4, 'omega_offdiag_high': 0.7, 'omega_diag_low': 0.7, 'omega_diag_high': 1.2, 'standardize_data': False, 'center_data': True, 'steps_per_env': 40_000, 'n_envs': 8, 'normalize_advantage': True, 'n_epochs': 1, 'device': 'cuda', 'n_steps': 1, 'ent_coef': 0.05, 'dcd_num_restarts': 1, 'vec_envs_random_state': 0, 'do_thresholding': True, 'threshold': 0.05, 'generator_seed': seed, 'explanation': explanation, 'topo_order_known': False, 'use_logits_partition': False, 'get_pag': True, 'require_connected': False}
+    D, B, X, S, bic, pag = generator.get_admg(
+            num_nodes=params['num_nodes'],
+            avg_degree=params['avg_degree'],
+            frac_directed=params['frac_directed'],
+            degree_variance=params['degree_variance'],
+            admg_model=params['admg_model'],
+            plot=False,
+            do_sampling=True,
+            num_samples=params['num_samples'],
+            sampling_params={'beta_low': params['beta_low'], 'beta_high': params['beta_high'], 'omega_offdiag_low': params['omega_offdiag_low'], 'omega_offdiag_high': params['omega_offdiag_high'], 'omega_diag_low': params['omega_diag_low'], 'omega_diag_high': params['omega_diag_high'], 'standardize_data': params['standardize_data'], 'center_data': params['center_data']},
+            get_pag=params['get_pag'],
+            require_connected=params['require_connected'],
+        )
+    print(f"\n\nGround truth bic {bic}\n\n")
+    # relcadilac - logits partition
+    rl_params = {'normalize_advantage': params['normalize_advantage'], 'n_epochs': params['n_epochs'], 'device': params['device'], 'n_steps': params['n_steps'], 'verbose': 0, 'ent_coef': params['ent_coef']}
+    start = time.perf_counter()
+    pred_D, pred_B, pred_pag, avg_rewards, pred_bic = rel_admg(X, S, params['admg_model'], steps_per_env=params['steps_per_env'], n_envs=params['n_envs'], rl_params=rl_params, random_state=params['vec_envs_random_state'], verbose=1, topo_order=None, use_logits_partition=params['use_logits_partition'])
+    params['logits_relcadilac_time_sec'] = time.perf_counter() - start
+    params = update_algo_params('relcadilac', params, D, B, pred_D, pred_B, X, S, bic, pred_bic, pag, pred_pag, avg_rewards=avg_rewards)
+    with open('runs/run_024.json', 'w') as f:
+        json.dump([params], f, indent=2)
+    print(f'\trelcadilac done')
+
 def known_causal_ordering(seed):
     # I want to do an experiment where we already know the causal ordering and are just trying to find the matrix values and edge existence
     print("\n\nKNOWN CAUSAL ORDERING\n\nWe know the causal ordering and just want to find the matrices and edge existence, 10 nodes, 4 degree, 2000 samples, ancestral model, 4000 steps_per_env. 3 runs.")
@@ -842,9 +895,9 @@ def known_causal_ordering(seed):
         # relcadilac
         nx_graph = nx.from_numpy_array(D.T, create_using=nx.DiGraph)
         topo_order = np.array(list(nx.topological_sort(nx_graph)))
-        rl_params = {'normalize_advantage': params['normalize_advantage'], 'n_epochs': params['n_epochs'], 'device': params['device'], 'n_steps': params['n_steps'], 'verbose': 0, 'ent_coef': params['ent_coef']}
+        rl_params = {'normalize_advantage': params['normalize_advantage'], 'n_epochs': params['n_epochs'], 'device': params['device'], 'n_steps': params['n_steps'], 'verbose': 1, 'ent_coef': params['ent_coef']}
         start = time.perf_counter()
-        pred_D, pred_B, pred_pag, avg_rewards, pred_bic = rel_admg(X, S, params['admg_model'], steps_per_env=params['steps_per_env'], n_envs=params['n_envs'], rl_params=rl_params, random_state=params['vec_envs_random_state'], verbose=0, topo_order=None)
+        pred_D, pred_B, pred_pag, avg_rewards, pred_bic = rel_admg(X, S, params['admg_model'], steps_per_env=params['steps_per_env'], n_envs=params['n_envs'], rl_params=rl_params, random_state=params['vec_envs_random_state'], verbose=1, topo_order=None)
         params['relcadilac_time_sec'] = time.perf_counter() - start
         if params['do_thresholding']:
             thresh_D, thresh_B = get_thresholded_admg(pred_D, pred_B, X, S, threshold=params['threshold'])
@@ -1065,7 +1118,19 @@ def check_dag_recovery(seed):
     with open('runs/run_021.json', 'w') as f:
         json.dump(params, f, indent=2)
 
+def plot_get_dag_rewards():
+    # there were ALIAS-like DAG runs in run_018, run_019, run_020, run_021. I will be using run_020 since that was the best
+    with open('runs/run_020.json', 'r') as f:
+        data = json.load(f)
+    avg_rewards = list(map(float, data['relcadilac_avg_rewards']))
+    plt.plot(avg_rewards)
+    plt.xlabel("8 Steps = 1 unit")
+    plt.ylabel("reward value")
+    plt.title("ALIAS-DAG run, 10 node, degree 4, 2000 samples,\n20_000 steps_per_env, 8 n_envs, 1 n_steps")
+    plt.show()
+
 if __name__ == '__main__':
-    seed = random.randint(1, 100)
+    # seed = random.randint(1, 100)
+    seed = 28
     generator = GraphGenerator(seed)
-    check_dag_recovery(seed)
+    single_test_04(seed)
