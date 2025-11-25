@@ -4,7 +4,7 @@ from tqdm import tqdm
 from stable_baselines3.common.callbacks import BaseCallback
 
 class TrackingCallback(BaseCallback):
-    def __init__(self, total_timesteps, num_samples, num_envs, z_len, verbose = 0, do_entropy_annealing=True, initial_entropy=0.3, min_entropy=0.005, cycle_length=35000, damping_factor=0.5):
+    def __init__(self, total_timesteps, num_samples, num_envs, z_len, verbose = 0, do_entropy_annealing=True, initial_entropy=0.4, min_entropy=0.005, cycle_length=10_000, damping_factor=0.5):
         super(TrackingCallback, self).__init__(verbose)
         self.total_timesteps = total_timesteps
         # all rewards are negative of the bic - scaled due to reward normalization
@@ -13,7 +13,7 @@ class TrackingCallback(BaseCallback):
         self.pbar = None  # this is the progress bar
         self.num_samples = num_samples
         self.average_rewards = []  # in order to track the rewards
-        self.action_values = np.empty((total_timesteps, num_envs, z_len), dtype=np.float32)
+        self.action_lengths = np.empty((total_timesteps,), dtype=np.float32)
         self.action_cursor = 0  # to track the actions that have been inserted
         # entropy calculation variables
         self.do_entropy_annealing = do_entropy_annealing
@@ -36,16 +36,16 @@ class TrackingCallback(BaseCallback):
         self.average_rewards.append(np.mean(rewards))
         batch_best_idx = np.argmax(rewards)
         batch_best_reward = rewards[batch_best_idx]
-        curr_actions = self.locals['actions']
+        curr_actions = self.locals['clipped_actions']
         if batch_best_reward > self.best_reward:
             self.best_reward = batch_best_reward
-            self.best_action = curr_actions[batch_best_idx, :]
+            self.best_action = self.locals['actions'][batch_best_idx, :]
             if self.verbose > 0:
                 self.pbar.write(f"Step: {self.num_timesteps}; New least BIC found: {- self.best_reward * self.num_samples}")
         if self.n_calls % 50 == 0:
             self.pbar.update(self.training_env.num_envs * 50)
         if curr_actions is not None and self.action_cursor < self.total_timesteps:
-            self.action_values[self.action_cursor] = curr_actions
+            self.action_lengths[self.action_cursor] = np.mean(np.linalg.norm(curr_actions, axis=1), axis=0)
             self.action_cursor += 1
         # if self.do_entropy_annealing:  # danish add this later
         # e = min + 0.5 * (max - min) * (1 + cos(2 pi (t mod T)/ T)) * exp(-lambda * t / kT)

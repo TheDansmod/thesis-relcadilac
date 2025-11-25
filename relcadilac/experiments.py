@@ -850,9 +850,9 @@ def update_algo_params(algo, params, D, B, pred_D, pred_B, X, S, bic, pred_bic, 
     return params
 
 def single_test_04(seed):
-    explanation = "I will be trying to restrict the range of the action space to -1, 1 rather than -10, 10 (which is what it was before)."
+    explanation = "Run 28: In run 28 I am still investigating the collapse of the action values length. I will be changing the entropy cycle length to be shorter and see if that has any impact. I will keep the same seed as run 27. I am reducing the cycle_length from 20k to 10k. Also reducing steps per env from 20_000 to 5_000. Still 40k steps in total so if there is a collapse at 20k we should still see it. \nRun 27: I will be trying to restrict the range of the action space to -1, 1 rather than -10, 10 (which is what it was before). initial entropy 0.4 rather than 0.3. Decreased cycle length to 20_000 from 35_000"
     print(f" \n\n SINGLE TEST 04 \n\n {explanation}\n\n")
-    params = {'num_nodes': 10, 'avg_degree': 4, 'frac_directed': 0.6, 'degree_variance': 0.2, 'num_samples': 2000, 'admg_model': 'ancestral', 'beta_low': 0.5, 'beta_high': 2.0, 'omega_offdiag_low': 0.4, 'omega_offdiag_high': 0.7, 'omega_diag_low': 0.7, 'omega_diag_high': 1.2, 'standardize_data': False, 'center_data': True, 'steps_per_env': 20_000, 'n_envs': 8, 'normalize_advantage': True, 'n_epochs': 1, 'device': 'cuda', 'n_steps': 1, 'ent_coef': 0.05, 'dcd_num_restarts': 1, 'vec_envs_random_state': 0, 'do_thresholding': True, 'threshold': 0.05, 'generator_seed': seed, 'explanation': explanation, 'topo_order_known': False, 'use_logits_partition': False, 'get_pag': True, 'require_connected': False}
+    params = {'num_nodes': 10, 'avg_degree': 4, 'frac_directed': 0.6, 'degree_variance': 0.2, 'num_samples': 2000, 'admg_model': 'ancestral', 'beta_low': 0.5, 'beta_high': 2.0, 'omega_offdiag_low': 0.4, 'omega_offdiag_high': 0.7, 'omega_diag_low': 0.7, 'omega_diag_high': 1.2, 'standardize_data': False, 'center_data': True, 'steps_per_env': 5_000, 'n_envs': 8, 'normalize_advantage': True, 'n_epochs': 1, 'device': 'cuda', 'n_steps': 1, 'ent_coef': 0.05, 'dcd_num_restarts': 1, 'vec_envs_random_state': 0, 'do_thresholding': True, 'threshold': 0.05, 'generator_seed': seed, 'explanation': explanation, 'topo_order_known': False, 'use_logits_partition': False, 'get_pag': True, 'require_connected': False, 'run_number': 28}
     D, B, X, S, bic, pag = generator.get_admg(
             num_nodes=params['num_nodes'],
             avg_degree=params['avg_degree'],
@@ -873,18 +873,21 @@ def single_test_04(seed):
     pred_D, pred_B, pred_pag, captured_metrics, pred_bic = rel_admg(X, S, params['admg_model'], steps_per_env=params['steps_per_env'], n_envs=params['n_envs'], rl_params=rl_params, random_state=params['vec_envs_random_state'], verbose=1, topo_order=None, use_logits_partition=params['use_logits_partition'])
     params['logits_relcadilac_time_sec'] = time.perf_counter() - start
     params = update_algo_params('relcadilac', params, D, B, pred_D, pred_B, X, S, bic, pred_bic, pag, pred_pag, captured_metrics=captured_metrics)
-    plot_z_length(captured_metrics['action_values'])
-    with open('runs/run_025.json', 'w') as f:
+    draw_admg(D, B, f'run_{params["run_number"]:03}_true_ancestral_admg', 'diagrams/')
+    draw_admg(pred_D, pred_B, f'run_{params["run_number"]:03}_pred_ancestral_admg', 'diagrams/')
+    with open(f'runs/run_{params["run_number"]:03}.json', 'w') as f:
         json.dump([params], f, indent=2)
     print(f'\trelcadilac done')
+    plot_z_length(captured_metrics['action_values'], f'run_{params["run_number"]:03}_ancestral_z_length.png')
 
-def plot_z_length(action_values):
-    # action values is of shape (total_timesteps, n_envs, d ** 2) where d is the number of nodes
-    mean_len_z = np.mean(np.linalg.norm(action_values, axis=2), axis=1)
-    plt.plot(mean_len_z)
+def plot_z_length(action_values, file_name):
+    # action values is of shape (total_timesteps, n_envs, d ** 2) where d is the number of nodes _ NO LONGER
+    # mean_len_z = np.mean(np.linalg.norm(action_values, axis=2), axis=1)
+    plt.plot(action_values)
     plt.xlabel('timesteps')
-    plt.ylabel('action vector (z) length averaged over 8 steps - 1 per env')
-    plt.savefig('diagrams/ancestral_z_length.png')
+    plt.ylabel('clipped action vector (z) length averaged over 8 steps - 1 per env')
+    # plt.savefig(f'diagrams/{file_name}.svg', dpi=300.0)
+    plt.show()
 
 def known_causal_ordering(seed):
     # I want to do an experiment where we already know the causal ordering and are just trying to find the matrix values and edge existence
@@ -1141,6 +1144,7 @@ def plot_get_dag_rewards():
     plt.show()
 
 if __name__ == '__main__':
-    seed = random.randint(1, 100)
+    # seed = random.randint(1, 100)
+    seed = 2
     generator = GraphGenerator(seed)
     single_test_04(seed)
