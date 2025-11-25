@@ -235,7 +235,7 @@ def get_dag_bic(D, X):
         ssr = 0
         if len(parents_indices) == 0:
             residual = X[:, i]
-            rss = np.sum(residual ** 2)
+            ssr = np.sum(residual ** 2)
         else:
             X_pa = X[:, parents_indices]
             y_true = X[:, i]
@@ -249,3 +249,10 @@ def get_dag_bic(D, X):
         bic_params += len(parents_indices) + 1  # for node
     bic = bic_params * np.log(n) - 2 * log_like
     return bic
+
+def vec2dag(z, d, tril_ind):
+    p = z[:d]
+    diE = np.zeros((d, d))
+    diE[tril_ind] = z[d:]
+    D = (diE + diE.T > 0) * (p[:, None] > p[None, :])
+    return D

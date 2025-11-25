@@ -13,6 +13,7 @@ from relcadilac.admg_env import ADMGEnv
 from relcadilac.tracking_callback import TrackingCallback
 from relcadilac.utils import vec_2_bow_free_admg, vec_2_ancestral_admg, convert_admg_to_pag, vec_2_bow_free_admg_known_topo_order, vec_2_ancestral_admg_known_topo_order, vec_2_bow_free_admg_logits
 from relcadilac.data_generator import GraphGenerator
+# from relcadilac.utils import vec2dag  # uncomment this line for ALIAS  (1 of 7 changes to get ALIAS behaviour - search the word ALIAS in comments)
 
 warnings.simplefilter("ignore")
 os.environ["PYTHONWARNINGS"] = "ignore"
@@ -66,6 +67,7 @@ def relcadilac(
         else:
             best_action = tracking.best_action
         pred_D, pred_B = vec2admg(best_action, d, np.tril_indices(d, -1), topo_order)
+        # pred_D, pred_B = vec2dag(best_action, d, np.tril_indices(d, -1)), np.zeros((d, d)) # comment above line and uncomment this line for ALIAS (2 of 7 changes to get ALIAS behaviour - search the word ALIAS in comments)
         best_bic = - tracking.best_reward * n
         pag_matrix = convert_admg_to_pag(pred_D, pred_B)
         if verbose:

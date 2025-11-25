@@ -1034,17 +1034,38 @@ def plot_some_pred_true_graphs():
             dones[exp['num_samples']] = True
 
 def check_dag_recovery(seed):
-    explanation = "I will be testing if my code can recover the DAG rather than an ADMG by using linear gaussian data for the DAG with equal variances to ensure that the DAG is identifiable. I am using 10 nodes, 2 degree - to make things simpler, 2000 samples, 2000 steps_per_env, 8 envs. Single run, just to check."
-    params = {'num_nodes': 10, 'avg_degree': 4, 'num_samples': 2000, 'beta_low': 0.5, 'beta_high': 2.0, 'standardize_data': False, 'center_data': True, 'steps_per_env': 2000, 'n_envs': 8, 'normalize_advantage': True, 'n_epochs': 1, 'device': 'cuda', 'n_steps': 16, 'ent_coef': 0.05, 'vec_envs_random_state': 0, 'do_thresholding': True, 'threshold': 0.3, 'generator_seed': seed, 'explanation': explanation}
+    explanation = "In run 21, I am checking the impact of setting n_envs = 16 keeping rest same from run 20"
+    print(f"\n\n CHECK DAG RECOVERY \n\n {explanation}\n\n")
+    params = {'num_nodes': 10, 'avg_degree': 4, 'num_samples': 2000, 'beta_low': 0.5, 'beta_high': 2.0, 'standardize_data': False, 'center_data': True, 'steps_per_env': 20_000, 'n_envs': 16, 'normalize_advantage': True, 'n_epochs': 1, 'device': 'cuda', 'n_steps': 1, 'ent_coef': 0.05, 'vec_envs_random_state': 0, 'do_thresholding': True, 'threshold': 0.3, 'generator_seed': seed, 'explanation': explanation, 'admg_model': 'bow-free'}
     D, X, bic = generator.get_lin_gauss_ev_dag(num_nodes=params['num_nodes'], avg_degree=params['avg_degree'], plot=False, do_sampling=True, num_samples=params['num_samples'], sampling_params={'beta_low': params['beta_low'], 'beta_high': params['beta_high'], 'standardize_data': params['standardize_data'], 'center_data': params['center_data']})
+    B, S = np.zeros((params['num_nodes'], params['num_nodes'])), np.cov(X.T)
+    print(f'\n\nGround truth BIC: {bic}\n\n')
     rl_params = {'normalize_advantage': params['normalize_advantage'], 'n_epochs': params['n_epochs'], 'device': params['device'], 'n_steps': params['n_steps'], 'verbose': 0, 'ent_coef': params['ent_coef']}
     start = time.perf_counter()
-    pred_D, pred_B, pred_pag, avg_rewards, pred_bic = rel_admg(X, None, params['admg_model'], steps_per_env=params['steps_per_env'], n_envs=params['n_envs'], rl_params=rl_params, random_state=params['vec_envs_random_state'], verbose=0)
+    pred_D, pred_B, pred_pag, avg_rewards, pred_bic = rel_admg(X, S, params['admg_model'], steps_per_env=params['steps_per_env'], n_envs=params['n_envs'], rl_params=rl_params, random_state=params['vec_envs_random_state'], verbose=1)
     params['relcadilac_time_sec'] = time.perf_counter() - start
-    print(pred_D)
+    if params['do_thresholding']:
+        thresh_D, thresh_B = get_thresholded_admg(pred_D, pred_B, X, S, threshold=params['threshold'])
+        thresh_pag = convert_admg_to_pag(thresh_D, thresh_B)
+        params['relcadilac_directed_thresh_adj'] = np.array2string(thresh_D)
+        params['relcadilac_bidirected_thresh_adj'] = np.array2string(thresh_B)
+        params['relcadilac_thresh_admg_metrics'] = get_admg_metrics((D, B), (thresh_D, thresh_B))
+        # params['relcadilac_thresh_pag_metrics'] = get_pag_metrics(pag, thresh_pag)
+    params['relcadilac_admg_metrics'] = get_admg_metrics((D, B), (pred_D, pred_B))
+    # params['relcadilac_pag_metrics'] = get_pag_metrics(pag, pred_pag)
+    params['ground_truth_bic'] = bic
+    params['relcadilac_avg_rewards'] = list(map(str, avg_rewards['average_rewards']))
+    params['relcadilac_pred_bic'] = pred_bic
+    params['ground_truth_directed_adj'] = np.array2string(D)
+    params['ground_truth_bidirected_adj'] = np.array2string(B)
+    params['relcadilac_directed_pred_adj'] = np.array2string(pred_D)
+    params['relcadilac_bidirected_pred_adj'] = np.array2string(pred_B)
     print(f'\trelcadilac done')
+    # print(params)
+    with open('runs/run_021.json', 'w') as f:
+        json.dump(params, f, indent=2)
 
 if __name__ == '__main__':
     seed = random.randint(1, 100)
     generator = GraphGenerator(seed)
-    plot_some_pred_true_graphs()
+    check_dag_recovery(seed)
