@@ -22,7 +22,7 @@ class Experiments:
     def __init__(self):
         self.algorithm_name = "CMA-ES"
         self.algorithm = self.get_algorithm()
-        self.run_commit = "093d80f4592faf8d5fa9de4916b40b53e470e30c"
+        self.run_commit = "ce3521a48318e09a319b60d5c40591632d87b5f1"
 
         self.log_file = Path('runs/runs.csv')
         self.log_df = pd.read_csv(self.log_file)
@@ -35,11 +35,11 @@ class Experiments:
         self.set_cmaes_params()
         self.set_dcd_params()
 
-        self.explanation = f"Run {self.run_number}; {self.algorithm_name}; Just checking if this experiment framework functions or not. Only {self.max_fevals} function evaluations."
+        self.explanation = f"Run {self.run_number}; {self.algorithm_name}; Checking how well it runs with {self.num_nodes} nodes and {self.max_fevals} function evaluations and how long it takes to run."
 
     def set_graph_generation_params(self):
         self.generator_seed = random.randint(1, 100)
-        self.num_nodes = 10
+        self.num_nodes = 20
         self.avg_degree = 4
         self.frac_directed = 0.6
         self.degree_variance = 0.2
@@ -62,7 +62,7 @@ class Experiments:
         self.threshold = 0.05
 
     def set_cmaes_params(self):
-        self.max_fevals = 500
+        self.max_fevals = 40_000
         self.cmaes_verbose_level = 3
         self.popsize_ratio = 4
         self.cmaes_popsize = int((4 + 3 * np.log(self.num_nodes * self.num_nodes)) * self.popsize_ratio)
@@ -167,8 +167,8 @@ class Experiments:
         start = time.perf_counter()
         self.pred_D, self.pred_B, self.pred_pag, self.pred_bic, self.captured_metrics = self.algorithm(self.data, self.data_cov, **self.get_algorithm_params())
         self.runtime = time.perf_counter() - start
-        print(f'\nPredicted D:\n{self.pred_D}\nPredicted B:\n{self.pred_B}\nPredicted bic: {self.pred_bic}\n'), 
         self.evaluate_and_set_metrics()
+        print(f'\nPredicted D:\n{self.pred_D}\nPredicted B:\n{self.pred_B}\nPredicted bic: {self.pred_bic}\nThresholded bic: {self.thresh_pred_bic}\nThresholded SHD: {self.thresh_admg_shd}\nPredicted ADMG SHD: {self.admg_shd}\n'), 
         self.log_metrics_and_data()
 
 if __name__ == '__main__':
