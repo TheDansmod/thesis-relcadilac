@@ -4,7 +4,7 @@ from tqdm import tqdm
 from stable_baselines3.common.callbacks import BaseCallback
 
 class TrackingCallback(BaseCallback):
-    def __init__(self, total_timesteps, num_samples, verbose = 0) # , do_entropy_annealing=True, initial_entropy=0.4, min_entropy=0.005, cycle_length=10_000, damping_factor=0.5): danish add later
+    def __init__(self, total_timesteps, num_samples, verbose = 0): # , do_entropy_annealing=True, initial_entropy=0.4, min_entropy=0.005, cycle_length=10_000, damping_factor=0.5): danish add later
         super(TrackingCallback, self).__init__(verbose)
         self.total_timesteps = total_timesteps
         # all rewards are negative of the bic - scaled due to reward normalization

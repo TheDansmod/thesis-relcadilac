@@ -849,10 +849,22 @@ def update_algo_params(algo, params, D, B, pred_D, pred_B, X, S, bic, pred_bic, 
         params[f'{algo}_avg_rewards'] = list(map(str, captured_metrics['average_rewards']))
     return params
 
+def plot_thresh_pred_true_admgs(single_run, run_num, index):
+    # index is extra to add for the run
+    thresh_pred_D = string_to_numpy_array(single_run['relcadilac_directed_thresh_adj'])
+    thresh_pred_B = string_to_numpy_array(single_run['relcadilac_bidirected_thresh_adj'])
+    pred_D = string_to_numpy_array(single_run['relcadilac_directed_pred_adj'])
+    pred_B = string_to_numpy_array(single_run['relcadilac_bidirected_pred_adj'])
+    true_D = string_to_numpy_array(single_run['ground_truth_directed_adj'])
+    true_B = string_to_numpy_array(single_run['ground_truth_bidirected_adj'])
+    draw_admg(thresh_pred_D, thresh_pred_B, f'run_{run_num:03}_{index}_thresh_pred', 'diagrams/pred_true_graphs/')
+    draw_admg(pred_D, pred_B, f'run_{run_num:03}_{index}_pred', 'diagrams/pred_true_graphs/')
+    draw_admg(true_D, true_B, f'run_{run_num:03}_{index}_true', 'diagrams/pred_true_graphs/')
+
 def single_test_04(seed):
-    explanation = "I stopped the run since it was saying it was going to take a while - around 1 hr (even if that was wrong its still too long). I have removed the code for entropy annealing (from tracking callback) to see if speed picks up again. The arguments are not passed at all so they can't be used. \n Previous run: I figured out the collapse of the action values. This run I am investigating the impact of use_sde=True. I have disabled the logging of the action values since they are no longer needed. This run will also help me see if the entropy calculation is the one slowing down the code - where previously it was running in 4-6 minutes, with the action values logging it was taking much longer. 10 node, 4 degree, 2k samples, 20k steps_per_env, 1 n_steps, ancestral."
+    explanation = "The previous run went well, but I think the ground truth graph was really disconnected which caused it to go well since there were few edges. This time I am trying with 20 nodes and am requiring connected. Want to see how long the run will take and if it will perform just as well."
     print(f" \n\n SINGLE TEST 04 \n\n {explanation}\n\n")
-    params = {'num_nodes': 10, 'avg_degree': 4, 'frac_directed': 0.6, 'degree_variance': 0.2, 'num_samples': 2000, 'admg_model': 'ancestral', 'beta_low': 0.5, 'beta_high': 2.0, 'omega_offdiag_low': 0.4, 'omega_offdiag_high': 0.7, 'omega_diag_low': 0.7, 'omega_diag_high': 1.2, 'standardize_data': False, 'center_data': True, 'steps_per_env': 20_000, 'n_envs': 8, 'normalize_advantage': True, 'n_epochs': 1, 'device': 'cuda', 'n_steps': 1, 'ent_coef': 0.05, 'dcd_num_restarts': 1, 'vec_envs_random_state': 0, 'do_thresholding': True, 'threshold': 0.05, 'generator_seed': seed, 'explanation': explanation, 'topo_order_known': False, 'use_logits_partition': False, 'get_pag': True, 'require_connected': False, 'run_number': 29, 'use_sde': True, 'do_entropy_annealing': True, 'initial_entropy': 0.3, 'min_entropy': 0.005, 'cycle_length': 20_000, 'damping_factor': 0.5, 'run_commit': 'b7d0650cd0375649b54b65cd7ec0945059a57181'}
+    params = {'num_nodes': 20, 'avg_degree': 4, 'frac_directed': 0.6, 'degree_variance': 0.2, 'num_samples': 2000, 'admg_model': 'ancestral', 'beta_low': 0.5, 'beta_high': 2.0, 'omega_offdiag_low': 0.4, 'omega_offdiag_high': 0.7, 'omega_diag_low': 0.7, 'omega_diag_high': 1.2, 'standardize_data': False, 'center_data': True, 'steps_per_env': 20_000, 'n_envs': 8, 'normalize_advantage': True, 'n_epochs': 1, 'device': 'cuda', 'n_steps': 1, 'ent_coef': 0.05, 'dcd_num_restarts': 1, 'vec_envs_random_state': 0, 'do_thresholding': True, 'threshold': 0.05, 'generator_seed': seed, 'explanation': explanation, 'topo_order_known': False, 'use_logits_partition': False, 'get_pag': True, 'require_connected': False, 'run_number': 30, 'use_sde': True, 'do_entropy_annealing': False, 'initial_entropy': 0.3, 'min_entropy': 0.005, 'cycle_length': 20_000, 'damping_factor': 0.5, 'run_commit': '9d2174bc880f88185124f0a6b8da38b354f1c3c5'}
     D, B, X, S, bic, pag = generator.get_admg(
             num_nodes=params['num_nodes'],
             avg_degree=params['avg_degree'],
@@ -872,10 +884,9 @@ def single_test_04(seed):
     entropy_params = {'initial_entropy': params['initial_entropy'], 'min_entropy': params['min_entropy'], 'cycle_length': params['cycle_length'], 'damping_factor': params['damping_factor']}
     start = time.perf_counter()
     pred_D, pred_B, pred_pag, captured_metrics, pred_bic = rel_admg(X, S, params['admg_model'], steps_per_env=params['steps_per_env'], n_envs=params['n_envs'], rl_params=rl_params, random_state=params['vec_envs_random_state'], verbose=1, topo_order=None, use_logits_partition=params['use_logits_partition'])  #, do_entropy_annealing=params['do_entropy_annealing'], entropy_params=entropy_params)
-    params['logits_relcadilac_time_sec'] = time.perf_counter() - start
+    params['relcadilac_time_sec'] = time.perf_counter() - start
     params = update_algo_params('relcadilac', params, D, B, pred_D, pred_B, X, S, bic, pred_bic, pag, pred_pag, captured_metrics=captured_metrics)
-    draw_admg(D, B, f'run_{params["run_number"]:03}_true_ancestral_admg', 'diagrams/')
-    draw_admg(pred_D, pred_B, f'run_{params["run_number"]:03}_pred_ancestral_admg', 'diagrams/')
+    plot_thresh_pred_true_admgs(params, params['run_num'], index=0)
     with open(f'runs/run_{params["run_number"]:03}.json', 'w') as f:
         json.dump([params], f, indent=2)
     print(f'\trelcadilac done')
@@ -1076,30 +1087,38 @@ def plot_some_pred_true_graphs():
     # pred_B = string_to_numpy_array("[[1. 0. 0. 1. 1.]\n [0. 1. 0. 1. 0.]\n [0. 0. 1. 0. 0.]\n [1. 1. 0. 1. 0.]\n [1. 0. 0. 0. 1.]]")
     # true_D = string_to_numpy_array("[[0. 1. 0. 1. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 0. 0.]\n [0. 0. 0. 1. 0.]]")
     # true_B = string_to_numpy_array("[[0. 0. 1. 0. 1.]\n [0. 0. 1. 1. 1.]\n [1. 1. 0. 1. 1.]\n [0. 1. 1. 0. 0.]\n [1. 1. 1. 0. 0.]]")
-    with open('runs/run_011_stdout.json', 'r') as f:
+    # with open('runs/run_011_stdout.json', 'r') as f:
+    #     data = json.load(f)
+    # dones = {5: False, 10: False, 15: False, 30: False}
+    # for exp in data:
+    #     if exp['num_nodes'] in dones and not dones[exp['num_nodes']]:
+    #         pred_D = string_to_numpy_array(exp['relcadilac_directed_thresh_adj'])
+    #         pred_B = string_to_numpy_array(exp['relcadilac_bidirected_thresh_adj'])
+    #         true_D = string_to_numpy_array(exp['ground_truth_directed_adj'])
+    #         true_B = string_to_numpy_array(exp['ground_truth_bidirected_adj'])
+    #         draw_admg(pred_D, pred_B, f'run_11_nodes_{exp["num_nodes"]}_01_pred', 'diagrams/pred_true_graphs/')
+    #         draw_admg(true_D, true_B, f'run_11_nodes_{exp["num_nodes"]}_01_true', 'diagrams/pred_true_graphs/')
+    #         dones[exp['num_nodes']] = True
+    # with open('runs/run_012.json', 'r') as f:
+    #     data = json.load(f)
+    # dones = {500: False, 2000: False, 4000: False}
+    # for exp in data:
+    #     if exp['num_samples'] in dones and not dones[exp['num_samples']]:
+    #         pred_D = string_to_numpy_array(exp['relcadilac_directed_thresh_adj'])
+    #         pred_B = string_to_numpy_array(exp['relcadilac_bidirected_thresh_adj'])
+    #         true_D = string_to_numpy_array(exp['ground_truth_directed_adj'])
+    #         true_B = string_to_numpy_array(exp['ground_truth_bidirected_adj'])
+    #         draw_admg(pred_D, pred_B, f'run_12_samples_{exp["num_samples"]}_01_pred', 'diagrams/pred_true_graphs/')
+    #         draw_admg(true_D, true_B, f'run_11_samples_{exp["num_samples"]}_01_true', 'diagrams/pred_true_graphs/')
+    #         dones[exp['num_samples']] = True
+    with open("runs/run_029.json", 'r') as f:
         data = json.load(f)
-    dones = {5: False, 10: False, 15: False, 30: False}
-    for exp in data:
-        if exp['num_nodes'] in dones and not dones[exp['num_nodes']]:
-            pred_D = string_to_numpy_array(exp['relcadilac_directed_thresh_adj'])
-            pred_B = string_to_numpy_array(exp['relcadilac_bidirected_thresh_adj'])
-            true_D = string_to_numpy_array(exp['ground_truth_directed_adj'])
-            true_B = string_to_numpy_array(exp['ground_truth_bidirected_adj'])
-            draw_admg(pred_D, pred_B, f'run_11_nodes_{exp["num_nodes"]}_01_pred', 'diagrams/pred_true_graphs/')
-            draw_admg(true_D, true_B, f'run_11_nodes_{exp["num_nodes"]}_01_true', 'diagrams/pred_true_graphs/')
-            dones[exp['num_nodes']] = True
-    with open('runs/run_012.json', 'r') as f:
-        data = json.load(f)
-    dones = {500: False, 2000: False, 4000: False}
-    for exp in data:
-        if exp['num_samples'] in dones and not dones[exp['num_samples']]:
-            pred_D = string_to_numpy_array(exp['relcadilac_directed_thresh_adj'])
-            pred_B = string_to_numpy_array(exp['relcadilac_bidirected_thresh_adj'])
-            true_D = string_to_numpy_array(exp['ground_truth_directed_adj'])
-            true_B = string_to_numpy_array(exp['ground_truth_bidirected_adj'])
-            draw_admg(pred_D, pred_B, f'run_12_samples_{exp["num_samples"]}_01_pred', 'diagrams/pred_true_graphs/')
-            draw_admg(true_D, true_B, f'run_11_samples_{exp["num_samples"]}_01_true', 'diagrams/pred_true_graphs/')
-            dones[exp['num_samples']] = True
+    pred_D = string_to_numpy_array(data[0]['relcadilac_directed_thresh_adj'])
+    pred_B = string_to_numpy_array(data[0]['relcadilac_bidirected_thresh_adj'])
+    true_D = string_to_numpy_array(data[0]['ground_truth_directed_adj'])
+    true_B = string_to_numpy_array(data[0]['ground_truth_bidirected_adj'])
+    draw_admg(pred_D, pred_B, 'run_029_thresh_pred', 'diagrams/pred_true_graphs/')
+    draw_admg(true_D, true_B, 'run_029_true', 'diagrams/pred_true_graphs/')
 
 def check_dag_recovery(seed):
     explanation = "In run 21, I am checking the impact of setting n_envs = 16 keeping rest same from run 20"
@@ -1147,5 +1166,6 @@ def plot_get_dag_rewards():
 if __name__ == '__main__':
     seed = random.randint(1, 100)
     # seed = 2
-    generator = GraphGenerator(seed)
-    single_test_04(seed)
+    # generator = GraphGenerator(seed)
+    # single_test_04(seed)
+    plot_some_pred_true_graphs()
