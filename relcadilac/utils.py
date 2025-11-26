@@ -170,7 +170,7 @@ def draw_admg_named_vertices(D, B, vertex_names, file_name, folder):
     G = ADMG(vertices=vertices, di_edges=di_edges, bi_edges=bi_edges)
     G.draw(direction="LR").render(filename=file_name, directory=folder, format='pdf')
 
-def get_thresholded_admg(D, B, X, S, threshold=0.05):
+def get_thresholded_admg(D, B, X, S, threshold=0.05, get_bic=False):
     # fits a linear gaussian model, then applies threshold, obtains D and B again
     d = D.shape[0]
     model = myLGSem(D, B, X, S)
@@ -180,6 +180,8 @@ def get_thresholded_admg(D, B, X, S, threshold=0.05):
     omega = np.where(abs(model.omega_) <= threshold, 0, model.omega_)
     D[np.nonzero(beta)] = 1
     B[np.nonzero(omega)] = 1
+    if get_bic:
+        return D, B, model.bic()
     return D, B
 
 def plot_rewards(rewards, save_path='diagrams/reward.png'):
