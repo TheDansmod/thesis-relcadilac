@@ -32,8 +32,8 @@ def relcadilac(
         random_state=0,
         topo_order=None,  # should be a numpy array of shape (d,)
         use_logits_partition=False,  # if this is true then we use the vec_2_bow_free_admg_logits function instead of the vec_2_bow_free_admg
-        do_entropy_annealing=False,
-        entropy_params={"initial_entropy": 0.3, "min_entropy": 0.005, "cycle_length": 10_000, "damping_factor": 0.5},
+        # do_entropy_annealing=False, - danish add later
+        # entropy_params={"initial_entropy": 0.3, "min_entropy": 0.005, "cycle_length": 10_000, "damping_factor": 0.5}, - danish add later
         **unused
     ):
     if not admg_model in ['bow-free', 'ancestral']:
