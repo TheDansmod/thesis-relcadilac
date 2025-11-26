@@ -8,6 +8,7 @@ os.environ["NUMEXPR_NUM_THREADS"] = "1"
 import pickle
 from pathlib import Path
 
+import random
 import pandas as pd
 import numpy as np
 
@@ -20,7 +21,7 @@ class Experiments:
         self.run_number = 30
         self.algorithm_name = "CMA-ES"
         self.algorithm = self.get_algorithm()
-        self.run_commit = None
+        self.run_commit = "060fdcce2cedd983af8f119979cdbbb22b65575e"
         self.explanation = f"Run {self.run_number}; {self.algorithm_name}; Just checking if this experiment framework functions or not. Only 5_000 function evaluations."
 
         self.set_graph_generation_params()
@@ -62,6 +63,8 @@ class Experiments:
         self.popsize_ratio = 4
         self.cmaes_popsize = int((4 + 3 * np.log(self.num_nodes * self.num_nodes)) * self.popsize_ratio)
         self.cmaes_num_parallel_workers = 8
+        self.output_folder = Path(f'runs/cmaes_{self.run_number:03}')
+        self.output_folder.mkdir(exist_ok=True)
 
     def set_relcadilac_params(self):
         self.steps_per_env = 20_000
@@ -108,7 +111,7 @@ class Experiments:
 
     def get_algorithm_params(self):
         if self.algorithm_name == 'CMA-ES':
-            return {'max_fevals': self.max_fevals, 'verbose': self.cmaes_verbose_level, 'popsize': self.cmaes_popsize, 'num_parallel_workers': self.cmaes_num_parallel_workers}
+            return {'max_fevals': self.max_fevals, 'verbose': self.cmaes_verbose_level, 'popsize': self.cmaes_popsize, 'num_parallel_workers': self.cmaes_num_parallel_workers, 'output_folder': self.output_folder}
 
     def log_metrics_and_data(self):
         # data

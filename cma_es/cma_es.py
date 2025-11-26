@@ -14,7 +14,7 @@ def objective_fn(z, d, tril_ind, data, data_cov):
     bic = utils.get_bic(D, B, data, data_cov)
     return bic + 1e-4 * np.linalg.norm(z) ** 2
 
-def cmaes_admg_search(data, data_cov, max_fevals=20_000, verbose=3, popsize=100, num_parallel_workers=8):
+def cmaes_admg_search(data, data_cov, max_fevals=20_000, verbose=3, popsize=100, num_parallel_workers=8, output_folder='runs/cmaes/'):
     n, d = data.shape
     tril_ind = np.tril_indices(d, -1)
     fit_func = functools.partial(objective_fn, d=d, tril_ind=tril_ind, data=data, data_cov=data_cov)
@@ -24,6 +24,7 @@ def cmaes_admg_search(data, data_cov, max_fevals=20_000, verbose=3, popsize=100,
     opts.set('verbose', verbose)
     opts.set('CMA_diagonal', True)  # always only take diagonal updates - else it gave option to i think set probability or something
     opts.set('popsize', popsize)
+    opts.set('verb_filenameprefix', output_folder)
     es = cma.CMAEvolutionStrategy(x0, sigma0, inopts=opts)
     with ProcessPoolExecutor(max_workers=num_parallel_workers) as executor:
         while not es.stop():
