@@ -3,3 +3,4 @@ diagrams/
 dcd/tmp/
 *.class
 outcmaes/
+runs/cmaes_*/

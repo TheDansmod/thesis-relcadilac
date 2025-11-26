@@ -36,7 +36,7 @@ def cmaes_admg_search(data, data_cov, max_fevals=20_000, verbose=3, popsize=100,
     pred_D, pred_B = utils.vec_2_bow_free_admg(es.result.xbest, d, tril_ind, None)
     pred_pag = utils.convert_admg_to_pag(pred_D, pred_B)
     pred_bic = utils.get_bic(pred_D, pred_B, data, data_cov)
-    return pred_D.astype(int), pred_B, pred_pag, pred_bic
+    return pred_D.astype(int), pred_B, pred_pag, pred_bic, None
 
 if __name__ == '__main__':
     seed = random.randint(1, 100)

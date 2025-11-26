@@ -20,10 +20,14 @@ import relcadilac.data_generator as data_generator
 
 class Experiments:
     def __init__(self):
-        self.run_number = 30
         self.algorithm_name = "CMA-ES"
         self.algorithm = self.get_algorithm()
-        self.run_commit = "c832ab2c92860e3113d2738d5fe1ed1505361eb9"
+        self.run_commit = "093d80f4592faf8d5fa9de4916b40b53e470e30c"
+
+        self.log_file = Path('runs/runs.csv')
+        self.log_df = pd.read_csv(self.log_file)
+        self.set_run_number()
+        self.data_file = Path(f'runs/run_{self.run_number:03}_data.pkl')
 
         self.set_graph_generation_params()
         self.set_post_prediction_params()
@@ -32,8 +36,6 @@ class Experiments:
         self.set_dcd_params()
 
         self.explanation = f"Run {self.run_number}; {self.algorithm_name}; Just checking if this experiment framework functions or not. Only {self.max_fevals} function evaluations."
-        self.data_file = Path(f'runs/run_{self.run_number:03}_data.pkl')
-        self.log_file = Path('runs/runs.csv')
 
     def set_graph_generation_params(self):
         self.generator_seed = random.randint(1, 100)
@@ -60,7 +62,7 @@ class Experiments:
         self.threshold = 0.05
 
     def set_cmaes_params(self):
-        self.max_fevals = 1_000
+        self.max_fevals = 500
         self.cmaes_verbose_level = 3
         self.popsize_ratio = 4
         self.cmaes_popsize = int((4 + 3 * np.log(self.num_nodes * self.num_nodes)) * self.popsize_ratio)
@@ -94,6 +96,12 @@ class Experiments:
         if self.algorithm_name == 'CMA-ES':
             return cma_es.cmaes_admg_search
 
+    def set_run_number(self):
+        if len(self.log_df) == 0:
+            self.run_number = 30
+        else:
+            self.run_number = self.log_df['run_number'].max() + 1
+
     def get_sampling_params(self):
         return {'beta_low': self.beta_low, 'beta_high': self.beta_high, 'omega_offdiag_low': self.omega_offdiag_low, 'omega_offdiag_high': self.omega_offdiag_high, 'omega_diag_low': self.omega_diag_low, 'omega_diag_high': self.omega_diag_high, 'standardize_data': self.standardize_data, 'center_data': self.center_data}
 
@@ -114,11 +122,11 @@ class Experiments:
 
     def get_algorithm_params(self):
         if self.algorithm_name == 'CMA-ES':
-            return {'max_fevals': self.max_fevals, 'verbose': self.cmaes_verbose_level, 'popsize': self.cmaes_popsize, 'num_parallel_workers': self.cmaes_num_parallel_workers, 'output_folder': self.output_folder}
+            return {'max_fevals': self.max_fevals, 'verbose': self.cmaes_verbose_level, 'popsize': self.cmaes_popsize, 'num_parallel_workers': self.cmaes_num_parallel_workers, 'output_folder': self.cmaes_output_folder}
 
     def log_metrics_and_data(self):
         # data
-        data_dict = {'true_D': self.true_D, 'true_B': self.true_B, 'data': self.data, 'data_cov': self.data_cov, 'pred_D': self.pred_D, 'pred_B': self.pred_B, 'pred_thresh_D': self.pred_thresh_D if self.do_thresholding else None, 'pred_thresh_B': self.pred_thresh_B if self.do_thresholding else None}
+        data_dict = {'true_D': self.true_D, 'true_B': self.true_B, 'data': self.data, 'data_cov': self.data_cov, 'pred_D': self.pred_D, 'pred_B': self.pred_B, 'pred_thresh_D': self.pred_thresh_D if self.do_thresholding else None, 'pred_thresh_B': self.pred_thresh_B if self.do_thresholding else None, 'captured_metrics': self.captured_metrics}
         with open(self.data_file, 'wb') as f:
             pickle.dump(data_dict, f)
         # first
@@ -127,9 +135,9 @@ class Experiments:
         p = [self.run_commit, self.explanation, self.data_file, self.log_file, self.generator_seed, self.num_nodes, self.avg_degree, self.frac_directed, self.degree_variance, self.num_samples, self.admg_model, self.beta_low, self.beta_high, self.omega_offdiag_low, self.omega_offdiag_high, self.omega_diag_low, self.omega_diag_high, self.standardize_data, self.center_data, self.get_pag, self.require_connected, self.do_thresholding, self.threshold, self.max_fevals, self.cmaes_verbose_level, self.popsize_ratio, self.cmaes_popsize, self.cmaes_num_parallel_workers, self.cmaes_output_folder, self.steps_per_env, self.n_envs, self.normalize_advantage, self.n_epochs, self.device, self.n_steps, self.ent_coef, self.vec_envs_random_state, self.topo_order_known, self.use_logits_partition, self.use_sde, self.do_entropy_annealing, self.initial_entropy, self.min_entropy, self.cycle_length, self.damping_factor, self.dcd_num_restarts]
         # metrics
         m = [self.thresh_admg_tpr, self.thresh_admg_fdr, self.thresh_admg_f1, self.thresh_admg_shd, self.thresh_admg_skeleton_tpr, self.thresh_admg_skeleton_fdr, self.thresh_admg_skeleton_f1, self.thresh_pag_skeleton_f1, self.thresh_pag_skeleton_tpr, self.thresh_pag_skeleton_fdr, self.thresh_pag_circle_f1, self.thresh_pag_circle_tpr, self.thresh_pag_circle_fdr, self.thresh_pag_head_f1, self.thresh_pag_head_tpr, self.thresh_pag_head_fdr, self.thresh_pag_tail_f1, self.thresh_pag_tail_tpr, self.thresh_pag_tail_fdr, self.admg_tpr, self.admg_fdr, self.admg_f1, self.admg_shd, self.admg_skeleton_tpr, self.admg_skeleton_fdr, self.admg_skeleton_f1, self.pag_skeleton_f1, self.pag_skeleton_tpr, self.pag_skeleton_fdr, self.pag_circle_f1, self.pag_circle_tpr, self.pag_circle_fdr, self.pag_head_f1, self.pag_head_tpr, self.pag_head_fdr, self.pag_tail_f1, self.pag_tail_tpr, self.pag_tail_fdr, self.thresh_pred_bic, self.pred_bic, self.runtime]
-        df = pd.read_csv(self.log_file)
-        df.loc[len(df)] = f + m + p
-        df.to_csv(self.log_file)
+        m = [round(val, 4) for val in m]
+        self.log_df.loc[len(self.log_df)] = f + m + p
+        self.log_df.to_csv(self.log_file, index=False)
 
     def evaluate_and_set_metrics(self):
         if self.do_thresholding:
@@ -157,9 +165,9 @@ class Experiments:
         self.set_data()
         print(f'\nTRUE BIC: {self.true_bic}\n')
         start = time.perf_counter()
-        self.pred_D, self.pred_B, self.pred_pag, self.pred_bic = self.algorithm(self.data, self.data_cov, **self.get_algorithm_params())
+        self.pred_D, self.pred_B, self.pred_pag, self.pred_bic, self.captured_metrics = self.algorithm(self.data, self.data_cov, **self.get_algorithm_params())
         self.runtime = time.perf_counter() - start
-        print(f'\nPredicted D:\n{self.pred_D}\nPredicted B:\n{self.pred_B}\nPredicted bic: {self.pred_bic}'), 
+        print(f'\nPredicted D:\n{self.pred_D}\nPredicted B:\n{self.pred_B}\nPredicted bic: {self.pred_bic}\n'), 
         self.evaluate_and_set_metrics()
         self.log_metrics_and_data()
 
