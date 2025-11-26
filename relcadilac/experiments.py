@@ -852,7 +852,7 @@ def update_algo_params(algo, params, D, B, pred_D, pred_B, X, S, bic, pred_bic, 
 def single_test_04(seed):
     explanation = "I figured out the collapse of the action values. This run I am investigating the impact of use_sde=True. I have disabled the logging of the action values since they are no longer needed. This run will also help me see if the entropy calculation is the one slowing down the code - where previously it was running in 4-6 minutes, with the action values logging it was taking much longer. 10 node, 4 degree, 2k samples, 20k steps_per_env, 1 n_steps, ancestral."
     print(f" \n\n SINGLE TEST 04 \n\n {explanation}\n\n")
-    params = {'num_nodes': 10, 'avg_degree': 4, 'frac_directed': 0.6, 'degree_variance': 0.2, 'num_samples': 2000, 'admg_model': 'ancestral', 'beta_low': 0.5, 'beta_high': 2.0, 'omega_offdiag_low': 0.4, 'omega_offdiag_high': 0.7, 'omega_diag_low': 0.7, 'omega_diag_high': 1.2, 'standardize_data': False, 'center_data': True, 'steps_per_env': 20_000, 'n_envs': 8, 'normalize_advantage': True, 'n_epochs': 1, 'device': 'cuda', 'n_steps': 1, 'ent_coef': 0.05, 'dcd_num_restarts': 1, 'vec_envs_random_state': 0, 'do_thresholding': True, 'threshold': 0.05, 'generator_seed': seed, 'explanation': explanation, 'topo_order_known': False, 'use_logits_partition': False, 'get_pag': True, 'require_connected': False, 'run_number': 29, 'use_sde': True, 'do_entropy_annealing': True, 'initial_entropy': 0.3, 'min_entropy': 0.005, 'cycle_length': 20_000, 'damping_factor': 0.5}
+    params = {'num_nodes': 10, 'avg_degree': 4, 'frac_directed': 0.6, 'degree_variance': 0.2, 'num_samples': 2000, 'admg_model': 'ancestral', 'beta_low': 0.5, 'beta_high': 2.0, 'omega_offdiag_low': 0.4, 'omega_offdiag_high': 0.7, 'omega_diag_low': 0.7, 'omega_diag_high': 1.2, 'standardize_data': False, 'center_data': True, 'steps_per_env': 20_000, 'n_envs': 8, 'normalize_advantage': True, 'n_epochs': 1, 'device': 'cuda', 'n_steps': 1, 'ent_coef': 0.05, 'dcd_num_restarts': 1, 'vec_envs_random_state': 0, 'do_thresholding': True, 'threshold': 0.05, 'generator_seed': seed, 'explanation': explanation, 'topo_order_known': False, 'use_logits_partition': False, 'get_pag': True, 'require_connected': False, 'run_number': 29, 'use_sde': True, 'do_entropy_annealing': True, 'initial_entropy': 0.3, 'min_entropy': 0.005, 'cycle_length': 20_000, 'damping_factor': 0.5, 'run_commit': 'ca694aa8d7243a95f483c3d8e6f62603b59721a8'}
     D, B, X, S, bic, pag = generator.get_admg(
             num_nodes=params['num_nodes'],
             avg_degree=params['avg_degree'],
@@ -1145,7 +1145,7 @@ def plot_get_dag_rewards():
     plt.show()
 
 if __name__ == '__main__':
-    # seed = random.randint(1, 100)
-    seed = 2
+    seed = random.randint(1, 100)
+    # seed = 2
     generator = GraphGenerator(seed)
     single_test_04(seed)

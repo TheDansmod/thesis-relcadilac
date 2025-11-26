@@ -54,7 +54,7 @@ def relcadilac(
     raw_vec_env = make_vec_env(ADMGEnv, n_envs=n_envs, env_kwargs=dict(nodes=d, X=X, sample_cov=sample_cov, vec2admg=vec2admg, topo_order=topo_order), vec_env_cls=SubprocVecEnv)
     vec_env = VecNormalize(raw_vec_env, norm_obs=False, norm_reward=False, gamma=1.0, clip_reward=np.inf)
     try:
-        tracking = TrackingCallback(total_timesteps=steps, num_samples=n, verbose=verbose, do_entropy_annealing=do_entropy_annealing, **entropy_params)
+        tracking = TrackingCallback(total_timesteps=steps, num_samples=n, verbose=verbose) # , do_entropy_annealing=do_entropy_annealing, **entropy_params) danish add later
 
         model = PPO("MlpPolicy", vec_env, seed=random_state, **rl_params)
         if verbose:
