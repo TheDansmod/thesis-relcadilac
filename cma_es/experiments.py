@@ -8,6 +8,7 @@ os.environ["NUMEXPR_NUM_THREADS"] = "1"
 import pickle
 from pathlib import Path
 
+import time
 import random
 import pandas as pd
 import numpy as np
@@ -15,14 +16,14 @@ import numpy as np
 import cma_es.cma_es as cma_es
 import relcadilac.utils as utils
 import relcadilac.metrics as metrics
+import relcadilac.data_generator as data_generator
 
 class Experiments:
     def __init__(self):
         self.run_number = 30
         self.algorithm_name = "CMA-ES"
         self.algorithm = self.get_algorithm()
-        self.run_commit = "060fdcce2cedd983af8f119979cdbbb22b65575e"
-        self.explanation = f"Run {self.run_number}; {self.algorithm_name}; Just checking if this experiment framework functions or not. Only 5_000 function evaluations."
+        self.run_commit = "c832ab2c92860e3113d2738d5fe1ed1505361eb9"
 
         self.set_graph_generation_params()
         self.set_post_prediction_params()
@@ -30,6 +31,7 @@ class Experiments:
         self.set_cmaes_params()
         self.set_dcd_params()
 
+        self.explanation = f"Run {self.run_number}; {self.algorithm_name}; Just checking if this experiment framework functions or not. Only {self.max_fevals} function evaluations."
         self.data_file = Path(f'runs/run_{self.run_number:03}_data.pkl')
         self.log_file = Path('runs/runs.csv')
 
@@ -58,13 +60,14 @@ class Experiments:
         self.threshold = 0.05
 
     def set_cmaes_params(self):
-        self.max_fevals = 5_000
+        self.max_fevals = 1_000
         self.cmaes_verbose_level = 3
         self.popsize_ratio = 4
         self.cmaes_popsize = int((4 + 3 * np.log(self.num_nodes * self.num_nodes)) * self.popsize_ratio)
         self.cmaes_num_parallel_workers = 8
-        self.output_folder = Path(f'runs/cmaes_{self.run_number:03}')
-        self.output_folder.mkdir(exist_ok=True)
+        path = Path(f'runs/cmaes_{self.run_number:03}/')
+        path.mkdir(exist_ok=True)
+        self.cmaes_output_folder = f"{path}{os.sep}"
 
     def set_relcadilac_params(self):
         self.steps_per_env = 20_000
@@ -121,7 +124,7 @@ class Experiments:
         # first
         f = [self.run_number, self.algorithm_name]
         # params
-        p = [self.run_commit, self.explanation, self.data_file, self.log_file, self.generator_seed, self.num_nodes, self.avg_degree, self.frac_directed, self.degree_variance, self.num_samples, self.admg_model, self.beta_low, self.beta_high, self.omega_offdiag_low, self.omega_offdiag_high, self.omega_diag_low, self.omega_diag_high, self.standardize_data, self.center_data, self.get_pag, self.require_connected, self.do_thresholding, self.threshold, self.max_fevals, self.cmaes_verbose_level, self.popsize_ratio, self.cmaes_popsize, self.cmaes_num_parallel_workers, self.steps_per_env, self.n_envs, self.normalize_advantage, self.n_epochs, self.device, self.n_steps, self.ent_coef, self.vec_envs_random_state, self.topo_order_known, self.use_logits_partition, self.use_sde, self.do_entropy_annealing, self.initial_entropy, self.min_entropy, self.cycle_length, self.damping_factor, self.dcd_num_restarts]
+        p = [self.run_commit, self.explanation, self.data_file, self.log_file, self.generator_seed, self.num_nodes, self.avg_degree, self.frac_directed, self.degree_variance, self.num_samples, self.admg_model, self.beta_low, self.beta_high, self.omega_offdiag_low, self.omega_offdiag_high, self.omega_diag_low, self.omega_diag_high, self.standardize_data, self.center_data, self.get_pag, self.require_connected, self.do_thresholding, self.threshold, self.max_fevals, self.cmaes_verbose_level, self.popsize_ratio, self.cmaes_popsize, self.cmaes_num_parallel_workers, self.cmaes_output_folder, self.steps_per_env, self.n_envs, self.normalize_advantage, self.n_epochs, self.device, self.n_steps, self.ent_coef, self.vec_envs_random_state, self.topo_order_known, self.use_logits_partition, self.use_sde, self.do_entropy_annealing, self.initial_entropy, self.min_entropy, self.cycle_length, self.damping_factor, self.dcd_num_restarts]
         # metrics
         m = [self.thresh_admg_tpr, self.thresh_admg_fdr, self.thresh_admg_f1, self.thresh_admg_shd, self.thresh_admg_skeleton_tpr, self.thresh_admg_skeleton_fdr, self.thresh_admg_skeleton_f1, self.thresh_pag_skeleton_f1, self.thresh_pag_skeleton_tpr, self.thresh_pag_skeleton_fdr, self.thresh_pag_circle_f1, self.thresh_pag_circle_tpr, self.thresh_pag_circle_fdr, self.thresh_pag_head_f1, self.thresh_pag_head_tpr, self.thresh_pag_head_fdr, self.thresh_pag_tail_f1, self.thresh_pag_tail_tpr, self.thresh_pag_tail_fdr, self.admg_tpr, self.admg_fdr, self.admg_f1, self.admg_shd, self.admg_skeleton_tpr, self.admg_skeleton_fdr, self.admg_skeleton_f1, self.pag_skeleton_f1, self.pag_skeleton_tpr, self.pag_skeleton_fdr, self.pag_circle_f1, self.pag_circle_tpr, self.pag_circle_fdr, self.pag_head_f1, self.pag_head_tpr, self.pag_head_fdr, self.pag_tail_f1, self.pag_tail_tpr, self.pag_tail_fdr, self.thresh_pred_bic, self.pred_bic, self.runtime]
         df = pd.read_csv(self.log_file)
@@ -152,9 +155,11 @@ class Experiments:
     def run_test(self):
         print(f'\nRUN NUMBER: {self.run_number}\nEXPLANATION: {self.explanation}\n')
         self.set_data()
+        print(f'\nTRUE BIC: {self.true_bic}\n')
         start = time.perf_counter()
-        self.pred_D, self.pred_B, self.pred_pag, self.pred_bic = self.algorithm(data, data_cov, **self.get_algorithm_params())
+        self.pred_D, self.pred_B, self.pred_pag, self.pred_bic = self.algorithm(self.data, self.data_cov, **self.get_algorithm_params())
         self.runtime = time.perf_counter() - start
+        print(f'\nPredicted D:\n{self.pred_D}\nPredicted B:\n{self.pred_B}\nPredicted bic: {self.pred_bic}'), 
         self.evaluate_and_set_metrics()
         self.log_metrics_and_data()
 
