@@ -27,7 +27,52 @@
 27. In run 27, I am doing the same as run 26, but have raised the initial entropy since I am still getting stuck just above the minimum for run 26, and I am only tracking clipped actions not the unclipped actions so perhaps I'll see a better graph. I just looked at the graph for action values and while the magnitude has been fixed (does not exceed 10), there is still a complete drop at 20k. I have set the value of cycle length for entropy at 20k. I think the drop is because of that. But not entirely sure how.
 28. In run 28 I am still investigating the collapse of the action values length. I will be changing the entropy cycle length to be shorter and see if that has any impact. I will keep the same seed as run 27. Something quite weird seems to have happened where the lengths of the clipped action values that I was tracking seem to have become absurdly large despite the restriction to be between -1 and 1. They reached values of 10 pow 38. I have it captured in a plot in diagrams folder. There was no convergence, no nothing. The reason for this is that 10 pow 38 is close the max representable value in IEEE so I was likely plotting just junk. The reason for the collapse to 0 at 20,000 steps was that I had allocated full total_timesteps length for action values but the on_step function is only called once every 8 timesteps so only the first 20k out of 160k timesteps were filled - the rest were 0.
 29. In run 29 I am trying to see the impact of use_sde=True. I ran part of it but it was going to take really long 160k total steps. Previously the code was running really fast - before I added the entropy and action_values calculation to the mix. So although I just added the entropy thing, I'll try and remove it and see if the code is faster. The code is in-fact faster. For 160k timesteps 8 envs 1 n_steps it ran in 8 minutes. The SHD was 4, the best BIC found was 21886.062622070312 whereas the ground truth BIC was 21895.999875394275 and the thresshold shd was 4. But the issue was there were no Bidirected edges predicted.
-30. In run 30, I will be doing a run with 20 nodes to see the performance with use_sde true.
+30. In run 30, I will be doing a run with 20 nodes to see the performance with use_sde true. The run is taking up way longer than expected. The total time currently estimated is 4 hours in total. The impact of the cache is also lower since it will have fewer hits. I think it might actually take somewhere around 4 hours. I think I will just have to write that if we run it for longer it gives better results but due to the difference in time complexity of the BIC computation, this code is taking much longer. I let it run to completion and it took 2 hours and 13 minutes and was continuously finding better values even up to the end. Ground truth BIC: 50353.95. thresholded SHD is 35.0 which is much lower than the SHD previously seen for 20 node graph which was around 150 and better than the SHD from DCD which was around 250 for 20 node graphs
+Step: 8; New least BIC found: 56915.72189331055
+Step: 24; New least BIC found: 54416.48483276367
+Step: 248; New least BIC found: 53805.09948730469
+Step: 760; New least BIC found: 53371.25015258789
+Step: 936; New least BIC found: 52394.06204223633
+Step: 1440; New least BIC found: 51916.316986083984
+Step: 2256; New least BIC found: 51824.405670166016
+Step: 2304; New least BIC found: 51523.90670776367
+Step: 4592; New least BIC found: 51516.693115234375
+Step: 6248; New least BIC found: 51487.3161315918
+Step: 6432; New least BIC found: 51437.51907348633
+Step: 7528; New least BIC found: 51220.99304199219
+Step: 10208; New least BIC found: 51115.90576171875
+Step: 11464; New least BIC found: 51112.77770996094
+Step: 16552; New least BIC found: 50995.98693847656
+Step: 29176; New least BIC found: 50964.91622924805
+Step: 42336; New least BIC found: 50959.102630615234
+Step: 45528; New least BIC found: 50905.59768676758
+Step: 65144; New least BIC found: 50902.88543701172
+Step: 71256; New least BIC found: 50866.5771484375
+Step: 83312; New least BIC found: 50861.64474487305
+Step: 84296; New least BIC found: 50835.87646484375
+Step: 92072; New least BIC found: 50826.32827758789
+Step: 92312; New least BIC found: 50787.540435791016
+Step: 97024; New least BIC found: 50781.20422363281
+Step: 105528; New least BIC found: 50774.810791015625
+Step: 108728; New least BIC found: 50762.11166381836
+Step: 112072; New least BIC found: 50745.1171875
+Step: 115448; New least BIC found: 50709.12551879883
+Step: 122648; New least BIC found: 50705.902099609375
+Step: 126696; New least BIC found: 50698.062896728516
+Step: 128832; New least BIC found: 50690.9065246582
+Step: 129480; New least BIC found: 50677.98614501953
+Step: 130456; New least BIC found: 50665.6608581543
+Step: 140544; New least BIC found: 50651.309967041016
+Step: 143880; New least BIC found: 50646.44241333008
+Step: 146240; New least BIC found: 50629.7492980957
+Step: 147552; New least BIC found: 50623.931884765625
+Step: 149128; New least BIC found: 50619.25506591797
+Step: 153176; New least BIC found: 50618.81637573242
+Step: 154496; New least BIC found: 50617.0654296875
+Step: 157216; New least BIC found: 50610.90850830078
+Step: 157384; New least BIC found: 50604.122161865234
+Step: 159208; New least BIC found: 50602.15377807617
+
 
 
 
