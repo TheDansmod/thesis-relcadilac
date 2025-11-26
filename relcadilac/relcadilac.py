@@ -32,6 +32,8 @@ def relcadilac(
         random_state=0,
         topo_order=None,  # should be a numpy array of shape (d,)
         use_logits_partition=False,  # if this is true then we use the vec_2_bow_free_admg_logits function instead of the vec_2_bow_free_admg
+        do_entropy_annealing=False,
+        entropy_params={"initial_entropy": 0.3, "min_entropy": 0.005, "cycle_length": 10_000, "damping_factor": 0.5},
         **unused
     ):
     if not admg_model in ['bow-free', 'ancestral']:
@@ -52,7 +54,7 @@ def relcadilac(
     raw_vec_env = make_vec_env(ADMGEnv, n_envs=n_envs, env_kwargs=dict(nodes=d, X=X, sample_cov=sample_cov, vec2admg=vec2admg, topo_order=topo_order), vec_env_cls=SubprocVecEnv)
     vec_env = VecNormalize(raw_vec_env, norm_obs=False, norm_reward=False, gamma=1.0, clip_reward=np.inf)
     try:
-        tracking = TrackingCallback(total_timesteps=steps, num_samples=n, num_envs=n_envs, z_len=d * d, verbose=verbose)
+        tracking = TrackingCallback(total_timesteps=steps, num_samples=n, verbose=verbose, do_entropy_annealing=do_entropy_annealing, **entropy_params)
 
         model = PPO("MlpPolicy", vec_env, seed=random_state, **rl_params)
         if verbose:
@@ -73,7 +75,8 @@ def relcadilac(
         if verbose:
             logger.info(f'\nBest BIC = {best_bic}')
             logger.info(f'Predicted ADMG (parents on columns) = \nDirected Edges:\n{pred_D.astype(int)}\nBidirected Edges:\n{pred_B}')
-        return pred_D, pred_B, pag_matrix, {'average_rewards': tracking.average_rewards, 'action_values': tracking.action_lengths}, best_bic
+        # return pred_D, pred_B, pag_matrix, {'average_rewards': tracking.average_rewards, 'action_values': tracking.action_lengths}, best_bic
+        return pred_D, pred_B, pag_matrix, {'average_rewards': tracking.average_rewards}, best_bic
     finally:
         vec_env.close()
         if 'model' in locals():

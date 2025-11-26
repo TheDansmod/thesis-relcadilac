@@ -850,9 +850,9 @@ def update_algo_params(algo, params, D, B, pred_D, pred_B, X, S, bic, pred_bic, 
     return params
 
 def single_test_04(seed):
-    explanation = "Run 28: In run 28 I am still investigating the collapse of the action values length. I will be changing the entropy cycle length to be shorter and see if that has any impact. I will keep the same seed as run 27. I am reducing the cycle_length from 20k to 10k. Also reducing steps per env from 20_000 to 5_000. Still 40k steps in total so if there is a collapse at 20k we should still see it. \nRun 27: I will be trying to restrict the range of the action space to -1, 1 rather than -10, 10 (which is what it was before). initial entropy 0.4 rather than 0.3. Decreased cycle length to 20_000 from 35_000"
+    explanation = "I figured out the collapse of the action values. This run I am investigating the impact of use_sde=True. I have disabled the logging of the action values since they are no longer needed. This run will also help me see if the entropy calculation is the one slowing down the code - where previously it was running in 4-6 minutes, with the action values logging it was taking much longer. 10 node, 4 degree, 2k samples, 20k steps_per_env, 1 n_steps, ancestral."
     print(f" \n\n SINGLE TEST 04 \n\n {explanation}\n\n")
-    params = {'num_nodes': 10, 'avg_degree': 4, 'frac_directed': 0.6, 'degree_variance': 0.2, 'num_samples': 2000, 'admg_model': 'ancestral', 'beta_low': 0.5, 'beta_high': 2.0, 'omega_offdiag_low': 0.4, 'omega_offdiag_high': 0.7, 'omega_diag_low': 0.7, 'omega_diag_high': 1.2, 'standardize_data': False, 'center_data': True, 'steps_per_env': 5_000, 'n_envs': 8, 'normalize_advantage': True, 'n_epochs': 1, 'device': 'cuda', 'n_steps': 1, 'ent_coef': 0.05, 'dcd_num_restarts': 1, 'vec_envs_random_state': 0, 'do_thresholding': True, 'threshold': 0.05, 'generator_seed': seed, 'explanation': explanation, 'topo_order_known': False, 'use_logits_partition': False, 'get_pag': True, 'require_connected': False, 'run_number': 28}
+    params = {'num_nodes': 10, 'avg_degree': 4, 'frac_directed': 0.6, 'degree_variance': 0.2, 'num_samples': 2000, 'admg_model': 'ancestral', 'beta_low': 0.5, 'beta_high': 2.0, 'omega_offdiag_low': 0.4, 'omega_offdiag_high': 0.7, 'omega_diag_low': 0.7, 'omega_diag_high': 1.2, 'standardize_data': False, 'center_data': True, 'steps_per_env': 20_000, 'n_envs': 8, 'normalize_advantage': True, 'n_epochs': 1, 'device': 'cuda', 'n_steps': 1, 'ent_coef': 0.05, 'dcd_num_restarts': 1, 'vec_envs_random_state': 0, 'do_thresholding': True, 'threshold': 0.05, 'generator_seed': seed, 'explanation': explanation, 'topo_order_known': False, 'use_logits_partition': False, 'get_pag': True, 'require_connected': False, 'run_number': 29, 'use_sde': True, 'do_entropy_annealing': True, 'initial_entropy': 0.3, 'min_entropy': 0.005, 'cycle_length': 20_000, 'damping_factor': 0.5}
     D, B, X, S, bic, pag = generator.get_admg(
             num_nodes=params['num_nodes'],
             avg_degree=params['avg_degree'],
@@ -868,9 +868,10 @@ def single_test_04(seed):
         )
     print(f"\n\nGround truth bic {bic}\n\n")
     # relcadilac - logits partition
-    rl_params = {'normalize_advantage': params['normalize_advantage'], 'n_epochs': params['n_epochs'], 'device': params['device'], 'n_steps': params['n_steps'], 'verbose': 0, 'ent_coef': params['ent_coef']}
+    rl_params = {'normalize_advantage': params['normalize_advantage'], 'n_epochs': params['n_epochs'], 'device': params['device'], 'n_steps': params['n_steps'], 'verbose': 0, 'ent_coef': params['ent_coef'], 'use_sde': params['use_sde']}
+    entropy_params = {'initial_entropy': params['initial_entropy'], 'min_entropy': params['min_entropy'], 'cycle_length': params['cycle_length'], 'damping_factor': params['damping_factor']}
     start = time.perf_counter()
-    pred_D, pred_B, pred_pag, captured_metrics, pred_bic = rel_admg(X, S, params['admg_model'], steps_per_env=params['steps_per_env'], n_envs=params['n_envs'], rl_params=rl_params, random_state=params['vec_envs_random_state'], verbose=1, topo_order=None, use_logits_partition=params['use_logits_partition'])
+    pred_D, pred_B, pred_pag, captured_metrics, pred_bic = rel_admg(X, S, params['admg_model'], steps_per_env=params['steps_per_env'], n_envs=params['n_envs'], rl_params=rl_params, random_state=params['vec_envs_random_state'], verbose=1, topo_order=None, use_logits_partition=params['use_logits_partition'], do_entropy_annealing=params['do_entropy_annealing'], entropy_params=entropy_params)
     params['logits_relcadilac_time_sec'] = time.perf_counter() - start
     params = update_algo_params('relcadilac', params, D, B, pred_D, pred_B, X, S, bic, pred_bic, pag, pred_pag, captured_metrics=captured_metrics)
     draw_admg(D, B, f'run_{params["run_number"]:03}_true_ancestral_admg', 'diagrams/')
@@ -878,7 +879,7 @@ def single_test_04(seed):
     with open(f'runs/run_{params["run_number"]:03}.json', 'w') as f:
         json.dump([params], f, indent=2)
     print(f'\trelcadilac done')
-    plot_z_length(captured_metrics['action_values'], f'run_{params["run_number"]:03}_ancestral_z_length.png')
+    # plot_z_length(captured_metrics['action_values'], f'run_{params["run_number"]:03}_ancestral_z_length.png')
 
 def plot_z_length(action_values, file_name):
     # action values is of shape (total_timesteps, n_envs, d ** 2) where d is the number of nodes _ NO LONGER

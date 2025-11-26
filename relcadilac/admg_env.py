@@ -17,7 +17,7 @@ class ADMGEnv(gym.Env):
         self.nodes = nodes
         action_shape = (nodes ** 2,) if topo_order is None else (nodes * (nodes - 1),)
         # action_shape = ((nodes * (nodes + 1)) // 2, )  # uncomment current line and comment previous line for ALIAS (4 of 7 changes to get ALIAS behaviour - search the word ALIAS in comments)
-        self.action_space = spaces.Box(-1, 1, action_shape)
+        self.action_space = spaces.Box(low=-1, high=1, shape=action_shape)
         self.observation_space = spaces.Discrete(1)
         self.tril_indices = np.tril_indices(nodes, -1)
         self._cache = LRU(100_000)
