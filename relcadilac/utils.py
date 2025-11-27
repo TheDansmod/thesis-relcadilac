@@ -172,6 +172,8 @@ def draw_admg_named_vertices(D, B, vertex_names, file_name, folder):
 
 def get_thresholded_admg(D, B, X, S, threshold=0.05, get_bic=False):
     # fits a linear gaussian model, then applies threshold, obtains D and B again
+    # to get D from model.B_, set D[i, j] = 1 if model.B_[i, j] =/= 0
+    # to get B from model.omega_, set B[i, j] = 1 if model.omega_[i, j] =/= 0; then set B[i, i] = 0 for all i
     d = D.shape[0]
     model = myLGSem(D, B, X, S)
     model.fit()
@@ -180,7 +182,10 @@ def get_thresholded_admg(D, B, X, S, threshold=0.05, get_bic=False):
     omega = np.where(abs(model.omega_) <= threshold, 0, model.omega_)
     D[np.nonzero(beta)] = 1
     B[np.nonzero(omega)] = 1
+    np.fill_diagonal(B, 0)
     if get_bic:
+        model = myLGSem(D, B, X, S)
+        model.fit()
         return D, B, model.bic()
     return D, B
 
@@ -258,3 +263,4 @@ def vec2dag(z, d, tril_ind):
     diE[tril_ind] = z[d:]
     D = (diE + diE.T > 0) * (p[:, None] > p[None, :])
     return D
+

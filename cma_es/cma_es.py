@@ -9,15 +9,16 @@ import matplotlib.pyplot as plt
 from relcadilac.data_generator import GraphGenerator
 import relcadilac.utils as utils
 
-def objective_fn(z, d, tril_ind, data, data_cov):
-    D, B = utils.vec_2_bow_free_admg(z, d, tril_ind, None)
+def objective_fn(z, d, tril_ind, data, data_cov, vec2admg):
+    D, B = vec2admg(z, d, tril_ind, None)
     bic = utils.get_bic(D, B, data, data_cov)
     return bic + 1e-4 * np.linalg.norm(z) ** 2
 
-def cmaes_admg_search(data, data_cov, max_fevals=20_000, verbose=3, popsize=100, num_parallel_workers=8, output_folder='runs/cmaes/'):
+def cmaes_admg_search(data, data_cov, admg_model, max_fevals=20_000, verbose=3, popsize=100, num_parallel_workers=8, output_folder='runs/cmaes/'):
     n, d = data.shape
     tril_ind = np.tril_indices(d, -1)
-    fit_func = functools.partial(objective_fn, d=d, tril_ind=tril_ind, data=data, data_cov=data_cov)
+    vec2admg = utils.vec_2_bow_free_admg if admg_model == 'bow-free' else utils.vec_2_ancestral_admg
+    fit_func = functools.partial(objective_fn, d=d, tril_ind=tril_ind, data=data, data_cov=data_cov, vec2admg=vec2admg)
     x0, sigma0 = np.random.randn(d * d), 1.0  # initial solution (isotropic), std dev to sample new solutions
     opts = cma.CMAOptions()
     opts.set('maxfevals', max_fevals)  # max number of fn evaluations
@@ -33,7 +34,7 @@ def cmaes_admg_search(data, data_cov, max_fevals=20_000, verbose=3, popsize=100,
             es.tell(X, F)
             es.disp()
             es.logger.add()
-    pred_D, pred_B = utils.vec_2_bow_free_admg(es.result.xbest, d, tril_ind, None)
+    pred_D, pred_B = vec2admg(es.result.xbest, d, tril_ind, None)
     pred_pag = utils.convert_admg_to_pag(pred_D, pred_B)
     pred_bic = utils.get_bic(pred_D, pred_B, data, data_cov)
     return pred_D.astype(int), pred_B, pred_pag, pred_bic, None

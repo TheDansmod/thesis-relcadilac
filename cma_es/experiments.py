@@ -5,11 +5,12 @@ os.environ["OPENBLAS_NUM_THREADS"] = "1"
 os.environ["VECLIB_MAXIMUM_THREADS"] = "1"
 os.environ["NUMEXPR_NUM_THREADS"] = "1"
 
-import pickle
-from pathlib import Path
-
 import time
 import random
+import pickle
+import traceback
+from pathlib import Path
+
 import pandas as pd
 import numpy as np
 
@@ -22,7 +23,7 @@ class Experiments:
     def __init__(self):
         self.algorithm_name = "CMA-ES"
         self.algorithm = self.get_algorithm()
-        self.run_commit = "ce3521a48318e09a319b60d5c40591632d87b5f1"
+        self.run_commit = "5bb4d6991b5552b8e46f52e7fae8437d80f61efc"
 
         self.log_file = Path('runs/runs.csv')
         self.log_df = pd.read_csv(self.log_file)
@@ -35,11 +36,11 @@ class Experiments:
         self.set_cmaes_params()
         self.set_dcd_params()
 
-        self.explanation = f"Run {self.run_number}; {self.algorithm_name}; Checking how well it runs with {self.num_nodes} nodes and {self.max_fevals} function evaluations and how long it takes to run."
+        self.explanation = f"No explanation given."
 
     def set_graph_generation_params(self):
         self.generator_seed = random.randint(1, 100)
-        self.num_nodes = 20
+        self.num_nodes = 10
         self.avg_degree = 4
         self.frac_directed = 0.6
         self.degree_variance = 0.2
@@ -66,7 +67,7 @@ class Experiments:
         self.cmaes_verbose_level = 3
         self.popsize_ratio = 4
         self.cmaes_popsize = int((4 + 3 * np.log(self.num_nodes * self.num_nodes)) * self.popsize_ratio)
-        self.cmaes_num_parallel_workers = 8
+        self.cmaes_num_parallel_workers = 12
         path = Path(f'runs/cmaes_{self.run_number:03}/')
         path.mkdir(exist_ok=True)
         self.cmaes_output_folder = f"{path}{os.sep}"
@@ -124,6 +125,13 @@ class Experiments:
         if self.algorithm_name == 'CMA-ES':
             return {'max_fevals': self.max_fevals, 'verbose': self.cmaes_verbose_level, 'popsize': self.cmaes_popsize, 'num_parallel_workers': self.cmaes_num_parallel_workers, 'output_folder': self.cmaes_output_folder}
 
+    def plot_graphs(self):
+        file_prefix = f'run_{self.run_number:03}_{self.admg_model}_'
+        directory = Path('diagrams')
+        utils.draw_admg(self.true_D, self.true_B, f'{file_prefix}true', directory)
+        utils.draw_admg(self.pred_D, self.pred_B, f'{file_prefix}pred', directory)
+        utils.draw_admg(self.pred_thresh_D, self.pred_thresh_B, f'{file_prefix}pred_thresh', directory)
+
     def log_metrics_and_data(self):
         # data
         data_dict = {'true_D': self.true_D, 'true_B': self.true_B, 'data': self.data, 'data_cov': self.data_cov, 'pred_D': self.pred_D, 'pred_B': self.pred_B, 'pred_thresh_D': self.pred_thresh_D if self.do_thresholding else None, 'pred_thresh_B': self.pred_thresh_B if self.do_thresholding else None, 'captured_metrics': self.captured_metrics}
@@ -165,12 +173,56 @@ class Experiments:
         self.set_data()
         print(f'\nTRUE BIC: {self.true_bic}\n')
         start = time.perf_counter()
-        self.pred_D, self.pred_B, self.pred_pag, self.pred_bic, self.captured_metrics = self.algorithm(self.data, self.data_cov, **self.get_algorithm_params())
+        self.pred_D, self.pred_B, self.pred_pag, self.pred_bic, self.captured_metrics = self.algorithm(self.data, self.data_cov, self.admg_model, **self.get_algorithm_params())
         self.runtime = time.perf_counter() - start
         self.evaluate_and_set_metrics()
         print(f'\nPredicted D:\n{self.pred_D}\nPredicted B:\n{self.pred_B}\nPredicted bic: {self.pred_bic}\nThresholded bic: {self.thresh_pred_bic}\nThresholded SHD: {self.thresh_admg_shd}\nPredicted ADMG SHD: {self.admg_shd}\n'), 
         self.log_metrics_and_data()
+        self.plot_graphs()
+
+def run_variation_test():
+    num_nodes = [5, 10, 15, 20, 30]
+    sample_sizes = [500, 1000, 3000, 4000]  # since 2k is already covered
+    admg_models = ['ancestral', 'bow-free']
+    repetitions = 3
+    for repeat in range(repetitions):
+        for curr_model in admg_models:
+            for curr_nodes in num_nodes:
+                exp = Experiments()
+                exp.num_nodes = curr_nodes
+                exp.admg_model = curr_model
+                exp.cmaes_popsize = int((4 + 3 * np.log(exp.num_nodes * exp.num_nodes)) * exp.popsize_ratio)
+                if curr_nodes == 5:
+                    exp.max_fevals = 20_000
+                elif curr_nodes == 30:
+                    exp.max_fevals = 60_000
+                else:
+                    exp.max_fevals = 40_000
+                exp.explanation = f"Run {exp.run_number}; {exp.algorithm_name}; Number of nodes: {exp.num_nodes}; Sample size: {exp.num_samples}; Fn Evals: {exp.max_fevals}; ADMG Model: {exp.admg_model}; Test suite that varies number of nodes and number of samples. This is iteration {repeat + 1} of {repetitions} varying number of nodes for {exp.admg_model} graphs."
+                try:
+                    exp.run_test()
+                except Exception as e:
+                    print("THERE WAS AN EXCEPTION")
+                    traceback.print_exc()
+                    print("CONTINUING ANYWAY")
+            for curr_samples in sample_sizes:
+                exp = Experiments()
+                exp.num_samples = curr_samples
+                exp.admg_model = curr_model
+                exp.cmaes_popsize = int((4 + 3 * np.log(exp.num_nodes * exp.num_nodes)) * exp.popsize_ratio)
+                if curr_samples == 500:
+                    exp.max_fevals = 20_000
+                elif curr_samples == 4_000:
+                    exp.max_fevals = 60_000
+                else:
+                    exp.max_fevals = 40_000
+                exp.explanation = f"Run {exp.run_number}; {exp.algorithm_name}; Number of nodes: {exp.num_nodes}; Sample size: {exp.num_samples}; Fn Evals: {exp.max_fevals}; ADMG Model: {exp.admg_model}; Test suite that varies number of nodes and number of samples. This is iteration {repeat + 1} of {repetitions} varying number of samples for {exp.admg_model} graphs."
+                try:
+                    exp.run_test()
+                except Exception as e:
+                    print("THERE WAS AN EXCEPTION")
+                    traceback.print_exc()
+                    print("CONTINUING ANYWAY")
 
 if __name__ == '__main__':
-    exp = Experiments()
-    exp.run_test()
+    run_variation_test()
