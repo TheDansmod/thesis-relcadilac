@@ -194,8 +194,6 @@ def run_variation_test():
                 exp.cmaes_popsize = int((4 + 3 * np.log(exp.num_nodes * exp.num_nodes)) * exp.popsize_ratio)
                 if curr_nodes == 5:
                     exp.max_fevals = 20_000
-                elif curr_nodes == 30:
-                    exp.max_fevals = 60_000
                 else:
                     exp.max_fevals = 40_000
                 exp.explanation = f"Run {exp.run_number}; {exp.algorithm_name}; Number of nodes: {exp.num_nodes}; Sample size: {exp.num_samples}; Fn Evals: {exp.max_fevals}; ADMG Model: {exp.admg_model}; Test suite that varies number of nodes and number of samples. This is iteration {repeat + 1} of {repetitions} varying number of nodes for {exp.admg_model} graphs."
@@ -212,8 +210,6 @@ def run_variation_test():
                 exp.cmaes_popsize = int((4 + 3 * np.log(exp.num_nodes * exp.num_nodes)) * exp.popsize_ratio)
                 if curr_samples == 500:
                     exp.max_fevals = 20_000
-                elif curr_samples == 4_000:
-                    exp.max_fevals = 60_000
                 else:
                     exp.max_fevals = 40_000
                 exp.explanation = f"Run {exp.run_number}; {exp.algorithm_name}; Number of nodes: {exp.num_nodes}; Sample size: {exp.num_samples}; Fn Evals: {exp.max_fevals}; ADMG Model: {exp.admg_model}; Test suite that varies number of nodes and number of samples. This is iteration {repeat + 1} of {repetitions} varying number of samples for {exp.admg_model} graphs."
