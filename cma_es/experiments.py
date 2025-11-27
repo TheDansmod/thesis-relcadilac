@@ -23,7 +23,7 @@ class Experiments:
     def __init__(self):
         self.algorithm_name = "CMA-ES"
         self.algorithm = self.get_algorithm()
-        self.run_commit = "5bb4d6991b5552b8e46f52e7fae8437d80f61efc"
+        self.run_commit = "4152a0d1b5e38cc4612f3a6bba5641e8b9f545df"
 
         self.log_file = Path('runs/runs.csv')
         self.log_df = pd.read_csv(self.log_file)
