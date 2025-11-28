@@ -23,7 +23,7 @@ class Experiments:
     def __init__(self):
         self.algorithm_name = "CMA-ES"
         self.algorithm = self.get_algorithm()
-        self.run_commit = "f3731dbd2d15bc5ee8b64e0c6382580ffda33627"
+        self.run_commit = "acda492e0045a309f034fb3f86ca33ec672a20af"
 
         self.log_file = Path('runs/runs-copy.csv')
         self.log_df = pd.read_csv(self.log_file)
@@ -73,8 +73,8 @@ class Experiments:
         path.mkdir(exist_ok=True)
         self.cmaes_output_folder = f"{path}{os.sep}"
         self.cmaes_lambda = 1e-4
-        self.cmaes_gamma = 1e-4
         self.cmaes_delta = 1.0
+        self.cmaes_gamma = 0.2 * np.log(self.num_samples) / (self.num_nodes * self.cmaes_delta)
         self.cmaes_obj_fn_type = 'order_edge_stability'  # can be one of order_edge_stability or z_l2_regularization
 
     def set_relcadilac_params(self):
@@ -275,7 +275,7 @@ def run_cmaes_obj_fn_test():
         for curr_model in admg_models:
             exp = Experiments()
             exp.admg_model = curr_model
-            exp.explanation = f"Run {exp.run_number}; {exp.algorithm_name}; Checking out the stability modification to the objective function. Also just updated the CMA-ES to not stop before the function budget is exhausted, so checking that as well. Test suite varies the admg model. This is iteration {repeat + 1} of {repetitions} with admg model as {exp.admg_model}. Using {exp.num_nodes} nodes and {exp.num_samples} samples. The maximum number of evaluations is {exp.max_fevals}."
+            exp.explanation = f"Run {exp.run_number}; {exp.algorithm_name}; Checking out the stability modification to the objective function. I have updated the value of gamma to be more theoretically consistent and made it larger so it actually has an impact but not made it so large that it becomes greater than the benefit of a single edge. The value of gamma is {exp.cmaes_gamma}. Test suite varies the admg model. This is iteration {repeat + 1} of {repetitions} with admg model as {exp.admg_model}. Using {exp.num_nodes} nodes and {exp.num_samples} samples. The maximum number of evaluations is {exp.max_fevals}."
             exp.run_test()
 
 if __name__ == '__main__':
