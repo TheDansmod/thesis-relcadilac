@@ -25,7 +25,7 @@ class Experiments:
         self.algorithm = self.get_algorithm()
         self.run_commit = "4152a0d1b5e38cc4612f3a6bba5641e8b9f545df"
 
-        self.log_file = Path('runs/runs.csv')
+        self.log_file = Path('runs/runs-copy.csv')
         self.log_df = pd.read_csv(self.log_file)
         self.set_run_number()
         self.data_file = Path(f'runs/run_{self.run_number:03}_data.pkl')
@@ -35,6 +35,7 @@ class Experiments:
         self.set_relcadilac_params()
         self.set_cmaes_params()
         self.set_dcd_params()
+        self.set_metrics_to_none()  # so that even if an algorithm does not provide some metric, we can still put it into the table
 
         self.explanation = f"No explanation given."
 
@@ -71,6 +72,10 @@ class Experiments:
         path = Path(f'runs/cmaes_{self.run_number:03}/')
         path.mkdir(exist_ok=True)
         self.cmaes_output_folder = f"{path}{os.sep}"
+        self.cmaes_lambda = 1e-4
+        self.cmaes_gamma = 1e-4
+        self.cmaes_delta = 1.0
+        self.cmaes_obj_fn_type = 'order_edge_stability'  # can be one of order_edge_stability or z_l2_regularization
 
     def set_relcadilac_params(self):
         self.steps_per_env = 20_000
@@ -103,6 +108,51 @@ class Experiments:
         else:
             self.run_number = self.log_df['run_number'].max() + 1
 
+    def set_metrics_to_none(self):
+        # this could probably be done better
+        self.thresh_admg_tpr = None
+        self.thresh_admg_fdr = None
+        self.thresh_admg_f1 = None
+        self.thresh_admg_shd = None
+        self.thresh_admg_skeleton_tpr = None
+        self.thresh_admg_skeleton_fdr = None
+        self.thresh_admg_skeleton_f1 = None
+        self.thresh_pag_skeleton_f1 = None
+        self.thresh_pag_skeleton_tpr = None
+        self.thresh_pag_skeleton_fdr = None
+        self.thresh_pag_circle_f1 = None
+        self.thresh_pag_circle_tpr = None
+        self.thresh_pag_circle_fdr = None
+        self.thresh_pag_head_f1 = None
+        self.thresh_pag_head_tpr = None
+        self.thresh_pag_head_fdr = None
+        self.thresh_pag_tail_f1 = None
+        self.thresh_pag_tail_tpr = None
+        self.thresh_pag_tail_fdr = None
+        self.admg_tpr = None
+        self.admg_fdr = None
+        self.admg_f1 = None
+        self.admg_shd = None
+        self.admg_skeleton_tpr = None
+        self.admg_skeleton_fdr = None
+        self.admg_skeleton_f1 = None
+        self.pag_skeleton_f1 = None
+        self.pag_skeleton_tpr = None
+        self.pag_skeleton_fdr = None
+        self.pag_circle_f1 = None
+        self.pag_circle_tpr = None
+        self.pag_circle_fdr = None
+        self.pag_head_f1 = None
+        self.pag_head_tpr = None
+        self.pag_head_fdr = None
+        self.pag_tail_f1 = None
+        self.pag_tail_tpr = None
+        self.pag_tail_fdr = None
+        self.thresh_pred_bic = None
+        self.pred_bic = None
+        self.true_bic = None
+        self.runtime = None
+
     def get_sampling_params(self):
         return {'beta_low': self.beta_low, 'beta_high': self.beta_high, 'omega_offdiag_low': self.omega_offdiag_low, 'omega_offdiag_high': self.omega_offdiag_high, 'omega_diag_low': self.omega_diag_low, 'omega_diag_high': self.omega_diag_high, 'standardize_data': self.standardize_data, 'center_data': self.center_data}
 
@@ -123,9 +173,9 @@ class Experiments:
 
     def get_algorithm_params(self):
         if self.algorithm_name == 'CMA-ES':
-            return {'max_fevals': self.max_fevals, 'verbose': self.cmaes_verbose_level, 'popsize': self.cmaes_popsize, 'num_parallel_workers': self.cmaes_num_parallel_workers, 'output_folder': self.cmaes_output_folder}
+            return {'max_fevals': self.max_fevals, 'verbose': self.cmaes_verbose_level, 'popsize': self.cmaes_popsize, 'num_parallel_workers': self.cmaes_num_parallel_workers, 'output_folder': self.cmaes_output_folder, 'cmaes_lambda': self.cmaes_lambda, 'gamma': self.cmaes_gamma, 'delta': self.cmaes_delta, 'obj_fn_type': self.cmaes_obj_fn_type}
 
-    def plot_graphs(self):
+    def plot_admgs(self):
         file_prefix = f'run_{self.run_number:03}_{self.admg_model}_'
         directory = Path('diagrams')
         utils.draw_admg(self.true_D, self.true_B, f'{file_prefix}true', directory)
@@ -140,47 +190,54 @@ class Experiments:
         # first
         f = [self.run_number, self.algorithm_name]
         # params
-        p = [self.run_commit, self.explanation, self.data_file, self.log_file, self.generator_seed, self.num_nodes, self.avg_degree, self.frac_directed, self.degree_variance, self.num_samples, self.admg_model, self.beta_low, self.beta_high, self.omega_offdiag_low, self.omega_offdiag_high, self.omega_diag_low, self.omega_diag_high, self.standardize_data, self.center_data, self.get_pag, self.require_connected, self.do_thresholding, self.threshold, self.max_fevals, self.cmaes_verbose_level, self.popsize_ratio, self.cmaes_popsize, self.cmaes_num_parallel_workers, self.cmaes_output_folder, self.steps_per_env, self.n_envs, self.normalize_advantage, self.n_epochs, self.device, self.n_steps, self.ent_coef, self.vec_envs_random_state, self.topo_order_known, self.use_logits_partition, self.use_sde, self.do_entropy_annealing, self.initial_entropy, self.min_entropy, self.cycle_length, self.damping_factor, self.dcd_num_restarts]
+        p = [self.run_commit, self.explanation, self.data_file, self.log_file, self.generator_seed, self.num_nodes, self.avg_degree, self.frac_directed, self.degree_variance, self.num_samples, self.admg_model, self.beta_low, self.beta_high, self.omega_offdiag_low, self.omega_offdiag_high, self.omega_diag_low, self.omega_diag_high, self.standardize_data, self.center_data, self.get_pag, self.require_connected, self.do_thresholding, self.threshold, self.max_fevals, self.cmaes_verbose_level, self.popsize_ratio, self.cmaes_popsize, self.cmaes_num_parallel_workers, self.cmaes_output_folder, self.cmaes_lambda, self.cmaes_gamma, self.cmaes_delta, self.cmaes_obj_fn_type, self.steps_per_env, self.n_envs, self.normalize_advantage, self.n_epochs, self.device, self.n_steps, self.ent_coef, self.vec_envs_random_state, self.topo_order_known, self.use_logits_partition, self.use_sde, self.do_entropy_annealing, self.initial_entropy, self.min_entropy, self.cycle_length, self.damping_factor, self.dcd_num_restarts]
         # metrics
-        m = [self.thresh_admg_tpr, self.thresh_admg_fdr, self.thresh_admg_f1, self.thresh_admg_shd, self.thresh_admg_skeleton_tpr, self.thresh_admg_skeleton_fdr, self.thresh_admg_skeleton_f1, self.thresh_pag_skeleton_f1, self.thresh_pag_skeleton_tpr, self.thresh_pag_skeleton_fdr, self.thresh_pag_circle_f1, self.thresh_pag_circle_tpr, self.thresh_pag_circle_fdr, self.thresh_pag_head_f1, self.thresh_pag_head_tpr, self.thresh_pag_head_fdr, self.thresh_pag_tail_f1, self.thresh_pag_tail_tpr, self.thresh_pag_tail_fdr, self.admg_tpr, self.admg_fdr, self.admg_f1, self.admg_shd, self.admg_skeleton_tpr, self.admg_skeleton_fdr, self.admg_skeleton_f1, self.pag_skeleton_f1, self.pag_skeleton_tpr, self.pag_skeleton_fdr, self.pag_circle_f1, self.pag_circle_tpr, self.pag_circle_fdr, self.pag_head_f1, self.pag_head_tpr, self.pag_head_fdr, self.pag_tail_f1, self.pag_tail_tpr, self.pag_tail_fdr, self.thresh_pred_bic, self.pred_bic, self.runtime]
+        m = [self.thresh_admg_tpr, self.thresh_admg_fdr, self.thresh_admg_f1, self.thresh_admg_shd, self.thresh_admg_skeleton_tpr, self.thresh_admg_skeleton_fdr, self.thresh_admg_skeleton_f1, self.thresh_pag_skeleton_f1, self.thresh_pag_skeleton_tpr, self.thresh_pag_skeleton_fdr, self.thresh_pag_circle_f1, self.thresh_pag_circle_tpr, self.thresh_pag_circle_fdr, self.thresh_pag_head_f1, self.thresh_pag_head_tpr, self.thresh_pag_head_fdr, self.thresh_pag_tail_f1, self.thresh_pag_tail_tpr, self.thresh_pag_tail_fdr, self.admg_tpr, self.admg_fdr, self.admg_f1, self.admg_shd, self.admg_skeleton_tpr, self.admg_skeleton_fdr, self.admg_skeleton_f1, self.pag_skeleton_f1, self.pag_skeleton_tpr, self.pag_skeleton_fdr, self.pag_circle_f1, self.pag_circle_tpr, self.pag_circle_fdr, self.pag_head_f1, self.pag_head_tpr, self.pag_head_fdr, self.pag_tail_f1, self.pag_tail_tpr, self.pag_tail_fdr, self.thresh_pred_bic, self.pred_bic, self.true_bic, self.runtime]
         m = [round(val, 4) for val in m]
         self.log_df.loc[len(self.log_df)] = f + m + p
         self.log_df.to_csv(self.log_file, index=False)
 
     def evaluate_and_set_metrics(self):
-        if self.do_thresholding:
-            self.pred_thresh_D, self.pred_thresh_B, self.thresh_pred_bic = utils.get_thresholded_admg(self.pred_D, self.pred_B, self.data, self.data_cov, threshold=self.threshold, get_bic=True)
-            self.pred_thresh_pag = utils.convert_admg_to_pag(self.pred_thresh_D, self.pred_thresh_B)
-            m = metrics.get_admg_metrics((self.true_D, self.true_B), (self.pred_thresh_D, self.pred_thresh_B))
-            self.thresh_admg_tpr, self.thresh_admg_fdr, self.thresh_admg_f1, self.thresh_admg_shd = m['admg']['tpr'], m['admg']['fdr'], m['admg']['f1'], m['admg']['shd']
-            self.thresh_admg_skeleton_tpr, self.thresh_admg_skeleton_fdr, self.thresh_admg_skeleton_f1 = m['skeleton']['tpr'], m['skeleton']['fdr'], m['skeleton']['f1']
-            m = metrics.get_pag_metrics(self.true_pag, self.pred_thresh_pag)
-            self.thresh_pag_skeleton_f1, self.thresh_pag_skeleton_tpr, self.thresh_pag_skeleton_fdr = m['skeleton']['f1'], m['skeleton']['tpr'], m['skeleton']['fdr']
-            self.thresh_pag_circle_f1, self.thresh_pag_circle_tpr, self.thresh_pag_circle_fdr = m['circle']['f1'], m['circle']['tpr'], m['circle']['fdr']
-            self.thresh_pag_head_f1, self.thresh_pag_head_tpr, self.thresh_pag_head_fdr = m['head']['f1'], m['head']['tpr'], m['head']['fdr']
-            self.thresh_pag_tail_f1, self.thresh_pag_tail_tpr, self.thresh_pag_tail_fdr = m['tail']['f1'], m['tail']['tpr'], m['tail']['fdr']
-        m = metrics.get_admg_metrics((self.true_D, self.true_B), (self.pred_D, self.pred_B))
-        self.admg_tpr, self.admg_fdr, self.admg_f1, self.admg_shd = m['admg']['tpr'], m['admg']['fdr'], m['admg']['f1'], m['admg']['shd']
-        self.admg_skeleton_tpr, self.admg_skeleton_fdr, self.admg_skeleton_f1 = m['skeleton']['tpr'], m['skeleton']['fdr'], m['skeleton']['f1']
-        m = metrics.get_pag_metrics(self.true_pag, self.pred_pag)
-        self.pag_skeleton_f1, self.pag_skeleton_tpr, self.pag_skeleton_fdr = m['skeleton']['f1'], m['skeleton']['tpr'], m['skeleton']['fdr']
-        self.pag_circle_f1, self.pag_circle_tpr, self.pag_circle_fdr = m['circle']['f1'], m['circle']['tpr'], m['circle']['fdr']
-        self.pag_head_f1, self.pag_head_tpr, self.pag_head_fdr = m['head']['f1'], m['head']['tpr'], m['head']['fdr']
-        self.pag_tail_f1, self.pag_tail_tpr, self.pag_tail_fdr = m['tail']['f1'], m['tail']['tpr'], m['tail']['fdr']
+        if self.algorithm_name in ['CMA-ES', 'Relcadilac']:
+            if self.do_thresholding:
+                self.pred_thresh_D, self.pred_thresh_B, self.thresh_pred_bic = utils.get_thresholded_admg(self.pred_D, self.pred_B, self.data, self.data_cov, threshold=self.threshold, get_bic=True)
+                self.pred_thresh_pag = utils.convert_admg_to_pag(self.pred_thresh_D, self.pred_thresh_B)
+                m = metrics.get_admg_metrics((self.true_D, self.true_B), (self.pred_thresh_D, self.pred_thresh_B))
+                self.thresh_admg_tpr, self.thresh_admg_fdr, self.thresh_admg_f1, self.thresh_admg_shd = m['admg']['tpr'], m['admg']['fdr'], m['admg']['f1'], m['admg']['shd']
+                self.thresh_admg_skeleton_tpr, self.thresh_admg_skeleton_fdr, self.thresh_admg_skeleton_f1 = m['skeleton']['tpr'], m['skeleton']['fdr'], m['skeleton']['f1']
+                m = metrics.get_pag_metrics(self.true_pag, self.pred_thresh_pag)
+                self.thresh_pag_skeleton_f1, self.thresh_pag_skeleton_tpr, self.thresh_pag_skeleton_fdr = m['skeleton']['f1'], m['skeleton']['tpr'], m['skeleton']['fdr']
+                self.thresh_pag_circle_f1, self.thresh_pag_circle_tpr, self.thresh_pag_circle_fdr = m['circle']['f1'], m['circle']['tpr'], m['circle']['fdr']
+                self.thresh_pag_head_f1, self.thresh_pag_head_tpr, self.thresh_pag_head_fdr = m['head']['f1'], m['head']['tpr'], m['head']['fdr']
+                self.thresh_pag_tail_f1, self.thresh_pag_tail_tpr, self.thresh_pag_tail_fdr = m['tail']['f1'], m['tail']['tpr'], m['tail']['fdr']
+            m = metrics.get_admg_metrics((self.true_D, self.true_B), (self.pred_D, self.pred_B))
+            self.admg_tpr, self.admg_fdr, self.admg_f1, self.admg_shd = m['admg']['tpr'], m['admg']['fdr'], m['admg']['f1'], m['admg']['shd']
+            self.admg_skeleton_tpr, self.admg_skeleton_fdr, self.admg_skeleton_f1 = m['skeleton']['tpr'], m['skeleton']['fdr'], m['skeleton']['f1']
+            m = metrics.get_pag_metrics(self.true_pag, self.pred_pag)
+            self.pag_skeleton_f1, self.pag_skeleton_tpr, self.pag_skeleton_fdr = m['skeleton']['f1'], m['skeleton']['tpr'], m['skeleton']['fdr']
+            self.pag_circle_f1, self.pag_circle_tpr, self.pag_circle_fdr = m['circle']['f1'], m['circle']['tpr'], m['circle']['fdr']
+            self.pag_head_f1, self.pag_head_tpr, self.pag_head_fdr = m['head']['f1'], m['head']['tpr'], m['head']['fdr']
+            self.pag_tail_f1, self.pag_tail_tpr, self.pag_tail_fdr = m['tail']['f1'], m['tail']['tpr'], m['tail']['fdr']
 
     def run_test(self):
-        print(f'\nRUN NUMBER: {self.run_number}\nEXPLANATION: {self.explanation}\n')
-        self.set_data()
-        print(f'\nTRUE BIC: {self.true_bic}\n')
-        start = time.perf_counter()
-        self.pred_D, self.pred_B, self.pred_pag, self.pred_bic, self.captured_metrics = self.algorithm(self.data, self.data_cov, self.admg_model, **self.get_algorithm_params())
-        self.runtime = time.perf_counter() - start
-        self.evaluate_and_set_metrics()
-        print(f'\nPredicted D:\n{self.pred_D}\nPredicted B:\n{self.pred_B}\nPredicted bic: {self.pred_bic}\nThresholded bic: {self.thresh_pred_bic}\nThresholded SHD: {self.thresh_admg_shd}\nPredicted ADMG SHD: {self.admg_shd}\n'), 
-        self.log_metrics_and_data()
-        self.plot_graphs()
+        try:
+            print(f'\nRUN NUMBER: {self.run_number}\nEXPLANATION: {self.explanation}\n')
+            self.set_data()
+            print(f'\nTRUE BIC: {self.true_bic}\n')
+            start = time.perf_counter()
+            self.pred_D, self.pred_B, self.pred_pag, self.pred_bic, self.captured_metrics = self.algorithm(self.data, self.data_cov, self.admg_model, **self.get_algorithm_params())
+            self.runtime = time.perf_counter() - start
+            self.evaluate_and_set_metrics()
+            print(f'\nPredicted D:\n{self.pred_D}\nPredicted B:\n{self.pred_B}\nPredicted bic: {self.pred_bic}\nThresholded bic: {self.thresh_pred_bic}\nThresholded SHD: {self.thresh_admg_shd}\nPredicted ADMG SHD: {self.admg_shd}\n'), 
+            self.log_metrics_and_data()
+            self.plot_admgs()
+        except Exception as e:
+            print("THERE WAS AN EXCEPTION")
+            traceback.print_exc()
+            print("CONTINUING ANYWAY")
 
 def run_variation_test():
+    # with this test, for each of ancestral and bow-free admg types, I am varying the number of nodes while keeping the sample size at 2k, and then varying the sample size while keeping the number of nodes at 10
     num_nodes = [5, 10, 15, 20, 30]
     sample_sizes = [500, 1000, 3000, 4000]  # since 2k is already covered
     admg_models = ['ancestral', 'bow-free']
@@ -197,12 +254,7 @@ def run_variation_test():
                 else:
                     exp.max_fevals = 40_000
                 exp.explanation = f"Run {exp.run_number}; {exp.algorithm_name}; Number of nodes: {exp.num_nodes}; Sample size: {exp.num_samples}; Fn Evals: {exp.max_fevals}; ADMG Model: {exp.admg_model}; Test suite that varies number of nodes and number of samples. This is iteration {repeat + 1} of {repetitions} varying number of nodes for {exp.admg_model} graphs."
-                try:
-                    exp.run_test()
-                except Exception as e:
-                    print("THERE WAS AN EXCEPTION")
-                    traceback.print_exc()
-                    print("CONTINUING ANYWAY")
+                exp.run_test()
             for curr_samples in sample_sizes:
                 exp = Experiments()
                 exp.num_samples = curr_samples
@@ -213,12 +265,18 @@ def run_variation_test():
                 else:
                     exp.max_fevals = 40_000
                 exp.explanation = f"Run {exp.run_number}; {exp.algorithm_name}; Number of nodes: {exp.num_nodes}; Sample size: {exp.num_samples}; Fn Evals: {exp.max_fevals}; ADMG Model: {exp.admg_model}; Test suite that varies number of nodes and number of samples. This is iteration {repeat + 1} of {repetitions} varying number of samples for {exp.admg_model} graphs."
-                try:
-                    exp.run_test()
-                except Exception as e:
-                    print("THERE WAS AN EXCEPTION")
-                    traceback.print_exc()
-                    print("CONTINUING ANYWAY")
+                exp.run_test()
+
+def run_cmaes_obj_fn_test():
+    # I have previously not used the stability modification to the objective function, so I am running it a few times so that I can compare it with the z_l2_regularization approach which I had been using
+    repetitions = 3
+    admg_models = ['ancestral', 'bow-free']
+    for repeat in range(repetitions):
+        for curr_model in admg_models:
+            exp = Experiments()
+            exp.admg_model = curr_model
+            exp.explanation = f"Run {exp.run_number}; {exp.algorithm_name}; Checking out the stability modification to the objective function. Test suite varies the admg model. This is iteration {repeat + 1} of {repetitions} with admg model as {exp.admg_model}. Using {exp.num_nodes} nodes and {exp.num_samples} samples."
+            exp.run_test()
 
 if __name__ == '__main__':
-    run_variation_test()
+    run_cmaes_obj_fn_test()

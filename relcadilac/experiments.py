@@ -9,6 +9,7 @@ import time
 import json
 import random
 import warnings
+import itertools
 warnings.simplefilter("ignore")
 os.environ["PYTHONWARNINGS"] = "ignore"
 
@@ -18,12 +19,12 @@ import networkx as nx
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 
-from relcadilac.data_generator import GraphGenerator
-from relcadilac.relcadilac import relcadilac as rel_admg
-from relcadilac.metrics import get_admg_metrics, get_pag_metrics
-from relcadilac.utils import draw_admg, get_ananke_bic, plot_rewards, get_thresholded_admg, convert_admg_to_pag, get_bic, vec_2_bow_free_admg
-from gfci.gfci import gfci_search
-from dcd.admg_discovery import Discovery
+# from relcadilac.data_generator import GraphGenerator
+# from relcadilac.relcadilac import relcadilac as rel_admg
+# from relcadilac.metrics import get_admg_metrics, get_pag_metrics
+# from relcadilac.utils import draw_admg, get_ananke_bic, plot_rewards, get_thresholded_admg, convert_admg_to_pag, get_bic, vec_2_bow_free_admg
+# from gfci.gfci import gfci_search
+# from dcd.admg_discovery import Discovery
 
 def num_nodes_variation(seed):
     #### DANISH: be careful with the threshold
@@ -1163,9 +1164,70 @@ def plot_get_dag_rewards():
     plt.title("ALIAS-DAG run, 10 node, degree 4, 2000 samples,\n20_000 steps_per_env, 8 n_envs, 1 n_steps")
     plt.show()
 
+def plot_cmaes_results():
+    num_nodes = [5, 10, 15, 20, 30]
+    sample_sizes = [500, 1000, 2000, 3000, 4000]
+    admg_models = ['ancestral', 'bow-free']
+    df = pd.read_csv('runs/runs-copy.csv').query('admg_model == "bow-free" & run_number > 80')
+    group_cols = ['num_nodes', 'num_samples']
+    df_agg = df.groupby(group_cols).agg(['mean', 'std'])
+    strategies = [('num_nodes', 'num_samples'), ('num_samples', 'num_nodes')]  # (varying var, fixed var)
+    default_configs = {'num_nodes': 10, 'num_samples': 2000}
+    metric_bundles = [['admg_tpr', 'admg_fdr', 'admg_f1'], 
+                      ['thresh_admg_tpr', 'thresh_admg_fdr', 'thresh_admg_f1'],
+                      ['admg_shd', 'thresh_admg_shd'],
+                      ['admg_skeleton_tpr', 'admg_skeleton_fdr', 'admg_skeleton_f1'],
+                      ['thresh_admg_skeleton_tpr', 'thresh_admg_skeleton_fdr', 'thresh_admg_skeleton_f1'],
+                      ['pag_skeleton_tpr', 'pag_skeleton_fdr', 'pag_skeleton_f1'],
+                      ['pag_circle_tpr', 'pag_circle_fdr', 'pag_circle_f1'],
+                      ['pag_head_tpr', 'pag_head_fdr', 'pag_head_f1'],
+                      ['pag_tail_tpr', 'pag_tail_fdr', 'pag_tail_f1'],
+                      ['thresh_pag_skeleton_tpr', 'thresh_pag_skeleton_fdr', 'thresh_pag_skeleton_f1'],
+                      ['thresh_pag_circle_tpr', 'thresh_pag_circle_fdr', 'thresh_pag_circle_f1'],
+                      ['thresh_pag_head_tpr', 'thresh_pag_head_fdr', 'thresh_pag_head_f1'],
+                      ['thresh_pag_tail_tpr', 'thresh_pag_tail_fdr', 'thresh_pag_tail_f1'],
+                      ['true_bic', 'thresh_pred_bic', 'pred_bic'],
+                      ['runtime']]
+
+    # Cycle markers for distinct visual differentiation in plots
+    markers = itertools.cycle(['o', 's', '^', 'D', 'v', '<', '>'])
+
+    # 3. Plotting Logic
+    for metrics in metric_bundles:
+        for varying_var, fixed_var in strategies:
+            fixed_val = default_configs[fixed_var]
+            try:
+                subset = df_agg.xs(fixed_val, level=fixed_var, axis=0)
+            except KeyError:
+                print(f"Warning: Default value {fixed_val} for {fixed_var} not found in data.")
+                continue
+            subset = subset.sort_index()
+            fig, ax = plt.subplots(figsize=(10, 6))
+            for metric in metrics:
+                if metric not in df.columns:
+                    print(f"Warning: Metric '{metric}' not found in dataset.")
+                    continue
+                means = subset[(metric, 'mean')]
+                stds = subset[(metric, 'std')]
+                x_values = subset.index
+                ax.errorbar(x_values, means, yerr=stds, label=metric, capsize=4, marker=next(markers), alpha=0.8)
+
+            ax.set_xlabel(varying_var.replace('_', ' ').title(), fontsize=12)
+            ax.set_title(f'Metrics vs {varying_var}\n(Fixed {fixed_var} = {fixed_val})', fontsize=14)
+            ax.legend()
+            ax.grid(True, which='both', linestyle='--', linewidth=0.5)
+            
+            amalgam_name = '-'.join(list(set(('_'.join(metrics)).split('_'))))
+            filename = f"diagrams/cmaes_plots/bowfree_{amalgam_name}_vs_{varying_var}.png"
+            plt.savefig(filename, dpi=300, bbox_inches='tight')
+            plt.close()
+
+            print(f"Generated plot: {filename}")
+
 if __name__ == '__main__':
     seed = random.randint(1, 100)
     # seed = 2
-    generator = GraphGenerator(seed)
-    single_test_04(seed)
+    # generator = GraphGenerator(seed)
+    # single_test_04(seed)
     # plot_some_pred_true_graphs()
+    plot_cmaes_results()
