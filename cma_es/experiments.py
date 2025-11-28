@@ -23,7 +23,7 @@ class Experiments:
     def __init__(self):
         self.algorithm_name = "CMA-ES"
         self.algorithm = self.get_algorithm()
-        self.run_commit = "4152a0d1b5e38cc4612f3a6bba5641e8b9f545df"
+        self.run_commit = "f3731dbd2d15bc5ee8b64e0c6382580ffda33627"
 
         self.log_file = Path('runs/runs-copy.csv')
         self.log_df = pd.read_csv(self.log_file)
@@ -40,7 +40,7 @@ class Experiments:
         self.explanation = f"No explanation given."
 
     def set_graph_generation_params(self):
-        self.generator_seed = random.randint(1, 100)
+        self.generator_seed = random.randint(1, pow(10, 6))
         self.num_nodes = 10
         self.avg_degree = 4
         self.frac_directed = 0.6
@@ -228,7 +228,7 @@ class Experiments:
             self.pred_D, self.pred_B, self.pred_pag, self.pred_bic, self.captured_metrics = self.algorithm(self.data, self.data_cov, self.admg_model, **self.get_algorithm_params())
             self.runtime = time.perf_counter() - start
             self.evaluate_and_set_metrics()
-            print(f'\nPredicted D:\n{self.pred_D}\nPredicted B:\n{self.pred_B}\nPredicted bic: {self.pred_bic}\nThresholded bic: {self.thresh_pred_bic}\nThresholded SHD: {self.thresh_admg_shd}\nPredicted ADMG SHD: {self.admg_shd}\n'), 
+            print(f'\nPredicted D:\n{self.pred_D}\nPredicted B:\n{self.pred_B}\nTrue bic: {self.true_bic}\nPredicted bic: {self.pred_bic}\nThresholded bic: {self.thresh_pred_bic}\nThresholded SHD: {self.thresh_admg_shd}\nPredicted ADMG SHD: {self.admg_shd}\n'), 
             self.log_metrics_and_data()
             self.plot_admgs()
         except Exception as e:
@@ -275,7 +275,7 @@ def run_cmaes_obj_fn_test():
         for curr_model in admg_models:
             exp = Experiments()
             exp.admg_model = curr_model
-            exp.explanation = f"Run {exp.run_number}; {exp.algorithm_name}; Checking out the stability modification to the objective function. Test suite varies the admg model. This is iteration {repeat + 1} of {repetitions} with admg model as {exp.admg_model}. Using {exp.num_nodes} nodes and {exp.num_samples} samples."
+            exp.explanation = f"Run {exp.run_number}; {exp.algorithm_name}; Checking out the stability modification to the objective function. Also just updated the CMA-ES to not stop before the function budget is exhausted, so checking that as well. Test suite varies the admg model. This is iteration {repeat + 1} of {repetitions} with admg model as {exp.admg_model}. Using {exp.num_nodes} nodes and {exp.num_samples} samples. The maximum number of evaluations is {exp.max_fevals}."
             exp.run_test()
 
 if __name__ == '__main__':

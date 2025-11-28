@@ -33,22 +33,37 @@ def cmaes_admg_search(data, data_cov, admg_model, max_fevals=20_000, verbose=3, 
         fit_func = functools.partial(objective_fn_z_l2_regularization, d=d, tril_ind=tril_ind, data=data, data_cov=data_cov, vec2admg=vec2admg, cmaes_lambda=cmaes_lambda)
     elif obj_fn_type == 'order_edge_stability':
         fit_func = functools.partial(objective_fn_order_edge_stability, d=d, tril_ind=tril_ind, data=data, data_cov=data_cov, vec2admg=vec2admg, gamma=gamma, delta=delta)
-    x0, sigma0 = np.random.randn(d * d), 1.0  # initial solution (isotropic), std dev to sample new solutions
-    opts = cma.CMAOptions()
-    opts.set('maxfevals', max_fevals)  # max number of fn evaluations
-    opts.set('verbose', verbose)
-    opts.set('CMA_diagonal', True)  # always only take diagonal updates - else it gave option to i think set probability or something
-    opts.set('popsize', popsize)
-    opts.set('verb_filenameprefix', output_folder)
-    es = cma.CMAEvolutionStrategy(x0, sigma0, inopts=opts)
+
+    global_best_f, global_best_x = np.inf, None 
+    used_fevals, restart_count = 0, 0
     with ProcessPoolExecutor(max_workers=num_parallel_workers) as executor:
-        while not es.stop():
-            X = es.ask()
-            F = list(executor.map(fit_func, X))
-            es.tell(X, F)
-            es.disp()
-            es.logger.add()
-    pred_D, pred_B = vec2admg(es.result.xbest, d, tril_ind, None)
+        while used_fevals < max_fevals:
+            rem_fevals = max_fevals - used_fevals
+            if rem_fevals < popsize * 2: # can't do a useful run with so few rem_fevals
+                break
+            if verbose > 0:
+                print(f"--- Restart {restart_count} (Used: {used_fevals}/{max_fevals}) ---")
+            # initial solution (isotropic), std dev to sample new solutions - increase on restart
+            x0, sigma0 = np.random.randn(d * d), 1.0 + (restart_count * 0.2)
+            opts = cma.CMAOptions()
+            opts.set('maxfevals', rem_fevals)  # max number of fn evaluations
+            opts.set('verbose', verbose)
+            opts.set('CMA_diagonal', True)  # always only take diagonal updates - else it gave option to i think set probability or something
+            opts.set('popsize', popsize)
+            opts.set('verb_filenameprefix', f'{output_folder}restart_{restart_count:02}_')
+            es = cma.CMAEvolutionStrategy(x0, sigma0, inopts=opts)
+            while not es.stop():
+                X = es.ask()
+                F = list(executor.map(fit_func, X))
+                es.tell(X, F)
+                es.disp()
+                es.logger.add()
+            used_fevals += es.countevals
+            if es.result.fbest < global_best_f:
+                global_best_f, global_best_x = es.result.fbest, es.result.xbest
+            restart_count += 1
+
+    pred_D, pred_B = vec2admg(global_best_x, d, tril_ind, None)
     pred_pag = utils.convert_admg_to_pag(pred_D, pred_B)
     pred_bic = utils.get_bic(pred_D, pred_B, data, data_cov)
     return pred_D.astype(int), pred_B, pred_pag, pred_bic, None
