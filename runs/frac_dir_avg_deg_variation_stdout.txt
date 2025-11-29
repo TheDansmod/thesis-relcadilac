@@ -1,0 +1,4593 @@
+Sat Nov 29, 02:07:44
+/mnt/windows/Users/lordh/Documents/LibraryOfBabel/Projects/thesis
+danish@helium $ python -m cma_es.experiments
+
+RUN NUMBER: 151
+EXPLANATION: Run 151; CMA-ES; Frac directed = 0.1; Varying directed fraction. 0 of 120. First run in test = 151.
+
+Nov 29, 2025 2:08:13 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 29979.451648171827
+
+--- Restart 0 (Used: 0/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=475449, Sat Nov 29 02:08:13 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 3.013794575041242e+04 1.1e+00 9.35e-01  9e-01  1e+00 0:00.2
+    2    142 3.013665277724100e+04 1.0e+00 9.00e-01  8e-01  1e+00 0:00.3
+    3    213 3.014805747627195e+04 1.0e+00 8.77e-01  8e-01  9e-01 0:00.4
+   47   3337 3.002665175904536e+04 1.0e+00 2.67e+00  1e+00  5e+00 0:03.5
+  100   7100 3.000564129555161e+04 1.0e+00 6.06e+00  2e+00  1e+01 0:07.3
+  141  10011 2.999320652411450e+04 1.0e+00 8.11e+00  2e+00  2e+01 0:12.3
+  189  13419 2.998638524072447e+04 1.0e+00 8.27e+00  1e+00  2e+01 0:18.3
+  200  14200 2.998638524072447e+04 1.0e+00 7.44e+00  1e+00  2e+01 0:19.7
+  238  16898 2.998638483254761e+04 1.0e+00 6.87e+00  9e-01  2e+01 0:23.3
+--- Restart 1 (Used: 16898/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=551396, Sat Nov 29 02:08:36 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 3.032196190224059e+04 1.1e+00 1.13e+00  1e+00  1e+00 0:00.2
+    2    142 3.020894433460829e+04 1.0e+00 1.09e+00  1e+00  1e+00 0:00.3
+    3    213 3.015745354697313e+04 1.0e+00 1.06e+00  1e+00  1e+00 0:00.5
+   20   1420 3.007163830805964e+04 1.0e+00 1.19e+00  1e+00  1e+00 0:03.5
+   37   2627 3.001351747159302e+04 1.0e+00 2.45e+00  2e+00  4e+00 0:07.6
+   58   4118 2.997873137489326e+04 1.0e+00 4.04e+00  2e+00  1e+01 0:12.9
+   85   6035 2.996472125599715e+04 1.0e+00 1.00e+01  3e+00  3e+01 0:19.0
+  100   7100 2.995348898450515e+04 1.0e+00 1.25e+01  4e+00  4e+01 0:22.5
+  135   9585 2.995346646879330e+04 1.0e+00 1.21e+01  3e+00  3e+01 0:30.7
+  168  11928 2.995346646879330e+04 1.0e+00 1.06e+01  3e+00  2e+01 0:38.5
+--- Restart 2 (Used: 28826/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=449644, Sat Nov 29 02:09:15 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 3.029226442390884e+04 1.1e+00 1.32e+00  1e+00  1e+00 0:00.1
+    2    142 3.030207270920721e+04 1.0e+00 1.27e+00  1e+00  1e+00 0:00.3
+    3    213 3.022258746858633e+04 1.0e+00 1.25e+00  1e+00  1e+00 0:00.5
+   26   1846 3.003534957630438e+04 1.0e+00 1.70e+00  1e+00  3e+00 0:03.5
+   69   4899 3.000538697539756e+04 1.0e+00 5.86e+00  3e+00  9e+00 0:07.5
+  100   7100 2.999734962087061e+04 1.0e+00 7.22e+00  2e+00  1e+01 0:10.0
+  158  11218 2.999732458363940e+04 1.0e+00 5.93e+00  1e+00  1e+01 0:14.6
+Nov 29, 2025 2:09:30 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+Nov 29, 2025 2:09:30 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [1 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 1 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 1 0 1 0 0 0]
+ [0 1 0 0 1 0 0 0 0 1]
+ [1 0 0 1 1 0 0 0 0 0]]
+Predicted B:
+[[0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 1. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 1. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 1. 0. 1. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 1. 1. 1. 0. 0. 0. 0. 1. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 1. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 1. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]
+True bic: 29979.451648171827
+Predicted bic: 29973.98890543406
+Thresholded bic: 29973.98890543406
+Thresholded SHD: 20.0
+Predicted ADMG SHD: 20.0
+
+
+RUN NUMBER: 152
+EXPLANATION: Run 152; CMA-ES; Frac directed = 0.3; Varying directed fraction. 1 of 120. First run in test = 151.
+
+Nov 29, 2025 2:09:30 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 23566.500277542364
+
+--- Restart 0 (Used: 0/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=481651, Sat Nov 29 02:09:30 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.364538337994140e+04 1.1e+00 9.36e-01  9e-01  1e+00 0:00.5
+    2    142 2.365254290346052e+04 1.0e+00 9.06e-01  8e-01  1e+00 0:00.8
+    3    213 2.387325877000383e+04 1.0e+00 8.99e-01  8e-01  1e+00 0:01.1
+   14    994 2.361417012538019e+04 1.0e+00 1.15e+00  8e-01  1e+00 0:04.4
+   25   1775 2.356198538735200e+04 1.0e+00 1.50e+00  9e-01  2e+00 0:08.9
+   37   2627 2.354933680319667e+04 1.0e+00 2.43e+00  1e+00  4e+00 0:13.9
+   52   3692 2.352380129325979e+04 1.0e+00 3.61e+00  2e+00  6e+00 0:20.2
+   69   4899 2.351380106367401e+04 1.0e+00 6.42e+00  2e+00  1e+01 0:27.3
+   89   6319 2.351374954117181e+04 1.0e+00 8.69e+00  3e+00  2e+01 0:35.5
+  100   7100 2.351374906514654e+04 1.0e+00 8.68e+00  3e+00  2e+01 0:40.2
+  124   8804 2.351374906514654e+04 1.0e+00 7.58e+00  2e+00  2e+01 0:50.5
+  150  10650 2.351374906514654e+04 1.0e+00 6.33e+00  1e+00  2e+01 1:01.5
+--- Restart 1 (Used: 10650/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=499575, Sat Nov 29 02:10:32 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.370390309410839e+04 1.1e+00 1.13e+00  1e+00  1e+00 0:00.3
+    2    142 2.366559366758043e+04 1.0e+00 1.10e+00  1e+00  1e+00 0:00.5
+    3    213 2.366311472500753e+04 1.0e+00 1.09e+00  1e+00  1e+00 0:00.7
+   27   1917 2.355965210809321e+04 1.0e+00 1.95e+00  1e+00  3e+00 0:03.8
+   61   4331 2.353370604184139e+04 1.0e+00 3.95e+00  1e+00  7e+00 0:07.9
+   96   6816 2.352592607982374e+04 1.0e+00 3.83e+00  1e+00  6e+00 0:12.9
+  100   7100 2.352592520667382e+04 1.0e+00 3.79e+00  9e-01  5e+00 0:14.0
+  119   8449 2.352592520667382e+04 1.0e+00 3.10e+00  7e-01  4e+00 0:21.0
+  139   9869 2.352592520667382e+04 1.0e+00 2.55e+00  4e-01  3e+00 0:28.7
+--- Restart 2 (Used: 20519/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=462495, Sat Nov 29 02:11:01 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.368739187360520e+04 1.1e+00 1.33e+00  1e+00  1e+00 0:00.2
+    2    142 2.365424392869428e+04 1.0e+00 1.27e+00  1e+00  1e+00 0:00.4
+    3    213 2.363432372862689e+04 1.0e+00 1.26e+00  1e+00  1e+00 0:00.7
+   28   1988 2.357458556579216e+04 1.0e+00 2.32e+00  1e+00  3e+00 0:03.7
+   82   5822 2.351322366844269e+04 1.0e+00 5.54e+00  1e+00  8e+00 0:07.7
+  100   7100 2.351316595288655e+04 1.0e+00 6.32e+00  1e+00  1e+01 0:08.8
+  155  11005 2.351316595288655e+04 1.0e+00 4.50e+00  6e-01  9e+00 0:11.5
+--- Restart 3 (Used: 31524/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=428100, Sat Nov 29 02:11:13 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.367867119332380e+04 1.1e+00 1.50e+00  1e+00  2e+00 0:00.2
+    2    142 2.366922247980062e+04 1.0e+00 1.46e+00  1e+00  2e+00 0:00.3
+    3    213 2.366167870279330e+04 1.0e+00 1.43e+00  1e+00  2e+00 0:00.4
+   25   1775 2.357451375126783e+04 1.0e+00 2.37e+00  2e+00  3e+00 0:03.5
+   52   3692 2.352060935068986e+04 1.0e+00 5.05e+00  3e+00  8e+00 0:07.6
+   71   5041 2.350870581667529e+04 1.0e+00 8.67e+00  4e+00  2e+01 0:12.8
+   93   6603 2.350585326723516e+04 1.0e+00 1.38e+01  5e+00  3e+01 0:19.1
+  100   7100 2.350585326723516e+04 1.0e+00 1.37e+01  4e+00  3e+01 0:21.7
+  120   8520 2.350585319719366e+04 1.0e+00 1.40e+01  4e+00  3e+01 0:29.1
+Nov 29, 2025 2:11:42 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+Nov 29, 2025 2:11:42 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0 0 0 0 0 0 0 0 0 0]
+ [1 0 1 0 0 0 0 0 1 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [1 0 0 0 0 0 0 0 1 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 1 0 0 0 0 0 0]]
+Predicted B:
+[[0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 1. 1. 1. 1. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 1. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 1. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 1. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 1. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]
+True bic: 23566.500277542364
+Predicted bic: 23526.37480225266
+Thresholded bic: 23526.37480225266
+Thresholded SHD: 18.0
+Predicted ADMG SHD: 18.0
+
+
+RUN NUMBER: 153
+EXPLANATION: Run 153; CMA-ES; Frac directed = 0.5; Varying directed fraction. 2 of 120. First run in test = 151.
+
+Nov 29, 2025 2:11:43 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 26048.760240722124
+
+--- Restart 0 (Used: 0/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=461574, Sat Nov 29 02:11:43 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.729000823082315e+04 1.1e+00 9.47e-01  9e-01  1e+00 0:00.6
+    2    142 2.702650026769456e+04 1.0e+00 9.15e-01  8e-01  1e+00 0:01.0
+    3    213 2.678032001694503e+04 1.0e+00 9.13e-01  8e-01  1e+00 0:01.4
+   16   1136 2.615420097083558e+04 1.0e+00 1.38e+00  1e+00  2e+00 0:04.5
+   55   3905 2.605581634218621e+04 1.0e+00 2.69e+00  1e+00  4e+00 0:08.6
+  100   7100 2.602603753823522e+04 1.0e+00 5.38e+00  2e+00  9e+00 0:12.4
+  160  11360 2.602603753823522e+04 1.0e+00 5.01e+00  1e+00  1e+01 0:17.3
+--- Restart 1 (Used: 11360/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=494969, Sat Nov 29 02:12:00 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.963900205756681e+04 1.1e+00 1.13e+00  1e+00  1e+00 0:00.4
+    2    142 2.853285821629715e+04 1.0e+00 1.08e+00  1e+00  1e+00 0:00.8
+    3    213 2.739008821956951e+04 1.0e+00 1.06e+00  1e+00  1e+00 0:01.2
+   14    994 2.613608392039996e+04 1.0e+00 1.32e+00  1e+00  2e+00 0:04.3
+   41   2911 2.609205344408374e+04 1.0e+00 2.65e+00  1e+00  5e+00 0:08.3
+   92   6532 2.602866568228866e+04 1.0e+00 1.00e+01  3e+00  2e+01 0:13.4
+  100   7100 2.602591790130935e+04 1.0e+00 1.11e+01  3e+00  2e+01 0:14.1
+  187  13277 2.602340270281593e+04 1.0e+00 6.68e+00  9e-01  1e+01 0:21.1
+  194  13774 2.602340270281593e+04 1.0e+00 6.58e+00  9e-01  1e+01 0:21.6
+--- Restart 2 (Used: 25134/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=513516, Sat Nov 29 02:12:22 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.737783171817641e+04 1.1e+00 1.31e+00  1e+00  1e+00 0:00.4
+    2    142 2.643836004129794e+04 1.0e+00 1.26e+00  1e+00  1e+00 0:00.8
+    3    213 2.693018918239402e+04 1.0e+00 1.24e+00  1e+00  1e+00 0:01.1
+   22   1562 2.614656126196209e+04 1.0e+00 1.99e+00  1e+00  2e+00 0:04.2
+   61   4331 2.607374684551250e+04 1.0e+00 5.32e+00  3e+00  8e+00 0:08.3
+  100   7100 2.604579138661361e+04 1.0e+00 8.64e+00  2e+00  1e+01 0:11.8
+  161  11431 2.602414941376716e+04 1.0e+00 1.34e+01  3e+00  4e+01 0:17.8
+  199  14129 2.602414941376716e+04 1.0e+00 1.23e+01  2e+00  3e+01 0:20.6
+--- Restart 3 (Used: 39263/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=458301, Sat Nov 29 02:12:43 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.698698965814835e+04 1.1e+00 1.52e+00  1e+00  2e+00 0:00.5
+    2    142 2.693473804249289e+04 1.0e+00 1.48e+00  1e+00  2e+00 0:00.9
+    3    213 2.682647038030842e+04 1.0e+00 1.47e+00  1e+00  2e+00 0:01.2
+   11    781 2.619187463535680e+04 1.0e+00 1.83e+00  2e+00  2e+00 0:03.2
+Nov 29, 2025 2:12:46 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+Nov 29, 2025 2:12:46 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0 0 0 1 0 0 0 0 0 1]
+ [0 0 1 1 0 0 0 0 1 0]
+ [0 0 0 0 0 0 1 0 0 0]
+ [0 0 0 0 0 0 0 0 1 0]
+ [0 0 1 0 0 0 1 0 0 0]
+ [0 0 1 1 1 0 1 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 1 0 1 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 1 0 0 0 0 0]]
+Predicted B:
+[[0. 0. 0. 0. 0. 1. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [1. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]
+True bic: 26048.760240722124
+Predicted bic: 26040.475733543622
+Thresholded bic: 26040.475733543622
+Thresholded SHD: 23.0
+Predicted ADMG SHD: 23.0
+
+
+RUN NUMBER: 154
+EXPLANATION: Run 154; CMA-ES; Frac directed = 0.7; Varying directed fraction. 3 of 120. First run in test = 151.
+
+Nov 29, 2025 2:12:47 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 23571.39867318861
+
+--- Restart 0 (Used: 0/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=492322, Sat Nov 29 02:12:47 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.619740824495296e+04 1.1e+00 9.42e-01  9e-01  1e+00 0:00.7
+    2    142 2.701281906163609e+04 1.0e+00 9.02e-01  8e-01  1e+00 0:01.1
+    3    213 2.520571961321602e+04 1.0e+00 8.87e-01  8e-01  1e+00 0:01.5
+   10    710 2.431348674587455e+04 1.0e+00 9.70e-01  8e-01  1e+00 0:04.9
+   18   1278 2.367721191520380e+04 1.0e+00 1.21e+00  9e-01  2e+00 0:08.9
+   29   2059 2.366787011956823e+04 1.0e+00 1.75e+00  1e+00  3e+00 0:14.1
+   43   3053 2.365514106469677e+04 1.0e+00 2.46e+00  1e+00  4e+00 0:20.4
+   59   4189 2.361927208492237e+04 1.0e+00 3.20e+00  1e+00  5e+00 0:27.5
+   79   5609 2.359362001430921e+04 1.0e+00 4.54e+00  1e+00  9e+00 0:35.8
+  100   7100 2.359125376886551e+04 1.0e+00 5.23e+00  1e+00  9e+00 0:44.5
+  125   8875 2.359114575683774e+04 1.0e+00 4.99e+00  1e+00  9e+00 0:54.8
+  153  10863 2.359114575683774e+04 1.0e+00 4.33e+00  8e-01  8e+00 1:06.0
+  176  12496 2.359114575683774e+04 1.0e+00 4.04e+00  7e-01  8e+00 1:15.2
+--- Restart 1 (Used: 12496/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=545867, Sat Nov 29 02:14:02 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.849517316986914e+04 1.1e+00 1.13e+00  1e+00  1e+00 0:00.5
+    2    142 2.692320738029139e+04 1.0e+00 1.07e+00  1e+00  1e+00 0:01.0
+    3    213 2.465615704157535e+04 1.0e+00 1.05e+00  1e+00  1e+00 0:01.6
+    9    639 2.409971116848037e+04 1.0e+00 1.18e+00  1e+00  1e+00 0:04.8
+   20   1420 2.367626158006463e+04 1.0e+00 1.74e+00  1e+00  2e+00 0:08.9
+   36   2556 2.363956762202187e+04 1.0e+00 2.82e+00  2e+00  5e+00 0:14.0
+   60   4260 2.357945164855952e+04 1.0e+00 4.44e+00  2e+00  1e+01 0:20.2
+   92   6532 2.356139366615895e+04 1.0e+00 8.57e+00  3e+00  2e+01 0:27.2
+  100   7100 2.356131372045998e+04 1.0e+00 9.47e+00  3e+00  2e+01 0:28.9
+  139   9869 2.356131372045998e+04 1.0e+00 8.87e+00  2e+00  2e+01 0:38.0
+  162  11502 2.356131372045998e+04 1.0e+00 7.27e+00  1e+00  2e+01 0:43.5
+--- Restart 2 (Used: 23998/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=501608, Sat Nov 29 02:14:46 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.668867409750688e+04 1.1e+00 1.33e+00  1e+00  1e+00 0:00.4
+    2    142 2.642768218122821e+04 1.0e+00 1.30e+00  1e+00  1e+00 0:00.8
+    3    213 2.584072005587158e+04 1.0e+00 1.28e+00  1e+00  1e+00 0:01.1
+   16   1136 2.363869394206426e+04 1.0e+00 1.84e+00  1e+00  3e+00 0:04.2
+   60   4260 2.358015645997662e+04 1.0e+00 6.00e+00  2e+00  8e+00 0:08.3
+  100   7100 2.357391606567832e+04 1.0e+00 9.43e+00  3e+00  1e+01 0:11.4
+  160  11360 2.357391567692787e+04 1.0e+00 9.18e+00  2e+00  2e+01 0:17.6
+  187  13277 2.357391567692787e+04 1.0e+00 8.43e+00  2e+00  2e+01 0:24.7
+  189  13419 2.357391567692787e+04 1.0e+00 8.43e+00  2e+00  2e+01 0:25.2
+--- Restart 3 (Used: 37417/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=418943, Sat Nov 29 02:15:12 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.516592853602996e+04 1.1e+00 1.50e+00  1e+00  2e+00 0:00.4
+    2    142 2.504040028328100e+04 1.0e+00 1.47e+00  1e+00  2e+00 0:00.9
+    3    213 2.455845563701703e+04 1.0e+00 1.45e+00  1e+00  2e+00 0:01.3
+   18   1278 2.366478665777435e+04 1.0e+00 2.23e+00  2e+00  3e+00 0:04.4
+   37   2627 2.360606098838387e+04 1.0e+00 3.86e+00  2e+00  7e+00 0:06.3
+Nov 29, 2025 2:15:18 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+Nov 29, 2025 2:15:18 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0 0 0 0 0 0 0 0 0 0]
+ [0 0 1 0 0 1 0 0 0 0]
+ [1 0 0 0 1 0 0 0 0 0]
+ [1 0 0 0 1 1 0 0 0 0]
+ [1 0 0 0 0 0 0 0 0 0]
+ [1 0 1 0 1 0 0 1 0 0]
+ [0 1 0 0 1 1 0 1 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [1 0 1 1 1 0 0 0 0 0]]
+Predicted B:
+[[0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 1. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 1. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 1. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 1. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]
+True bic: 23571.39867318861
+Predicted bic: 23580.102908260866
+Thresholded bic: 23580.102908260866
+Thresholded SHD: 15.0
+Predicted ADMG SHD: 15.0
+
+
+RUN NUMBER: 155
+EXPLANATION: Run 155; CMA-ES; Frac directed = 0.9; Varying directed fraction. 4 of 120. First run in test = 151.
+
+Nov 29, 2025 2:15:18 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 19108.388931524194
+
+--- Restart 0 (Used: 0/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=568131, Sat Nov 29 02:15:18 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.246229676156962e+04 1.1e+00 9.43e-01  9e-01  1e+00 0:00.9
+    2    142 2.077580828863202e+04 1.0e+00 9.06e-01  9e-01  1e+00 0:01.6
+    3    213 2.165694007563804e+04 1.0e+00 8.85e-01  8e-01  1e+00 0:02.2
+   12    852 1.946685657852678e+04 1.0e+00 1.16e+00  9e-01  1e+00 0:05.3
+   44   3124 1.914061570644871e+04 1.0e+00 2.30e+00  1e+00  4e+00 0:09.3
+  100   7100 1.910388134713415e+04 1.0e+00 4.85e+00  2e+00  9e+00 0:14.0
+  187  13277 1.910383399147484e+04 1.0e+00 4.44e+00  9e-01  1e+01 0:18.1
+--- Restart 1 (Used: 13277/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=468032, Sat Nov 29 02:15:37 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.125114112067181e+04 1.1e+00 1.12e+00  1e+00  1e+00 0:00.7
+    2    142 2.160691923830762e+04 1.0e+00 1.08e+00  1e+00  1e+00 0:01.4
+    3    213 2.151119256516027e+04 1.0e+00 1.07e+00  1e+00  1e+00 0:02.0
+   10    710 1.943642448646003e+04 1.0e+00 1.15e+00  9e-01  1e+00 0:05.2
+   24   1704 1.919463365837728e+04 1.0e+00 1.46e+00  1e+00  2e+00 0:09.3
+   56   3976 1.912286337141963e+04 1.0e+00 1.96e+00  1e+00  3e+00 0:14.4
+  100   7100 1.910826086946566e+04 1.0e+00 3.22e+00  8e-01  6e+00 0:20.1
+  190  13490 1.910805761183360e+04 1.0e+00 2.91e+00  3e-01  7e+00 0:25.0
+--- Restart 2 (Used: 26767/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=476956, Sat Nov 29 02:16:02 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.327028685799924e+04 1.1e+00 1.31e+00  1e+00  1e+00 0:00.8
+    2    142 2.462347548450305e+04 1.0e+00 1.26e+00  1e+00  1e+00 0:01.4
+    3    213 2.286890314684408e+04 1.0e+00 1.25e+00  1e+00  1e+00 0:02.0
+   10    710 1.926488740506023e+04 1.0e+00 1.60e+00  1e+00  2e+00 0:05.1
+   28   1988 1.918970854672330e+04 1.0e+00 2.58e+00  2e+00  4e+00 0:09.2
+   61   4331 1.911484072790357e+04 1.0e+00 5.40e+00  2e+00  1e+01 0:14.2
+  100   7100 1.910828828624307e+04 1.0e+00 7.89e+00  2e+00  2e+01 0:19.1
+  170  12070 1.910816484275349e+04 1.0e+00 6.30e+00  1e+00  1e+01 0:22.2
+--- Restart 3 (Used: 38837/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=445571, Sat Nov 29 02:16:25 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.164265810915492e+04 1.1e+00 1.49e+00  1e+00  2e+00 0:00.8
+    2    142 1.983299076737560e+04 1.0e+00 1.43e+00  1e+00  2e+00 0:01.7
+    3    213 2.006169436079898e+04 1.0e+00 1.39e+00  1e+00  1e+00 0:02.6
+    7    497 1.957690376126352e+04 1.0e+00 1.35e+00  1e+00  1e+00 0:05.9
+   14    994 1.968531895996058e+04 1.0e+00 1.59e+00  1e+00  2e+00 0:10.4
+   17   1207 1.938045884362393e+04 1.0e+00 1.73e+00  1e+00  2e+00 0:12.1
+Nov 29, 2025 2:16:37 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+Nov 29, 2025 2:16:37 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0 0 0 0 0 0 0 0 0 0]
+ [1 0 1 1 0 0 0 0 0 0]
+ [1 0 0 1 0 0 0 0 0 0]
+ [1 0 0 0 0 0 0 0 0 0]
+ [0 0 0 1 0 0 0 0 1 0]
+ [0 1 1 1 0 0 0 0 0 1]
+ [0 1 0 0 1 1 0 0 0 1]
+ [0 1 0 0 0 0 0 0 0 1]
+ [0 0 0 1 0 0 0 0 0 1]
+ [0 1 1 1 0 0 0 0 0 0]]
+Predicted B:
+[[0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 1. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 1. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]
+True bic: 19108.388931524194
+Predicted bic: 19124.356389976354
+Thresholded bic: 19268.64056391549
+Thresholded SHD: 16.0
+Predicted ADMG SHD: 17.0
+
+
+RUN NUMBER: 156
+EXPLANATION: Run 156; CMA-ES; Avg degree = 2; Varying average degree. 5 of 120. First run in test = 151.
+
+Nov 29, 2025 2:16:37 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 24039.80321490069
+
+--- Restart 0 (Used: 0/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=513775, Sat Nov 29 02:16:37 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.450764748866524e+04 1.1e+00 9.35e-01  9e-01  1e+00 0:00.3
+    2    142 2.492741404904130e+04 1.0e+00 9.07e-01  9e-01  1e+00 0:00.5
+    3    213 2.455367806696139e+04 1.0e+00 9.06e-01  8e-01  1e+00 0:00.7
+   36   2556 2.406492673872737e+04 1.0e+00 2.10e+00  1e+00  4e+00 0:03.7
+   78   5538 2.401823086101599e+04 1.0e+00 7.15e+00  3e+00  2e+01 0:07.7
+  100   7100 2.401029664321379e+04 1.0e+00 9.58e+00  3e+00  2e+01 0:09.5
+  152  10792 2.401029639288026e+04 1.0e+00 7.71e+00  2e+00  1e+01 0:12.1
+--- Restart 1 (Used: 10792/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=400545, Sat Nov 29 02:16:50 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.430552208580729e+04 1.1e+00 1.12e+00  1e+00  1e+00 0:00.3
+    2    142 2.438036699165264e+04 1.0e+00 1.09e+00  1e+00  1e+00 0:00.5
+    3    213 2.420673127192237e+04 1.0e+00 1.08e+00  1e+00  1e+00 0:00.7
+   37   2627 2.404258962296352e+04 1.0e+00 2.20e+00  9e-01  3e+00 0:03.7
+   92   6532 2.400779678881420e+04 1.0e+00 6.62e+00  2e+00  1e+01 0:07.8
+  100   7100 2.400779808791399e+04 1.0e+00 6.94e+00  2e+00  1e+01 0:08.5
+  147  10437 2.400778098534645e+04 1.0e+00 5.73e+00  1e+00  1e+01 0:14.5
+  160  11360 2.400778098534645e+04 1.0e+00 4.69e+00  1e+00  9e+00 0:16.5
+--- Restart 2 (Used: 22152/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=544775, Sat Nov 29 02:17:06 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.472138018246345e+04 1.1e+00 1.32e+00  1e+00  1e+00 0:00.2
+    2    142 2.458716522800777e+04 1.0e+00 1.29e+00  1e+00  1e+00 0:00.4
+    3    213 2.419465591954312e+04 1.0e+00 1.27e+00  1e+00  1e+00 0:00.7
+   20   1420 2.412808021032794e+04 1.0e+00 1.63e+00  1e+00  2e+00 0:03.7
+   77   5467 2.402147315142294e+04 1.0e+00 5.34e+00  2e+00  1e+01 0:07.7
+  100   7100 2.401998094722817e+04 1.0e+00 6.16e+00  2e+00  1e+01 0:08.9
+  189  13419 2.401997931487647e+04 1.0e+00 4.82e+00  8e-01  1e+01 0:14.6
+--- Restart 3 (Used: 35571/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=506434, Sat Nov 29 02:17:21 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.450015495561171e+04 1.1e+00 1.51e+00  1e+00  2e+00 0:00.1
+    2    142 2.428853682363701e+04 1.0e+00 1.46e+00  1e+00  2e+00 0:00.3
+    3    213 2.427061765823540e+04 1.0e+00 1.41e+00  1e+00  2e+00 0:00.4
+   35   2485 2.406898586942146e+04 1.0e+00 2.40e+00  1e+00  3e+00 0:03.4
+   63   4473 2.403797743322693e+04 1.0e+00 5.14e+00  1e+00  1e+01 0:05.8
+Nov 29, 2025 2:17:27 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+Nov 29, 2025 2:17:27 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0 0 1 0 0 1 0 0 0 1]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 1 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 1 0]
+ [0 0 1 1 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 1 0 1 0 0]
+ [0 0 0 0 0 0 0 0 0 0]]
+Predicted B:
+[[0. 1. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [1. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]
+True bic: 24039.80321490069
+Predicted bic: 24028.30342198721
+Thresholded bic: 24025.035151003634
+Thresholded SHD: 13.0
+Predicted ADMG SHD: 14.0
+
+
+RUN NUMBER: 157
+EXPLANATION: Run 157; CMA-ES; Avg degree = 3; Varying average degree. 6 of 120. First run in test = 151.
+
+Nov 29, 2025 2:17:28 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 21703.213760304294
+
+--- Restart 0 (Used: 0/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=483401, Sat Nov 29 02:17:28 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.202661923610002e+04 1.1e+00 9.42e-01  9e-01  1e+00 0:00.3
+    2    142 2.193634815289362e+04 1.0e+00 9.24e-01  8e-01  1e+00 0:00.5
+    3    213 2.185251472645259e+04 1.0e+00 9.15e-01  8e-01  1e+00 0:00.7
+   20   1420 2.175332713323144e+04 1.0e+00 1.20e+00  7e-01  2e+00 0:03.8
+   51   3621 2.169190389911947e+04 1.0e+00 2.37e+00  1e+00  5e+00 0:07.8
+   98   6958 2.168497926946847e+04 1.0e+00 3.68e+00  9e-01  6e+00 0:12.9
+  100   7100 2.168499597248814e+04 1.0e+00 3.67e+00  8e-01  7e+00 0:13.1
+  145  10295 2.168497603664480e+04 1.0e+00 2.60e+00  4e-01  5e+00 0:17.5
+--- Restart 1 (Used: 10295/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=526871, Sat Nov 29 02:17:45 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.238962080036393e+04 1.1e+00 1.13e+00  1e+00  1e+00 0:00.3
+    2    142 2.282050485428613e+04 1.0e+00 1.09e+00  1e+00  1e+00 0:00.5
+    3    213 2.250491931233314e+04 1.0e+00 1.07e+00  1e+00  1e+00 0:00.7
+   33   2343 2.175463399005699e+04 1.0e+00 1.84e+00  1e+00  2e+00 0:03.8
+   81   5751 2.170144976436559e+04 1.0e+00 4.68e+00  2e+00  8e+00 0:07.8
+  100   7100 2.169809726571510e+04 1.0e+00 5.74e+00  2e+00  9e+00 0:09.1
+  126   8946 2.169764760997622e+04 1.0e+00 5.25e+00  1e+00  8e+00 0:15.4
+  147  10437 2.169764760997622e+04 1.0e+00 4.46e+00  1e+00  7e+00 0:22.7
+  163  11573 2.169764760997622e+04 1.0e+00 4.57e+00  8e-01  8e+00 0:28.4
+--- Restart 2 (Used: 21868/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=443924, Sat Nov 29 02:18:14 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.241100219823887e+04 1.1e+00 1.32e+00  1e+00  1e+00 0:00.4
+    2    142 2.235758654795877e+04 1.0e+00 1.29e+00  1e+00  1e+00 0:00.9
+    3    213 2.204735712877744e+04 1.0e+00 1.28e+00  1e+00  1e+00 0:01.3
+   13    923 2.183907921792059e+04 1.0e+00 1.48e+00  1e+00  2e+00 0:04.3
+   61   4331 2.169349193668224e+04 1.0e+00 3.87e+00  2e+00  7e+00 0:08.4
+  100   7100 2.169113246456158e+04 1.0e+00 4.42e+00  1e+00  7e+00 0:10.9
+  165  11715 2.169113246456158e+04 1.0e+00 3.68e+00  9e-01  6e+00 0:13.3
+--- Restart 3 (Used: 33583/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=435692, Sat Nov 29 02:18:28 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.308649058191482e+04 1.1e+00 1.49e+00  1e+00  2e+00 0:00.5
+    2    142 2.319903317747296e+04 1.0e+00 1.44e+00  1e+00  2e+00 0:01.1
+    3    213 2.216500365213303e+04 1.0e+00 1.43e+00  1e+00  2e+00 0:01.6
+    8    568 2.198417368875194e+04 1.0e+00 1.51e+00  1e+00  2e+00 0:05.0
+   13    923 2.191031388374976e+04 1.0e+00 1.69e+00  1e+00  2e+00 0:09.8
+   19   1349 2.181117339660438e+04 1.0e+00 2.03e+00  2e+00  3e+00 0:15.5
+   25   1775 2.180967754838375e+04 1.0e+00 2.27e+00  2e+00  3e+00 0:21.9
+   32   2272 2.179039430072390e+04 1.0e+00 2.64e+00  2e+00  4e+00 0:29.4
+   40   2840 2.176573673613097e+04 1.0e+00 3.15e+00  2e+00  5e+00 0:38.1
+   49   3479 2.176224532794222e+04 1.0e+00 4.11e+00  2e+00  7e+00 0:47.2
+   59   4189 2.174734094377567e+04 1.0e+00 5.21e+00  2e+00  9e+00 0:57.2
+   71   5041 2.173801520377037e+04 1.0e+00 5.78e+00  2e+00  1e+01 1:09.1
+   84   5964 2.172662146614110e+04 1.0e+00 6.55e+00  2e+00  1e+01 1:22.1
+   91   6461 2.172563864823361e+04 1.0e+00 7.18e+00  2e+00  1e+01 1:29.2
+Nov 29, 2025 2:19:57 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+Nov 29, 2025 2:19:57 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 1 0 0 1 1 0]
+ [1 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 1 1 0]
+ [0 0 1 0 0 0 0 0 0 0]
+ [0 0 1 1 1 1 0 0 0 1]
+ [0 0 1 0 0 0 0 0 1 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 1 0 0 0 0 0 0]]
+Predicted B:
+[[0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]
+True bic: 21703.213760304294
+Predicted bic: 21705.145449529195
+Thresholded bic: 21706.078804071145
+Thresholded SHD: 13.0
+Predicted ADMG SHD: 14.0
+
+
+RUN NUMBER: 158
+EXPLANATION: Run 158; CMA-ES; Avg degree = 4; Varying average degree. 7 of 120. First run in test = 151.
+
+Nov 29, 2025 2:19:57 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 24851.495278178696
+
+--- Restart 0 (Used: 0/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=542670, Sat Nov 29 02:19:57 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.701667336310347e+04 1.1e+00 9.41e-01  9e-01  1e+00 0:00.7
+    2    142 2.640100175100803e+04 1.0e+00 9.08e-01  9e-01  1e+00 0:01.1
+    3    213 2.600861731551018e+04 1.0e+00 8.95e-01  8e-01  1e+00 0:01.5
+   16   1136 2.495542111917565e+04 1.0e+00 1.20e+00  1e+00  1e+00 0:04.6
+   40   2840 2.487031881656538e+04 1.0e+00 2.22e+00  1e+00  3e+00 0:08.7
+   76   5396 2.483643041036317e+04 1.0e+00 4.77e+00  2e+00  8e+00 0:13.7
+  100   7100 2.483612721871941e+04 1.0e+00 6.83e+00  2e+00  2e+01 0:17.3
+  138   9798 2.483493987007505e+04 1.0e+00 7.39e+00  2e+00  1e+01 0:24.3
+  173  12283 2.483493987007505e+04 1.0e+00 5.74e+00  1e+00  1e+01 0:31.7
+--- Restart 1 (Used: 12283/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=498395, Sat Nov 29 02:20:29 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.529005938825648e+04 1.1e+00 1.14e+00  1e+00  1e+00 0:00.5
+    2    142 2.507266111357551e+04 1.0e+00 1.10e+00  1e+00  1e+00 0:00.9
+    3    213 2.496467060234550e+04 1.0e+00 1.08e+00  1e+00  1e+00 0:01.2
+   16   1136 2.494501004027724e+04 1.0e+00 1.49e+00  1e+00  2e+00 0:04.3
+   41   2911 2.486964710077267e+04 1.0e+00 3.31e+00  2e+00  6e+00 0:08.3
+   93   6603 2.483174464095649e+04 1.0e+00 9.70e+00  3e+00  2e+01 0:13.4
+  100   7100 2.483155786345483e+04 1.0e+00 1.11e+01  3e+00  3e+01 0:13.9
+  167  11857 2.483152795292066e+04 1.0e+00 8.12e+00  2e+00  2e+01 0:17.4
+--- Restart 2 (Used: 24140/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=530193, Sat Nov 29 02:20:47 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.508251161994279e+04 1.1e+00 1.33e+00  1e+00  1e+00 0:00.3
+    2    142 2.552417018021810e+04 1.0e+00 1.29e+00  1e+00  1e+00 0:00.7
+    3    213 2.517948616225933e+04 1.0e+00 1.28e+00  1e+00  1e+00 0:01.1
+   16   1136 2.494447312676137e+04 1.0e+00 1.73e+00  1e+00  2e+00 0:04.2
+   37   2627 2.488583561802828e+04 1.0e+00 3.36e+00  2e+00  5e+00 0:08.4
+   75   5325 2.482919654546826e+04 1.0e+00 7.42e+00  3e+00  2e+01 0:13.5
+  100   7100 2.482187376092363e+04 1.0e+00 8.50e+00  3e+00  2e+01 0:16.4
+  200  14200 2.481635090684750e+04 1.0e+00 8.14e+00  2e+00  2e+01 0:20.9
+  203  14413 2.481635090684750e+04 1.0e+00 7.99e+00  2e+00  2e+01 0:21.0
+--- Restart 3 (Used: 38553/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=508700, Sat Nov 29 02:21:08 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.524857264972392e+04 1.1e+00 1.50e+00  1e+00  2e+00 0:00.3
+    2    142 2.495597955920236e+04 1.0e+00 1.48e+00  1e+00  2e+00 0:00.7
+    3    213 2.513003191920562e+04 1.0e+00 1.48e+00  1e+00  2e+00 0:01.0
+   21   1491 2.489381052464595e+04 1.0e+00 2.76e+00  2e+00  4e+00 0:03.8
+Nov 29, 2025 2:21:12 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+Nov 29, 2025 2:21:12 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0 0 0 0 0 0 0 0 0 0]
+ [1 0 0 0 0 0 0 0 0 0]
+ [1 1 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 1 1 0 0 0 1 1 0 0]
+ [0 0 0 1 0 0 0 0 0 0]
+ [0 0 0 0 0 1 0 0 0 0]
+ [0 0 0 1 0 1 1 0 0 0]
+ [0 0 0 0 0 0 0 1 0 0]
+ [0 0 0 0 0 0 0 0 0 0]]
+Predicted B:
+[[0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]
+True bic: 24851.495278178696
+Predicted bic: 24836.873343488267
+Thresholded bic: 24836.873343488267
+Thresholded SHD: 18.0
+Predicted ADMG SHD: 18.0
+
+
+RUN NUMBER: 159
+EXPLANATION: Run 159; CMA-ES; Avg degree = 6; Varying average degree. 8 of 120. First run in test = 151.
+
+Nov 29, 2025 2:21:13 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 30027.462193338913
+
+--- Restart 0 (Used: 0/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=476992, Sat Nov 29 02:21:13 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 3.554627927652803e+04 1.1e+00 9.45e-01  9e-01  1e+00 0:00.6
+    2    142 3.303280195396965e+04 1.0e+00 9.17e-01  9e-01  1e+00 0:01.2
+    3    213 3.229465334314211e+04 1.0e+00 9.05e-01  8e-01  1e+00 0:01.7
+    8    568 3.160480809798259e+04 1.0e+00 9.68e-01  8e-01  1e+00 0:04.7
+   15   1065 3.084545297459426e+04 1.0e+00 1.07e+00  8e-01  1e+00 0:09.4
+   23   1633 3.014416585479882e+04 1.0e+00 1.43e+00  1e+00  2e+00 0:14.6
+   31   2201 3.007544752631092e+04 1.0e+00 1.56e+00  1e+00  2e+00 0:20.8
+   39   2769 3.006038177144854e+04 1.0e+00 1.86e+00  1e+00  3e+00 0:27.9
+   48   3408 3.006454879683008e+04 1.0e+00 1.99e+00  1e+00  3e+00 0:36.5
+   57   4047 3.005012222198540e+04 1.0e+00 2.10e+00  9e-01  4e+00 0:46.4
+   66   4686 3.003672595233473e+04 1.0e+00 2.21e+00  9e-01  4e+00 0:56.4
+   76   5396 3.003859652521675e+04 1.0e+00 2.59e+00  9e-01  5e+00 1:07.8
+   87   6177 3.003538879244457e+04 1.0e+00 3.05e+00  9e-01  6e+00 1:20.5
+  100   7100 3.003527960479875e+04 1.0e+00 3.37e+00  1e+00  7e+00 1:34.5
+  114   8094 3.003522099710490e+04 1.0e+00 3.92e+00  1e+00  8e+00 1:49.1
+  129   9159 3.003522349427763e+04 1.0e+00 4.15e+00  1e+00  8e+00 2:04.3
+  146  10366 3.003522099710490e+04 1.0e+00 4.07e+00  9e-01  9e+00 2:20.4
+  161  11431 3.003522099710490e+04 1.0e+00 3.73e+00  7e-01  1e+01 2:37.9
+  165  11715 3.003522099710490e+04 1.0e+00 3.43e+00  7e-01  1e+01 2:43.0
+--- Restart 1 (Used: 11715/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=468431, Sat Nov 29 02:23:56 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 3.450741643931590e+04 1.1e+00 1.12e+00  1e+00  1e+00 0:00.7
+    2    142 3.259859590711612e+04 1.0e+00 1.09e+00  1e+00  1e+00 0:01.5
+    3    213 3.287249617318552e+04 1.0e+00 1.09e+00  1e+00  1e+00 0:02.0
+   12    852 3.066502918961451e+04 1.0e+00 1.32e+00  1e+00  2e+00 0:05.2
+   33   2343 3.008541321530556e+04 1.0e+00 2.04e+00  1e+00  3e+00 0:09.2
+   68   4828 3.004355669747957e+04 1.0e+00 3.69e+00  2e+00  5e+00 0:14.3
+  100   7100 3.003260660032404e+04 1.0e+00 6.25e+00  2e+00  1e+01 0:19.5
+  157  11147 3.003241433344841e+04 1.0e+00 4.57e+00  9e-01  8e+00 0:26.6
+  163  11573 3.003241433344841e+04 1.0e+00 4.45e+00  8e-01  8e+00 0:27.3
+--- Restart 2 (Used: 23288/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=465637, Sat Nov 29 02:24:24 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 3.246707712549161e+04 1.1e+00 1.30e+00  1e+00  1e+00 0:00.9
+    2    142 3.232856109149308e+04 1.0e+00 1.25e+00  1e+00  1e+00 0:01.6
+    3    213 3.129526319266797e+04 1.0e+00 1.23e+00  1e+00  1e+00 0:02.2
+    8    568 3.062998325449305e+04 1.0e+00 1.27e+00  1e+00  1e+00 0:05.3
+   20   1420 3.015948337346593e+04 1.0e+00 1.58e+00  1e+00  2e+00 0:09.5
+   35   2485 3.006430928865551e+04 1.0e+00 1.96e+00  1e+00  3e+00 0:14.7
+   53   3763 3.005466323498272e+04 1.0e+00 2.73e+00  1e+00  4e+00 0:20.8
+   74   5254 3.004001933617951e+04 1.0e+00 4.50e+00  2e+00  9e+00 0:28.2
+   97   6887 3.002357024762188e+04 1.0e+00 6.71e+00  2e+00  2e+01 0:36.2
+  100   7100 3.002955251634482e+04 1.0e+00 7.17e+00  2e+00  2e+01 0:37.2
+  131   9301 3.002345306706920e+04 1.0e+00 6.75e+00  2e+00  2e+01 0:47.3
+  166  11786 3.001757459152470e+04 1.0e+00 7.58e+00  1e+00  2e+01 0:58.5
+  194  13774 3.001757459152470e+04 1.0e+00 7.59e+00  1e+00  2e+01 1:07.3
+--- Restart 3 (Used: 37062/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=491818, Sat Nov 29 02:25:31 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 3.244586250080428e+04 1.1e+00 1.50e+00  1e+00  2e+00 0:00.7
+    2    142 3.340620143482579e+04 1.0e+00 1.47e+00  1e+00  2e+00 0:01.4
+    3    213 3.247972464725290e+04 1.0e+00 1.46e+00  1e+00  2e+00 0:02.1
+    9    639 3.080838275033299e+04 1.0e+00 1.50e+00  1e+00  2e+00 0:05.4
+   20   1420 3.050429797688851e+04 1.0e+00 1.95e+00  1e+00  2e+00 0:09.5
+   38   2698 3.017581553357231e+04 1.0e+00 3.06e+00  2e+00  5e+00 0:14.7
+   42   2982 3.008368282947955e+04 1.0e+00 3.19e+00  1e+00  5e+00 0:15.8
+Nov 29, 2025 2:25:47 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+Nov 29, 2025 2:25:47 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0 1 1 1 1 0 0 0 0 1]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 1 0 1 0 0 0 1 0 1]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 1 0 1 0 0 0 1 0 1]
+ [0 1 0 1 1 0 0 0 0 1]
+ [0 0 1 1 1 1 0 1 0 1]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 1 1 1 1 0 0 0 1]
+ [0 1 0 1 0 0 0 0 0 0]]
+Predicted B:
+[[0. 0. 0. 0. 0. 1. 0. 0. 1. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 1. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [1. 0. 1. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 1. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [1. 0. 0. 0. 0. 0. 1. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]
+True bic: 30027.462193338913
+Predicted bic: 30038.097028165463
+Thresholded bic: 30046.803135360777
+Thresholded SHD: 45.0
+Predicted ADMG SHD: 47.0
+
+
+RUN NUMBER: 160
+EXPLANATION: Run 160; CMA-ES; Avg degree = 8; Varying average degree. 9 of 120. First run in test = 151.
+
+Nov 29, 2025 2:25:48 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 28374.551937460714
+
+--- Restart 0 (Used: 0/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=495999, Sat Nov 29 02:25:48 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 3.113009202000415e+04 1.1e+00 9.41e-01  9e-01  1e+00 0:00.9
+    2    142 3.137783373267360e+04 1.0e+00 9.15e-01  9e-01  1e+00 0:01.7
+    3    213 3.122702893184120e+04 1.0e+00 9.06e-01  8e-01  1e+00 0:02.5
+    7    497 2.930143731495438e+04 1.0e+00 9.67e-01  9e-01  1e+00 0:06.2
+   12    852 2.899828126019354e+04 1.0e+00 1.05e+00  9e-01  1e+00 0:10.4
+   19   1349 2.870364098261985e+04 1.0e+00 1.24e+00  9e-01  2e+00 0:15.9
+   31   2201 2.840355739491150e+04 1.0e+00 1.58e+00  1e+00  2e+00 0:22.1
+   48   3408 2.839877472462797e+04 1.0e+00 1.98e+00  1e+00  3e+00 0:29.2
+   89   6319 2.838471354017165e+04 1.0e+00 2.82e+00  1e+00  5e+00 0:37.3
+  100   7100 2.838472574437927e+04 1.0e+00 2.87e+00  9e-01  5e+00 0:38.9
+  143  10153 2.838470871773889e+04 1.0e+00 2.34e+00  5e-01  5e+00 0:45.2
+--- Restart 1 (Used: 10153/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=503009, Sat Nov 29 02:26:33 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 3.040864604744969e+04 1.1e+00 1.12e+00  1e+00  1e+00 0:00.7
+    2    142 3.091716398667960e+04 1.0e+00 1.08e+00  1e+00  1e+00 0:01.4
+    3    213 3.035232854017671e+04 1.0e+00 1.04e+00  1e+00  1e+00 0:02.0
+   10    710 2.907426838456075e+04 1.0e+00 1.16e+00  1e+00  1e+00 0:05.3
+   25   1775 2.843421597417380e+04 1.0e+00 1.42e+00  9e-01  2e+00 0:09.4
+   43   3053 2.838567813815575e+04 1.0e+00 1.71e+00  9e-01  2e+00 0:14.7
+   62   4402 2.837674301950645e+04 1.0e+00 2.01e+00  9e-01  3e+00 0:20.7
+   84   5964 2.837646785093951e+04 1.0e+00 2.62e+00  9e-01  4e+00 0:28.0
+  100   7100 2.837641798896370e+04 1.0e+00 2.89e+00  8e-01  5e+00 0:33.0
+  129   9159 2.837641486504667e+04 1.0e+00 3.10e+00  6e-01  6e+00 0:42.0
+  165  11715 2.837641486504667e+04 1.0e+00 3.07e+00  5e-01  1e+01 0:52.2
+  171  12141 2.837641486504667e+04 1.0e+00 2.88e+00  5e-01  9e+00 0:53.8
+--- Restart 2 (Used: 22294/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=490409, Sat Nov 29 02:27:27 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 3.090057120310632e+04 1.1e+00 1.32e+00  1e+00  1e+00 0:00.8
+    2    142 3.019782871022894e+04 1.0e+00 1.30e+00  1e+00  1e+00 0:01.6
+    3    213 3.020587557501533e+04 1.0e+00 1.30e+00  1e+00  1e+00 0:02.2
+    8    568 2.885922399629647e+04 1.0e+00 1.47e+00  1e+00  2e+00 0:05.6
+   17   1207 2.876000950594834e+04 1.0e+00 1.95e+00  1e+00  3e+00 0:09.6
+   41   2911 2.841054299141984e+04 1.0e+00 3.24e+00  2e+00  5e+00 0:15.0
+   82   5822 2.836467692488457e+04 1.0e+00 4.50e+00  2e+00  8e+00 0:21.1
+  100   7100 2.836452914592753e+04 1.0e+00 4.54e+00  1e+00  7e+00 0:23.8
+  161  11431 2.836452914592753e+04 1.0e+00 4.47e+00  1e+00  1e+01 0:31.9
+  181  12851 2.836452914592753e+04 1.0e+00 4.02e+00  1e+00  1e+01 0:34.5
+--- Restart 3 (Used: 35145/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=460509, Sat Nov 29 02:28:02 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 3.100306155044577e+04 1.1e+00 1.48e+00  1e+00  2e+00 0:00.8
+    2    142 3.047273509184135e+04 1.0e+00 1.42e+00  1e+00  2e+00 0:01.4
+    3    213 3.009418769782485e+04 1.0e+00 1.39e+00  1e+00  1e+00 0:02.1
+   14    994 2.901243265503175e+04 1.0e+00 1.59e+00  1e+00  2e+00 0:05.2
+   54   3834 2.837794342680350e+04 1.0e+00 2.72e+00  1e+00  4e+00 0:09.2
+   69   4899 2.835371666039316e+04 1.0e+00 3.76e+00  1e+00  6e+00 0:10.7
+Nov 29, 2025 2:28:13 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+Nov 29, 2025 2:28:13 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0 1 0 1 1 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [1 1 0 0 1 0 0 0 0 0]
+ [0 1 0 0 0 0 0 0 0 0]
+ [0 1 0 1 0 0 0 0 0 0]
+ [1 1 1 1 1 0 0 0 0 0]
+ [1 1 0 1 1 1 0 1 1 1]
+ [0 1 0 0 1 1 0 0 0 0]
+ [1 0 1 1 1 1 0 1 0 0]
+ [0 0 0 1 0 1 0 1 0 0]]
+Predicted B:
+[[0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]
+True bic: 28374.551937460714
+Predicted bic: 28373.070758958387
+Thresholded bic: 28382.224998535014
+Thresholded SHD: 36.0
+Predicted ADMG SHD: 37.0
+
+
+RUN NUMBER: 161
+EXPLANATION: Run 161; DCD; Frac directed = 0.1; Varying directed fraction. 10 of 120. First run in test = 151.
+
+Nov 29, 2025 2:28:13 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 29294.16540725175
+
+Nov 29, 2025 2:28:51 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+Nov 29, 2025 2:28:51 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0. 1. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [1. 0. 0. 0. 0. 0. 0. 0. 1. 1.]
+ [1. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 1. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]
+Predicted B:
+[[0. 0. 0. 0. 0. 0. 0. 0. 1. 0.]
+ [0. 0. 0. 0. 1. 0. 1. 0. 0. 0.]
+ [0. 0. 0. 1. 0. 0. 1. 0. 0. 0.]
+ [0. 0. 1. 0. 0. 0. 0. 0. 1. 0.]
+ [0. 1. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 1. 1. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [1. 0. 0. 1. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]
+True bic: 29294.16540725175
+Predicted bic: 29548.366996494635
+Thresholded bic: 29548.366996494635
+Thresholded SHD: 27.0
+Predicted ADMG SHD: 27.0
+
+
+RUN NUMBER: 162
+EXPLANATION: Run 162; DCD; Frac directed = 0.3; Varying directed fraction. 11 of 120. First run in test = 151.
+
+Nov 29, 2025 2:28:51 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 29445.325094214666
+
+Nov 29, 2025 2:29:28 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+Nov 29, 2025 2:29:28 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [1. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 1. 0. 1. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 1. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 1. 0. 0.]
+ [0. 0. 0. 0. 1. 0. 0. 0. 0. 0.]
+ [1. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [1. 0. 1. 0. 0. 0. 1. 0. 0. 0.]
+ [0. 1. 0. 1. 0. 0. 0. 0. 0. 0.]]
+Predicted B:
+[[0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 1. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 1.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 1. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 1. 0. 0. 0. 0. 0.]]
+True bic: 29445.325094214666
+Predicted bic: 29489.861265423242
+Thresholded bic: 29489.86126542324
+Thresholded SHD: 19.0
+Predicted ADMG SHD: 19.0
+
+
+RUN NUMBER: 163
+EXPLANATION: Run 163; DCD; Frac directed = 0.5; Varying directed fraction. 12 of 120. First run in test = 151.
+
+Nov 29, 2025 2:29:28 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 24535.24344427673
+
+Nov 29, 2025 2:30:15 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+Nov 29, 2025 2:30:15 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0. 1. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [1. 0. 0. 0. 0. 0. 1. 0. 0. 0.]
+ [1. 0. 0. 0. 0. 0. 1. 0. 0. 1.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [1. 0. 0. 0. 0. 1. 0. 0. 0. 0.]
+ [1. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 1. 0. 0. 1. 1. 1. 0. 0. 0.]]
+Predicted B:
+[[0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 1. 0. 0.]
+ [0. 0. 0. 0. 0. 1. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 1. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 1. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]
+True bic: 24535.24344427673
+Predicted bic: 25040.012591522594
+Thresholded bic: 25033.22845311834
+Thresholded SHD: 15.0
+Predicted ADMG SHD: 16.0
+
+
+RUN NUMBER: 164
+EXPLANATION: Run 164; DCD; Frac directed = 0.7; Varying directed fraction. 13 of 120. First run in test = 151.
+
+Nov 29, 2025 2:30:15 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 26262.627844310824
+
+Nov 29, 2025 2:39:45 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+Nov 29, 2025 2:39:45 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0. 0. 0. 0. 1. 1. 1. 0. 0. 1.]
+ [1. 0. 1. 0. 0. 0. 0. 1. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 1. 0. 1. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 1.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 1. 0. 0. 0. 0.]
+ [1. 0. 0. 0. 0. 1. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]
+Predicted B:
+[[0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 1. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 1. 0. 1.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 1. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 1. 0. 1. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 1. 0. 0. 0. 0.]
+ [0. 0. 1. 0. 0. 0. 0. 0. 0. 1.]
+ [0. 1. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 1. 0. 0. 0. 0. 1. 0. 0.]]
+True bic: 26262.627844310824
+Predicted bic: 26615.348508843086
+Thresholded bic: 26615.348508843086
+Thresholded SHD: 20.0
+Predicted ADMG SHD: 20.0
+
+
+RUN NUMBER: 165
+EXPLANATION: Run 165; DCD; Frac directed = 0.9; Varying directed fraction. 14 of 120. First run in test = 151.
+
+Nov 29, 2025 2:39:45 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 17407.252283344165
+
+Nov 29, 2025 2:58:41 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+Nov 29, 2025 2:58:42 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0. 1. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [1. 1. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 1. 0.]
+ [0. 0. 0. 1. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 1. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 1. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 1. 0. 0. 0. 1. 1. 0. 0. 0.]]
+Predicted B:
+[[0. 0. 0. 0. 0. 0. 1. 0. 1. 0.]
+ [0. 0. 0. 1. 1. 1. 0. 1. 0. 0.]
+ [0. 0. 0. 1. 1. 1. 1. 1. 0. 1.]
+ [0. 1. 1. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 1. 1. 0. 0. 1. 1. 1. 0. 0.]
+ [0. 1. 1. 0. 1. 0. 0. 1. 0. 0.]
+ [1. 0. 1. 0. 1. 0. 0. 0. 1. 0.]
+ [0. 1. 1. 0. 1. 1. 0. 0. 0. 0.]
+ [1. 0. 0. 0. 0. 0. 1. 0. 0. 1.]
+ [0. 0. 1. 0. 0. 0. 0. 0. 1. 0.]]
+True bic: 17407.252283344165
+Predicted bic: 19407.194715130317
+Thresholded bic: 19429.020005425362
+Thresholded SHD: 29.0
+Predicted ADMG SHD: 33.0
+
+
+RUN NUMBER: 166
+EXPLANATION: Run 166; DCD; Avg degree = 2; Varying average degree. 15 of 120. First run in test = 151.
+
+Nov 29, 2025 2:58:42 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 20099.250181627383
+
+Nov 29, 2025 2:59:09 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+Nov 29, 2025 2:59:09 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0. 0. 0. 0. 0. 0. 1. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 1. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 1. 0. 0. 0. 0. 0.]]
+Predicted B:
+[[0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 1.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 1. 0. 0. 0. 0.]]
+True bic: 20099.250181627383
+Predicted bic: 20128.593979041627
+Thresholded bic: 20128.593979041627
+Thresholded SHD: 4.0
+Predicted ADMG SHD: 4.0
+
+
+RUN NUMBER: 167
+EXPLANATION: Run 167; DCD; Avg degree = 3; Varying average degree. 16 of 120. First run in test = 151.
+
+Nov 29, 2025 2:59:09 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 28016.81888156693
+
+Nov 29, 2025 2:59:48 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+Nov 29, 2025 2:59:48 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 1. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 1. 1. 0. 0. 1. 0. 1. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 1.]
+ [0. 0. 0. 0. 0. 0. 1. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [1. 1. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 1. 0. 0. 0. 1. 1. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]
+Predicted B:
+[[0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 1. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 1. 0. 0. 0. 0. 1. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 1. 0. 0. 0. 0. 1.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 1. 0.]]
+True bic: 28016.81888156693
+Predicted bic: 28346.177946629872
+Thresholded bic: 28346.177946629876
+Thresholded SHD: 13.0
+Predicted ADMG SHD: 13.0
+
+
+RUN NUMBER: 168
+EXPLANATION: Run 168; DCD; Avg degree = 4; Varying average degree. 17 of 120. First run in test = 151.
+
+Nov 29, 2025 2:59:48 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 23968.414385367414
+
+Nov 29, 2025 3:03:36 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+Nov 29, 2025 3:03:37 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 1. 0. 0. 1. 1. 1. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 1.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 1. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]
+Predicted B:
+[[0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 1. 1. 1. 0. 0. 0. 0. 1.]
+ [0. 1. 0. 0. 1. 0. 0. 0. 1. 1.]
+ [0. 1. 0. 0. 1. 0. 0. 0. 1. 1.]
+ [0. 1. 1. 1. 0. 0. 0. 1. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 1. 1.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 1. 0. 0. 0. 0. 1.]
+ [0. 0. 1. 1. 0. 1. 0. 0. 0. 0.]
+ [0. 1. 1. 1. 0. 1. 0. 1. 0. 0.]]
+True bic: 23968.414385367414
+Predicted bic: 24413.079239886174
+Thresholded bic: 24399.400304793642
+Thresholded SHD: 24.0
+Predicted ADMG SHD: 26.0
+
+
+RUN NUMBER: 169
+EXPLANATION: Run 169; DCD; Avg degree = 6; Varying average degree. 18 of 120. First run in test = 151.
+
+Nov 29, 2025 3:03:37 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 27680.514383087346
+
+Nov 29, 2025 3:04:20 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+Nov 29, 2025 3:04:20 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0. 0. 0. 0. 0. 1. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 1. 1. 1. 1.]
+ [1. 1. 0. 0. 1. 1. 0. 1. 0. 0.]
+ [0. 1. 0. 0. 0. 0. 0. 1. 1. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 1. 1. 0. 0. 0. 0.]
+ [1. 0. 0. 0. 1. 1. 1. 0. 0. 0.]
+ [1. 0. 0. 0. 0. 0. 0. 0. 0. 1.]
+ [1. 0. 0. 0. 0. 1. 0. 1. 0. 0.]]
+Predicted B:
+[[0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]
+True bic: 27680.514383087346
+Predicted bic: 27856.628563420025
+Thresholded bic: 27856.628563420025
+Thresholded SHD: 16.0
+Predicted ADMG SHD: 16.0
+
+
+RUN NUMBER: 170
+EXPLANATION: Run 170; DCD; Avg degree = 8; Varying average degree. 19 of 120. First run in test = 151.
+
+Nov 29, 2025 3:04:20 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 27834.629565821568
+
+Nov 29, 2025 3:05:10 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+Nov 29, 2025 3:05:11 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0. 0. 0. 1. 0. 0. 1. 1. 0. 0.]
+ [0. 0. 1. 1. 0. 0. 0. 0. 1. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 1. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 1. 1. 1. 0. 1. 1. 1. 0. 1.]
+ [1. 1. 0. 0. 0. 0. 0. 1. 1. 1.]
+ [0. 1. 0. 1. 0. 0. 0. 1. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 1. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [1. 1. 0. 1. 0. 0. 0. 1. 0. 0.]]
+Predicted B:
+[[0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]
+True bic: 27834.629565821568
+Predicted bic: 28335.08777931942
+Thresholded bic: 28335.08777931942
+Thresholded SHD: 22.0
+Predicted ADMG SHD: 22.0
+
+
+RUN NUMBER: 171
+EXPLANATION: Run 171; Relcadilac; Frac directed = 0.1; Varying directed fraction. 20 of 120. First run in test = 151.
+
+Nov 29, 2025 3:05:11 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 35409.06285558275
+
+INFO:relcadilac.relcadilac:triggering learn
+Starting Entropy Coefficient Annealing:
+	self.initial_entropy = 0.3
+	self.min_entropy = 0.005
+	self.cycle_length = 16000
+	self.damping_factor = 0.5
+Step: 8; New least BIC found: 35837.47863769531
+Step: 16; New least BIC found: 35625.92697143555
+Step: 24; New least BIC found: 35517.97103881836
+Step: 296; New least BIC found: 35471.88186645508
+Step: 1160; New least BIC found: 35466.07971191406
+Step: 1704; New least BIC found: 35457.84378051758
+Step: 3968; New least BIC found: 35456.86721801758
+Step: 5224; New least BIC found: 35432.8498840332
+Step: 10064; New least BIC found: 35431.46514892578
+Step: 10440; New least BIC found: 35419.60906982422
+Step: 16880; New least BIC found: 35413.8069152832
+Step: 23256; New least BIC found: 35413.05923461914
+Step: 23352; New least BIC found: 35408.35189819336
+Step: 24416; New least BIC found: 35408.06579589844
+Step: 26512; New least BIC found: 35407.72247314453
+Step: 28840; New least BIC found: 35406.341552734375
+Step: 34712; New least BIC found: 35395.14923095703
+Step: 45264; New least BIC found: 35390.54489135742
+Step: 51216; New least BIC found: 35388.4162902832
+Step: 52960; New least BIC found: 35385.1432800293
+Step: 57976; New least BIC found: 35382.88116455078
+Step: 59168; New least BIC found: 35380.64956665039
+Step: 62608; New least BIC found: 35379.920959472656
+Step: 64784; New least BIC found: 35379.43649291992
+Step: 65952; New least BIC found: 35376.014709472656
+Step: 72328; New least BIC found: 35372.615814208984
+Step: 78936; New least BIC found: 35366.95861816406
+RL Training Progress: 100%|█████████████████████████████████████████████████████████████████████████████| 80000/80000 [07:02<00:00, 189.37step/s]
+Nov 29, 2025 3:12:37 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+INFO:relcadilac.relcadilac:
+Best BIC = 35366.95861816406
+INFO:relcadilac.relcadilac:Predicted ADMG (parents on columns) =
+Directed Edges:
+[[0 0 0 1 0 0 1 0 1 1]
+ [1 0 0 1 1 1 0 1 0 0]
+ [0 0 0 0 0 0 0 0 0 1]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 1 0]
+ [1 0 1 0 0 0 1 1 1 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 1 0 0 0 0 0 0 0]
+ [0 0 1 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]]
+Bidirected Edges:
+[[0. 0. 0. 0. 1. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [1. 0. 0. 0. 0. 0. 0. 1. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 1.]
+ [0. 0. 0. 0. 1. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 1. 0. 0. 0.]]
+Nov 29, 2025 3:12:38 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0 0 0 1 0 0 1 0 1 1]
+ [1 0 0 1 1 1 0 1 0 0]
+ [0 0 0 0 0 0 0 0 0 1]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 1 0]
+ [1 0 1 0 0 0 1 1 1 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 1 0 0 0 0 0 0 0]
+ [0 0 1 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]]
+Predicted B:
+[[0. 0. 0. 0. 1. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [1. 0. 0. 0. 0. 0. 0. 1. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 1.]
+ [0. 0. 0. 0. 1. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 1. 0. 0. 0.]]
+True bic: 35409.06285558275
+Predicted bic: 35366.95861816406
+Thresholded bic: 35507.13192203306
+Thresholded SHD: 31.0
+Predicted ADMG SHD: 38.0
+
+
+RUN NUMBER: 172
+EXPLANATION: Run 172; Relcadilac; Frac directed = 0.3; Varying directed fraction. 21 of 120. First run in test = 151.
+
+Nov 29, 2025 3:12:38 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 30630.11332079059
+
+INFO:relcadilac.relcadilac:triggering learn
+Starting Entropy Coefficient Annealing:
+	self.initial_entropy = 0.3
+	self.min_entropy = 0.005
+	self.cycle_length = 16000
+	self.damping_factor = 0.5
+Step: 8; New least BIC found: 31992.99430847168
+Step: 16; New least BIC found: 31406.780242919922
+Step: 88; New least BIC found: 31347.810745239258
+Step: 112; New least BIC found: 31347.152709960938
+Step: 144; New least BIC found: 31312.870025634766
+Step: 152; New least BIC found: 31231.691360473633
+Step: 224; New least BIC found: 31015.97023010254
+Step: 832; New least BIC found: 31006.874084472656
+Step: 1168; New least BIC found: 30972.721099853516
+Step: 1632; New least BIC found: 30964.24102783203
+Step: 1672; New least BIC found: 30764.70184326172
+Step: 4680; New least BIC found: 30757.177352905273
+Step: 6352; New least BIC found: 30742.918014526367
+Step: 13128; New least BIC found: 30738.258361816406
+Step: 17752; New least BIC found: 30732.330322265625
+Step: 27272; New least BIC found: 30730.90171813965
+Step: 27752; New least BIC found: 30707.639694213867
+Step: 29448; New least BIC found: 30704.959869384766
+Step: 41696; New least BIC found: 30699.8291015625
+Step: 69680; New least BIC found: 30699.134826660156
+RL Training Progress: 100%|██████████████████████████████████████████████████████████████████████████████| 80000/80000 [20:31<00:00, 64.94step/s]
+Nov 29, 2025 3:33:31 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+INFO:relcadilac.relcadilac:
+Best BIC = 30699.134826660156
+INFO:relcadilac.relcadilac:Predicted ADMG (parents on columns) =
+Directed Edges:
+[[0 0 0 0 1 0 1 0 1 0]
+ [1 0 1 0 1 1 0 1 1 1]
+ [0 0 0 0 0 0 0 0 0 1]
+ [0 0 1 0 0 0 0 0 1 0]
+ [0 0 0 0 0 0 1 0 0 0]
+ [0 0 0 0 0 0 1 1 1 1]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 1 0 0 0 1 0 0 0]
+ [0 0 0 0 0 0 1 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]]
+Bidirected Edges:
+[[0. 0. 0. 0. 0. 1. 0. 0. 0. 0.]
+ [0. 0. 0. 1. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 1. 0. 0. 0. 0. 0.]
+ [0. 1. 0. 0. 1. 0. 0. 1. 0. 0.]
+ [0. 0. 1. 1. 0. 1. 0. 1. 1. 0.]
+ [1. 0. 0. 0. 1. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 1. 1. 0. 0. 0. 1. 0.]
+ [0. 0. 0. 0. 1. 0. 0. 1. 0. 1.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 1. 0.]]
+Nov 29, 2025 3:33:31 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0 0 0 0 1 0 1 0 1 0]
+ [1 0 1 0 1 1 0 1 1 1]
+ [0 0 0 0 0 0 0 0 0 1]
+ [0 0 1 0 0 0 0 0 1 0]
+ [0 0 0 0 0 0 1 0 0 0]
+ [0 0 0 0 0 0 1 1 1 1]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 1 0 0 0 1 0 0 0]
+ [0 0 0 0 0 0 1 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]]
+Predicted B:
+[[0. 0. 0. 0. 0. 1. 0. 0. 0. 0.]
+ [0. 0. 0. 1. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 1. 0. 0. 0. 0. 0.]
+ [0. 1. 0. 0. 1. 0. 0. 1. 0. 0.]
+ [0. 0. 1. 1. 0. 1. 0. 1. 1. 0.]
+ [1. 0. 0. 0. 1. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 1. 1. 0. 0. 0. 1. 0.]
+ [0. 0. 0. 0. 1. 0. 0. 1. 0. 1.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 1. 0.]]
+True bic: 30630.11332079059
+Predicted bic: 30699.134826660156
+Thresholded bic: 30774.873424580048
+Thresholded SHD: 26.0
+Predicted ADMG SHD: 37.0
+
+
+RUN NUMBER: 173
+EXPLANATION: Run 173; Relcadilac; Frac directed = 0.5; Varying directed fraction. 22 of 120. First run in test = 151.
+
+Nov 29, 2025 3:33:31 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 28239.114118334903
+
+INFO:relcadilac.relcadilac:triggering learn
+Starting Entropy Coefficient Annealing:
+	self.initial_entropy = 0.3
+	self.min_entropy = 0.005
+	self.cycle_length = 16000
+	self.damping_factor = 0.5
+Step: 8; New least BIC found: 31073.545455932617
+Step: 16; New least BIC found: 28934.289932250977
+Step: 1136; New least BIC found: 28570.73211669922
+Step: 1672; New least BIC found: 28558.002471923828
+Step: 1840; New least BIC found: 28535.02082824707
+Step: 3224; New least BIC found: 28510.234832763672
+Step: 3704; New least BIC found: 28460.433959960938
+Step: 4304; New least BIC found: 28434.131622314453
+Step: 6832; New least BIC found: 28363.544464111328
+Step: 9528; New least BIC found: 28361.509323120117
+Step: 16672; New least BIC found: 28361.330032348633
+Step: 16696; New least BIC found: 28357.78045654297
+Step: 17152; New least BIC found: 28353.469848632812
+Step: 21936; New least BIC found: 28344.390869140625
+Step: 25192; New least BIC found: 28343.822479248047
+Step: 35480; New least BIC found: 28325.714111328125
+RL Training Progress: 100%|██████████████████████████████████████████████████████████████████████████████| 80000/80000 [22:16<00:00, 59.88step/s]
+Nov 29, 2025 3:56:08 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+INFO:relcadilac.relcadilac:
+Best BIC = 28325.714111328125
+INFO:relcadilac.relcadilac:Predicted ADMG (parents on columns) =
+Directed Edges:
+[[0 0 0 1 1 1 1 0 1 0]
+ [0 0 0 0 0 0 1 0 0 0]
+ [0 0 0 1 0 1 0 0 0 0]
+ [0 0 0 0 0 0 1 0 0 0]
+ [0 1 1 1 0 1 0 0 0 0]
+ [0 1 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 1 1 1 1 0 1 0 1 0]
+ [0 0 1 0 1 0 1 0 0 0]
+ [1 0 0 1 1 1 1 1 0 0]]
+Bidirected Edges:
+[[0. 0. 0. 0. 0. 0. 0. 1. 0. 0.]
+ [0. 0. 0. 1. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 1. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [1. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]
+Nov 29, 2025 3:56:08 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0 0 0 1 1 1 1 0 1 0]
+ [0 0 0 0 0 0 1 0 0 0]
+ [0 0 0 1 0 1 0 0 0 0]
+ [0 0 0 0 0 0 1 0 0 0]
+ [0 1 1 1 0 1 0 0 0 0]
+ [0 1 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 1 1 1 1 0 1 0 1 0]
+ [0 0 1 0 1 0 1 0 0 0]
+ [1 0 0 1 1 1 1 1 0 0]]
+Predicted B:
+[[0. 0. 0. 0. 0. 0. 0. 1. 0. 0.]
+ [0. 0. 0. 1. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 1. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [1. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]
+True bic: 28239.114118334903
+Predicted bic: 28325.714111328125
+Thresholded bic: 29816.54310848402
+Thresholded SHD: 22.0
+Predicted ADMG SHD: 31.0
+
+
+RUN NUMBER: 174
+EXPLANATION: Run 174; Relcadilac; Frac directed = 0.7; Varying directed fraction. 23 of 120. First run in test = 151.
+
+Nov 29, 2025 3:56:08 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 22641.39981809901
+
+INFO:relcadilac.relcadilac:triggering learn
+Starting Entropy Coefficient Annealing:
+	self.initial_entropy = 0.3
+	self.min_entropy = 0.005
+	self.cycle_length = 16000
+	self.damping_factor = 0.5
+Step: 8; New least BIC found: 26115.30876159668
+Step: 16; New least BIC found: 24625.32615661621
+Step: 184; New least BIC found: 24360.219955444336
+Step: 216; New least BIC found: 24145.383834838867
+Step: 224; New least BIC found: 24118.53790283203
+Step: 248; New least BIC found: 23892.23861694336
+Step: 1400; New least BIC found: 22958.267211914062
+Step: 5056; New least BIC found: 22793.251037597656
+Step: 5184; New least BIC found: 22766.691207885742
+Step: 6816; New least BIC found: 22751.01089477539
+Step: 22400; New least BIC found: 22731.887817382812
+Step: 74920; New least BIC found: 22724.624633789062
+RL Training Progress: 100%|██████████████████████████████████████████████████████████████████████████████| 80000/80000 [28:22<00:00, 46.99step/s]
+Nov 29, 2025 4:24:52 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+INFO:relcadilac.relcadilac:
+Best BIC = 22724.624633789062
+INFO:relcadilac.relcadilac:Predicted ADMG (parents on columns) =
+Directed Edges:
+[[0 0 1 0 1 0 1 0 1 1]
+ [1 0 1 1 0 1 0 0 1 1]
+ [0 0 0 0 1 0 0 0 0 0]
+ [0 0 1 0 1 1 0 0 1 1]
+ [0 0 0 0 0 0 1 0 0 0]
+ [0 0 0 0 1 0 1 0 1 1]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 1 1 0 1 0 0 1]
+ [0 0 0 0 1 0 0 0 0 0]
+ [0 0 0 0 1 0 1 0 0 0]]
+Bidirected Edges:
+[[0. 0. 0. 0. 0. 1. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 1. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 1.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [1. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 1. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 1.]
+ [0. 0. 1. 0. 0. 0. 0. 0. 1. 0.]]
+Nov 29, 2025 4:24:52 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0 0 1 0 1 0 1 0 1 1]
+ [1 0 1 1 0 1 0 0 1 1]
+ [0 0 0 0 1 0 0 0 0 0]
+ [0 0 1 0 1 1 0 0 1 1]
+ [0 0 0 0 0 0 1 0 0 0]
+ [0 0 0 0 1 0 1 0 1 1]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 1 1 0 1 0 0 1]
+ [0 0 0 0 1 0 0 0 0 0]
+ [0 0 0 0 1 0 1 0 0 0]]
+Predicted B:
+[[0. 0. 0. 0. 0. 1. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 1. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 1.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [1. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 1. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 1.]
+ [0. 0. 1. 0. 0. 0. 0. 0. 1. 0.]]
+True bic: 22641.39981809901
+Predicted bic: 22724.624633789062
+Thresholded bic: 25155.01968335958
+Thresholded SHD: 16.0
+Predicted ADMG SHD: 32.0
+
+
+RUN NUMBER: 175
+EXPLANATION: Run 175; Relcadilac; Frac directed = 0.9; Varying directed fraction. 24 of 120. First run in test = 151.
+
+Nov 29, 2025 4:24:52 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 19524.850192123497
+
+INFO:relcadilac.relcadilac:triggering learn
+Starting Entropy Coefficient Annealing:
+	self.initial_entropy = 0.3
+	self.min_entropy = 0.005
+	self.cycle_length = 16000
+	self.damping_factor = 0.5
+Step: 8; New least BIC found: 25095.722198486328
+Step: 16; New least BIC found: 21991.899490356445
+Step: 72; New least BIC found: 21847.312927246094
+Step: 120; New least BIC found: 21543.386459350586
+Step: 848; New least BIC found: 21271.54541015625
+Step: 1400; New least BIC found: 19972.082138061523
+Step: 5168; New least BIC found: 19913.686752319336
+Step: 5424; New least BIC found: 19802.05726623535
+Step: 7144; New least BIC found: 19778.173446655273
+Step: 9608; New least BIC found: 19736.652374267578
+Step: 11928; New least BIC found: 19723.621368408203
+Step: 13584; New least BIC found: 19679.88395690918
+Step: 14192; New least BIC found: 19664.3123626709
+Step: 20672; New least BIC found: 19663.74397277832
+Step: 24480; New least BIC found: 19663.60092163086
+Step: 25240; New least BIC found: 19648.03123474121
+Step: 46328; New least BIC found: 19648.027420043945
+Step: 51816; New least BIC found: 19640.132904052734
+Step: 65400; New least BIC found: 19636.40785217285
+Step: 70008; New least BIC found: 19633.325576782227
+RL Training Progress: 100%|██████████████████████████████████████████████████████████████████████████████| 80000/80000 [28:21<00:00, 47.02step/s]
+Nov 29, 2025 4:53:35 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+INFO:relcadilac.relcadilac:
+Best BIC = 19633.325576782227
+INFO:relcadilac.relcadilac:Predicted ADMG (parents on columns) =
+Directed Edges:
+[[0 0 1 1 0 0 1 0 1 1]
+ [0 0 0 0 1 1 0 0 0 0]
+ [0 0 0 0 1 0 0 0 0 1]
+ [0 0 0 0 1 0 1 0 1 1]
+ [0 0 0 0 0 0 0 0 1 0]
+ [0 0 0 1 1 0 1 0 1 1]
+ [0 0 0 0 0 0 0 0 1 0]
+ [0 1 1 1 0 0 1 0 0 1]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 1 0 0 0 1 0]]
+Bidirected Edges:
+[[0. 0. 0. 0. 0. 1. 0. 1. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 1. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 1. 0. 0. 0.]
+ [1. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 1. 0. 1. 0. 0. 0. 0. 1.]
+ [1. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 1. 0. 0. 0.]]
+Nov 29, 2025 4:53:35 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0 0 1 1 0 0 1 0 1 1]
+ [0 0 0 0 1 1 0 0 0 0]
+ [0 0 0 0 1 0 0 0 0 1]
+ [0 0 0 0 1 0 1 0 1 1]
+ [0 0 0 0 0 0 0 0 1 0]
+ [0 0 0 1 1 0 1 0 1 1]
+ [0 0 0 0 0 0 0 0 1 0]
+ [0 1 1 1 0 0 1 0 0 1]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 1 0 0 0 1 0]]
+Predicted B:
+[[0. 0. 0. 0. 0. 1. 0. 1. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 1. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 1. 0. 0. 0.]
+ [1. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 1. 0. 1. 0. 0. 0. 0. 1.]
+ [1. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 1. 0. 0. 0.]]
+True bic: 19524.850192123497
+Predicted bic: 19633.325576782227
+Thresholded bic: 19941.65859726486
+Thresholded SHD: 18.0
+Predicted ADMG SHD: 28.0
+
+
+RUN NUMBER: 176
+EXPLANATION: Run 176; Relcadilac; Avg degree = 2; Varying average degree. 25 of 120. First run in test = 151.
+
+Nov 29, 2025 4:53:35 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 21086.961133867782
+
+INFO:relcadilac.relcadilac:triggering learn
+Starting Entropy Coefficient Annealing:
+	self.initial_entropy = 0.3
+	self.min_entropy = 0.005
+	self.cycle_length = 16000
+	self.damping_factor = 0.5
+Step: 8; New least BIC found: 21938.196182250977
+Step: 16; New least BIC found: 21560.523986816406
+Step: 72; New least BIC found: 21375.05340576172
+Step: 96; New least BIC found: 21196.142196655273
+Step: 3776; New least BIC found: 21193.66455078125
+Step: 4224; New least BIC found: 21187.549591064453
+Step: 9952; New least BIC found: 21180.06706237793
+Step: 11536; New least BIC found: 21170.373916625977
+Step: 24944; New least BIC found: 21150.30288696289
+Step: 33616; New least BIC found: 21145.71762084961
+Step: 61176; New least BIC found: 21144.41680908203
+Step: 65864; New least BIC found: 21139.493942260742
+Step: 71752; New least BIC found: 21130.327224731445
+RL Training Progress: 100%|██████████████████████████████████████████████████████████████████████████████| 80000/80000 [15:56<00:00, 83.64step/s]
+Nov 29, 2025 5:09:53 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+INFO:relcadilac.relcadilac:
+Best BIC = 21130.327224731445
+INFO:relcadilac.relcadilac:Predicted ADMG (parents on columns) =
+Directed Edges:
+[[0 0 0 1 1 0 1 0 0 0]
+ [0 0 0 0 0 1 1 1 1 1]
+ [1 0 0 0 0 1 0 0 0 1]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 1 0 0 1 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 1 0 0 0 0 1 1]
+ [0 0 0 0 1 1 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 1 0]]
+Bidirected Edges:
+[[0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 1. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 1.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 1. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 1. 0. 0. 0. 0.]]
+Nov 29, 2025 5:09:53 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0 0 0 1 1 0 1 0 0 0]
+ [0 0 0 0 0 1 1 1 1 1]
+ [1 0 0 0 0 1 0 0 0 1]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 1 0 0 1 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 1 0 0 0 0 1 1]
+ [0 0 0 0 1 1 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 1 0]]
+Predicted B:
+[[0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 1. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 1.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 1. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 1. 0. 0. 0. 0.]]
+True bic: 21086.961133867782
+Predicted bic: 21130.327224731445
+Thresholded bic: 22931.589991451445
+Thresholded SHD: 17.0
+Predicted ADMG SHD: 28.0
+
+
+RUN NUMBER: 177
+EXPLANATION: Run 177; Relcadilac; Avg degree = 3; Varying average degree. 26 of 120. First run in test = 151.
+
+Nov 29, 2025 5:09:53 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 22808.87126023349
+
+INFO:relcadilac.relcadilac:triggering learn
+Starting Entropy Coefficient Annealing:
+	self.initial_entropy = 0.3
+	self.min_entropy = 0.005
+	self.cycle_length = 16000
+	self.damping_factor = 0.5
+Step: 8; New least BIC found: 24623.544692993164
+Step: 16; New least BIC found: 23310.895919799805
+Step: 72; New least BIC found: 23242.935180664062
+Step: 512; New least BIC found: 23197.851181030273
+Step: 1136; New least BIC found: 22931.989669799805
+Step: 1208; New least BIC found: 22914.649963378906
+Step: 5072; New least BIC found: 22914.508819580078
+Step: 8240; New least BIC found: 22902.179718017578
+Step: 18256; New least BIC found: 22897.84812927246
+Step: 23912; New least BIC found: 22895.01190185547
+Step: 30528; New least BIC found: 22888.675689697266
+Step: 53312; New least BIC found: 22887.409210205078
+Step: 55184; New least BIC found: 22883.02230834961
+Step: 56312; New least BIC found: 22881.55746459961
+Step: 72248; New least BIC found: 22867.93327331543
+RL Training Progress: 100%|██████████████████████████████████████████████████████████████████████████████| 80000/80000 [20:14<00:00, 65.89step/s]
+Nov 29, 2025 5:30:28 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+INFO:relcadilac.relcadilac:
+Best BIC = 22867.93327331543
+INFO:relcadilac.relcadilac:Predicted ADMG (parents on columns) =
+Directed Edges:
+[[0 0 0 0 1 0 1 0 1 1]
+ [1 0 0 1 0 0 1 0 1 1]
+ [0 0 0 0 0 0 0 0 0 0]
+ [1 0 0 0 1 0 0 0 1 1]
+ [0 0 0 0 0 0 0 0 1 1]
+ [0 0 0 1 1 0 1 0 0 1]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 1 0 0 0 1 0 0 0]
+ [0 0 0 0 0 0 1 0 0 1]
+ [0 0 0 0 0 0 1 1 0 0]]
+Bidirected Edges:
+[[0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 1. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 1. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]
+Nov 29, 2025 5:30:28 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0 0 0 0 1 0 1 0 1 1]
+ [1 0 0 1 0 0 1 0 1 1]
+ [0 0 0 0 0 0 0 0 0 0]
+ [1 0 0 0 1 0 0 0 1 1]
+ [0 0 0 0 0 0 0 0 1 1]
+ [0 0 0 1 1 0 1 0 0 1]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 1 0 0 0 1 0 0 0]
+ [0 0 0 0 0 0 1 0 0 1]
+ [0 0 0 0 0 0 1 1 0 0]]
+Predicted B:
+[[0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 1. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 1. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]
+True bic: 22808.87126023349
+Predicted bic: 22867.93327331543
+Thresholded bic: 24263.5160577607
+Thresholded SHD: 15.0
+Predicted ADMG SHD: 27.0
+
+
+RUN NUMBER: 178
+EXPLANATION: Run 178; Relcadilac; Avg degree = 4; Varying average degree. 27 of 120. First run in test = 151.
+
+Nov 29, 2025 5:30:29 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 28213.53250800895
+
+INFO:relcadilac.relcadilac:triggering learn
+Starting Entropy Coefficient Annealing:
+	self.initial_entropy = 0.3
+	self.min_entropy = 0.005
+	self.cycle_length = 16000
+	self.damping_factor = 0.5
+Step: 8; New least BIC found: 32019.248962402344
+Step: 16; New least BIC found: 29950.572967529297
+Step: 216; New least BIC found: 29428.953170776367
+Step: 2336; New least BIC found: 28823.40431213379
+Step: 3704; New least BIC found: 28492.246627807617
+Step: 5056; New least BIC found: 28483.097076416016
+Step: 6816; New least BIC found: 28373.02589416504
+Step: 10656; New least BIC found: 28326.549530029297
+Step: 19240; New least BIC found: 28325.876235961914
+Step: 28320; New least BIC found: 28318.98307800293
+Step: 35288; New least BIC found: 28311.75994873047
+Step: 42896; New least BIC found: 28311.254501342773
+Step: 47480; New least BIC found: 28307.636260986328
+Step: 56208; New least BIC found: 28305.931091308594
+Step: 76496; New least BIC found: 28305.116653442383
+Step: 78368; New least BIC found: 28304.166793823242
+RL Training Progress: 100%|██████████████████████████████████████████████████████████████████████████████| 80000/80000 [28:22<00:00, 46.99step/s]
+Nov 29, 2025 5:59:12 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+INFO:relcadilac.relcadilac:
+Best BIC = 28304.166793823242
+INFO:relcadilac.relcadilac:Predicted ADMG (parents on columns) =
+Directed Edges:
+[[0 0 0 0 0 0 1 0 0 0]
+ [0 0 0 0 1 0 0 0 0 1]
+ [0 0 0 0 0 0 1 0 0 0]
+ [1 0 1 0 1 1 1 1 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [1 1 0 0 1 0 1 1 1 1]
+ [0 0 0 0 1 0 0 0 0 0]
+ [0 1 1 0 1 0 1 0 1 1]
+ [0 0 0 0 1 0 0 0 0 0]
+ [0 0 0 0 1 0 1 0 0 0]]
+Bidirected Edges:
+[[0. 0. 1. 0. 0. 0. 0. 0. 1. 1.]
+ [0. 0. 1. 0. 0. 0. 0. 0. 0. 0.]
+ [1. 1. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 1. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [1. 0. 0. 0. 0. 0. 1. 0. 0. 1.]
+ [1. 0. 0. 0. 0. 0. 0. 0. 1. 0.]]
+Nov 29, 2025 5:59:13 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0 0 0 0 0 0 1 0 0 0]
+ [0 0 0 0 1 0 0 0 0 1]
+ [0 0 0 0 0 0 1 0 0 0]
+ [1 0 1 0 1 1 1 1 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [1 1 0 0 1 0 1 1 1 1]
+ [0 0 0 0 1 0 0 0 0 0]
+ [0 1 1 0 1 0 1 0 1 1]
+ [0 0 0 0 1 0 0 0 0 0]
+ [0 0 0 0 1 0 1 0 0 0]]
+Predicted B:
+[[0. 0. 1. 0. 0. 0. 0. 0. 1. 1.]
+ [0. 0. 1. 0. 0. 0. 0. 0. 0. 0.]
+ [1. 1. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 1. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [1. 0. 0. 0. 0. 0. 1. 0. 0. 1.]
+ [1. 0. 0. 0. 0. 0. 0. 0. 1. 0.]]
+True bic: 28213.53250800895
+Predicted bic: 28304.166793823242
+Thresholded bic: 29905.813486295807
+Thresholded SHD: 28.0
+Predicted ADMG SHD: 38.0
+
+
+RUN NUMBER: 179
+EXPLANATION: Run 179; Relcadilac; Avg degree = 6; Varying average degree. 28 of 120. First run in test = 151.
+
+Nov 29, 2025 5:59:13 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 26695.61836895252
+
+INFO:relcadilac.relcadilac:triggering learn
+Starting Entropy Coefficient Annealing:
+	self.initial_entropy = 0.3
+	self.min_entropy = 0.005
+	self.cycle_length = 16000
+	self.damping_factor = 0.5
+Step: 8; New least BIC found: 29513.9102935791
+Step: 504; New least BIC found: 29353.364944458008
+Step: 1360; New least BIC found: 28911.361694335938
+Step: 2320; New least BIC found: 27895.97511291504
+Step: 4720; New least BIC found: 27667.091369628906
+Step: 5176; New least BIC found: 27560.781478881836
+Step: 6224; New least BIC found: 27358.909606933594
+Step: 6656; New least BIC found: 27019.21272277832
+Step: 7520; New least BIC found: 26973.318099975586
+Step: 10584; New least BIC found: 26818.052291870117
+Step: 10816; New least BIC found: 26783.550262451172
+Step: 32640; New least BIC found: 26779.075622558594
+Step: 33712; New least BIC found: 26770.977020263672
+Step: 42120; New least BIC found: 26769.145965576172
+Step: 50104; New least BIC found: 26765.77377319336
+RL Training Progress: 100%|██████████████████████████████████████████████████████████████████████████████| 80000/80000 [29:27<00:00, 45.27step/s]
+Nov 29, 2025 6:29:01 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+INFO:relcadilac.relcadilac:
+Best BIC = 26765.77377319336
+INFO:relcadilac.relcadilac:Predicted ADMG (parents on columns) =
+Directed Edges:
+[[0 1 1 1 0 1 0 0 1 1]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 1 0 0 1 1 0 1]
+ [0 0 0 0 0 0 0 0 0 0]
+ [1 1 1 0 0 1 1 0 1 1]
+ [0 1 1 1 0 0 0 1 0 1]
+ [0 1 0 1 0 0 0 1 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 1 1 1 0 0 0 1 0 1]
+ [0 0 0 0 0 0 1 0 0 0]]
+Bidirected Edges:
+[[0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 1. 0. 0. 0. 1. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 1. 0. 0. 0. 0. 0. 1. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 1. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 1. 0. 1. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 1. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]
+Nov 29, 2025 6:29:01 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0 1 1 1 0 1 0 0 1 1]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 1 0 0 1 1 0 1]
+ [0 0 0 0 0 0 0 0 0 0]
+ [1 1 1 0 0 1 1 0 1 1]
+ [0 1 1 1 0 0 0 1 0 1]
+ [0 1 0 1 0 0 0 1 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 1 1 1 0 0 0 1 0 1]
+ [0 0 0 0 0 0 1 0 0 0]]
+Predicted B:
+[[0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 1. 0. 0. 0. 1. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 1. 0. 0. 0. 0. 0. 1. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 1. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 1. 0. 1. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 1. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]
+True bic: 26695.61836895252
+Predicted bic: 26765.77377319336
+Thresholded bic: 30952.789351299598
+Thresholded SHD: 46.0
+Predicted ADMG SHD: 50.0
+
+
+RUN NUMBER: 180
+EXPLANATION: Run 180; Relcadilac; Avg degree = 8; Varying average degree. 29 of 120. First run in test = 151.
+
+Nov 29, 2025 6:29:01 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 27887.69381401613
+
+INFO:relcadilac.relcadilac:triggering learn
+Starting Entropy Coefficient Annealing:
+	self.initial_entropy = 0.3
+	self.min_entropy = 0.005
+	self.cycle_length = 16000
+	self.damping_factor = 0.5
+Step: 8; New least BIC found: 33616.81365966797
+Step: 24; New least BIC found: 30169.448852539062
+Step: 1024; New least BIC found: 29237.459182739258
+Step: 4912; New least BIC found: 28969.587326049805
+Step: 5136; New least BIC found: 28686.567306518555
+Step: 6792; New least BIC found: 28575.763702392578
+Step: 7336; New least BIC found: 28462.825775146484
+Step: 7808; New least BIC found: 28359.050750732422
+Step: 8576; New least BIC found: 28101.900100708008
+Step: 10392; New least BIC found: 28021.413803100586
+Step: 13824; New least BIC found: 28006.244659423828
+Step: 15960; New least BIC found: 27970.37124633789
+Step: 16992; New least BIC found: 27957.008361816406
+Step: 17600; New least BIC found: 27936.82098388672
+Step: 17776; New least BIC found: 27935.760498046875
+Step: 22888; New least BIC found: 27932.67059326172
+Step: 23760; New least BIC found: 27915.807723999023
+RL Training Progress: 100%|██████████████████████████████████████████████████████████████████████████████| 80000/80000 [29:16<00:00, 45.54step/s]
+Nov 29, 2025 6:58:39 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+INFO:relcadilac.relcadilac:
+Best BIC = 27915.807723999023
+INFO:relcadilac.relcadilac:Predicted ADMG (parents on columns) =
+Directed Edges:
+[[0 1 0 0 1 1 0 1 0 1]
+ [0 0 0 0 1 1 0 1 0 0]
+ [0 1 0 0 1 0 1 1 1 1]
+ [1 0 0 0 1 0 1 1 0 1]
+ [0 0 0 0 0 0 0 1 1 0]
+ [0 0 0 0 0 0 0 1 0 1]
+ [1 0 0 0 1 1 0 1 0 1]
+ [0 0 0 0 0 0 0 0 1 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 1 0 0 0 1 0]]
+Bidirected Edges:
+[[0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]
+Nov 29, 2025 6:58:39 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0 1 0 0 1 1 0 1 0 1]
+ [0 0 0 0 1 1 0 1 0 0]
+ [0 1 0 0 1 0 1 1 1 1]
+ [1 0 0 0 1 0 1 1 0 1]
+ [0 0 0 0 0 0 0 1 1 0]
+ [0 0 0 0 0 0 0 1 0 1]
+ [1 0 0 0 1 1 0 1 0 1]
+ [0 0 0 0 0 0 0 0 1 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 1 0 0 0 1 0]]
+Predicted B:
+[[0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]
+True bic: 27887.69381401613
+Predicted bic: 27915.807723999023
+Thresholded bic: 36919.632484862224
+Thresholded SHD: 41.0
+Predicted ADMG SHD: 46.0
+
+
+RUN NUMBER: 181
+EXPLANATION: Run 181; CMA-ES; Frac directed = 0.1; Varying directed fraction. 30 of 120. First run in test = 151.
+
+Nov 29, 2025 6:58:39 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 36616.560792647375
+
+--- Restart 0 (Used: 0/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=527380, Sat Nov 29 06:58:39 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 3.670036180974163e+04 1.1e+00 9.36e-01  9e-01  1e+00 0:00.4
+    2    142 3.670803068042970e+04 1.0e+00 9.07e-01  8e-01  1e+00 0:00.5
+    3    213 3.675458066624247e+04 1.0e+00 8.80e-01  8e-01  9e-01 0:00.8
+   27   1917 3.663527844646584e+04 1.0e+00 1.62e+00  1e+00  2e+00 0:03.9
+   72   5112 3.658166938584216e+04 1.0e+00 4.72e+00  2e+00  7e+00 0:07.9
+  100   7100 3.658040315688955e+04 1.0e+00 5.10e+00  2e+00  8e+00 0:10.1
+  162  11502 3.657994525238276e+04 1.0e+00 5.48e+00  1e+00  8e+00 0:16.1
+  177  12567 3.657994525238276e+04 1.0e+00 4.57e+00  1e+00  7e+00 0:17.9
+--- Restart 1 (Used: 12567/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=559052, Sat Nov 29 06:58:57 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 3.671988970556191e+04 1.1e+00 1.13e+00  1e+00  1e+00 0:00.3
+    2    142 3.680349864582214e+04 1.0e+00 1.10e+00  1e+00  1e+00 0:00.6
+    3    213 3.671648674620125e+04 1.0e+00 1.09e+00  1e+00  1e+00 0:00.9
+   18   1278 3.666913828846085e+04 1.0e+00 1.53e+00  1e+00  2e+00 0:04.1
+   34   2414 3.663973643330936e+04 1.0e+00 2.56e+00  2e+00  4e+00 0:08.2
+   62   4402 3.659473890965391e+04 1.0e+00 5.06e+00  2e+00  9e+00 0:13.2
+  100   7100 3.658812811835916e+04 1.0e+00 6.09e+00  7e-01  1e+01 0:16.5
+  176  12496 3.658812811835916e+04 1.0e+00 4.47e+00  6e-01  7e+00 0:22.4
+--- Restart 2 (Used: 25063/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=551681, Sat Nov 29 06:59:20 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 3.675744149533407e+04 1.1e+00 1.31e+00  1e+00  1e+00 0:00.3
+    2    142 3.671427058572064e+04 1.0e+00 1.28e+00  1e+00  1e+00 0:00.6
+    3    213 3.673203111651780e+04 1.0e+00 1.27e+00  1e+00  1e+00 0:00.9
+   13    923 3.668285214424226e+04 1.0e+00 1.53e+00  1e+00  2e+00 0:03.9
+   30   2130 3.663887971933256e+04 1.0e+00 2.31e+00  2e+00  3e+00 0:07.9
+   68   4828 3.659356805224373e+04 1.0e+00 7.62e+00  3e+00  1e+01 0:13.0
+  100   7100 3.657892096052235e+04 1.0e+00 1.01e+01  3e+00  2e+01 0:16.8
+  174  12354 3.657841489956388e+04 1.0e+00 9.07e+00  2e+00  3e+01 0:23.9
+  191  13561 3.657841489956388e+04 1.0e+00 9.89e+00  2e+00  3e+01 0:25.6
+--- Restart 3 (Used: 38624/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=547662, Sat Nov 29 06:59:46 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 3.689470213960108e+04 1.1e+00 1.52e+00  1e+00  2e+00 0:00.3
+    2    142 3.696564013236474e+04 1.0e+00 1.49e+00  1e+00  2e+00 0:00.6
+    3    213 3.680820858792366e+04 1.0e+00 1.50e+00  1e+00  2e+00 0:00.8
+   20   1420 3.666165346027455e+04 1.0e+00 2.93e+00  2e+00  5e+00 0:03.2
+Nov 29, 2025 6:59:49 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+Nov 29, 2025 6:59:50 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 1 0 0 0 0 0 0 0]
+ [0 0 1 0 0 0 0 1 0 0]
+ [0 0 1 0 0 0 1 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 1 0 0 1 0 0 0]
+ [0 0 1 1 1 0 1 0 0 0]
+ [0 0 0 0 0 0 1 0 0 0]]
+Predicted B:
+[[0 0 0 0 1 0 0 0 0 1]
+ [0 0 0 0 1 1 0 0 1 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [1 1 0 0 0 1 0 0 0 0]
+ [0 1 0 0 1 0 0 0 1 1]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 1 0 0 0 1 0 0 0 0]
+ [1 0 0 0 0 1 0 0 0 0]]
+True bic: 36616.560792647375
+Predicted bic: 36595.28422945203
+Thresholded bic: 36594.728483421684
+Thresholded SHD: 20.0
+Predicted ADMG SHD: 21.0
+
+
+RUN NUMBER: 182
+EXPLANATION: Run 182; CMA-ES; Frac directed = 0.3; Varying directed fraction. 31 of 120. First run in test = 151.
+
+Nov 29, 2025 6:59:50 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 33567.807547992415
+
+--- Restart 0 (Used: 0/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=505253, Sat Nov 29 06:59:50 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 3.370429331655533e+04 1.1e+00 9.31e-01  9e-01  1e+00 0:00.4
+    2    142 3.369791018074448e+04 1.0e+00 8.99e-01  8e-01  1e+00 0:00.7
+    3    213 3.367981809242980e+04 1.0e+00 8.84e-01  8e-01  1e+00 0:00.9
+   18   1278 3.361507355047381e+04 1.0e+00 1.11e+00  8e-01  2e+00 0:04.0
+   45   3195 3.358712041736063e+04 1.0e+00 2.96e+00  2e+00  4e+00 0:08.0
+   78   5538 3.357215858917740e+04 1.0e+00 5.54e+00  2e+00  9e+00 0:13.1
+  100   7100 3.355887021224001e+04 1.0e+00 7.87e+00  3e+00  1e+01 0:16.9
+  142  10082 3.355584096877073e+04 1.0e+00 1.21e+01  3e+00  2e+01 0:24.0
+  190  13490 3.355584096877073e+04 1.0e+00 1.22e+01  2e+00  2e+01 0:32.1
+  200  14200 3.355584096877073e+04 1.0e+00 1.14e+01  2e+00  2e+01 0:33.8
+  238  16898 3.355584096877073e+04 1.0e+00 1.00e+01  1e+00  2e+01 0:40.1
+--- Restart 1 (Used: 16898/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=517578, Sat Nov 29 07:00:30 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 3.366707741740950e+04 1.1e+00 1.12e+00  1e+00  1e+00 0:00.4
+    2    142 3.368670145155962e+04 1.0e+00 1.08e+00  1e+00  1e+00 0:00.7
+    3    213 3.366928983936962e+04 1.0e+00 1.08e+00  1e+00  1e+00 0:01.1
+   11    781 3.363497107615335e+04 1.0e+00 1.45e+00  1e+00  2e+00 0:04.5
+   22   1562 3.360086386721482e+04 1.0e+00 2.31e+00  2e+00  3e+00 0:08.7
+   44   3124 3.356521842774987e+04 1.0e+00 4.32e+00  2e+00  6e+00 0:13.7
+  100   7100 3.352365991398024e+04 1.0e+00 1.19e+01  5e+00  3e+01 0:19.5
+  170  12070 3.352365929536889e+04 1.0e+00 1.02e+01  3e+00  2e+01 0:24.2
+--- Restart 2 (Used: 28968/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=517899, Sat Nov 29 07:00:55 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 3.375430382213931e+04 1.1e+00 1.31e+00  1e+00  1e+00 0:00.2
+    2    142 3.369135661560715e+04 1.0e+00 1.27e+00  1e+00  1e+00 0:00.5
+    3    213 3.368617620530045e+04 1.0e+00 1.27e+00  1e+00  1e+00 0:00.8
+   16   1136 3.363923491632070e+04 1.0e+00 1.46e+00  1e+00  2e+00 0:04.0
+   33   2343 3.358025595988923e+04 1.0e+00 2.59e+00  2e+00  3e+00 0:08.1
+   56   3976 3.354326538039960e+04 1.0e+00 4.48e+00  2e+00  7e+00 0:13.2
+   87   6177 3.353300914006333e+04 1.0e+00 5.81e+00  3e+00  1e+01 0:19.3
+  100   7100 3.353300865820080e+04 1.0e+00 6.54e+00  3e+00  1e+01 0:21.8
+  136   9656 3.353300804248439e+04 1.0e+00 5.45e+00  2e+00  9e+00 0:29.8
+  156  11076 3.353300804248439e+04 1.0e+00 4.72e+00  1e+00  8e+00 0:35.0
+Nov 29, 2025 7:01:30 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+Nov 29, 2025 7:01:30 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [1 0 0 1 0 0 0 0 0 1]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 1 0 1 0 0 0 0 1 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 1 0 1 0 0 1]
+ [1 0 0 0 0 0 1 0 0 0]
+ [0 0 0 1 1 0 0 0 0 0]]
+Predicted B:
+[[0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 1 1 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 1 0 0 0 0 0 0 0]
+ [0 0 1 0 0 0 0 1 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 1 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]]
+True bic: 33567.807547992415
+Predicted bic: 33544.18173200965
+Thresholded bic: 33544.18173200965
+Thresholded SHD: 22.0
+Predicted ADMG SHD: 22.0
+
+
+RUN NUMBER: 183
+EXPLANATION: Run 183; CMA-ES; Frac directed = 0.5; Varying directed fraction. 32 of 120. First run in test = 151.
+
+Nov 29, 2025 7:01:30 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 29615.730486843273
+
+--- Restart 0 (Used: 0/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=500055, Sat Nov 29 07:01:30 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 3.037871313869786e+04 1.1e+00 9.39e-01  9e-01  1e+00 0:01.5
+    2    142 2.971345319756058e+04 1.0e+00 9.07e-01  8e-01  1e+00 0:02.7
+    3    213 2.993779329608251e+04 1.0e+00 9.10e-01  8e-01  1e+00 0:03.9
+    6    426 2.972332532031197e+04 1.0e+00 9.56e-01  9e-01  1e+00 0:07.4
+   10    710 2.971238288712887e+04 1.0e+00 1.06e+00  9e-01  1e+00 0:12.0
+   15   1065 2.971575940886327e+04 1.0e+00 1.16e+00  9e-01  1e+00 0:17.4
+   22   1562 2.967071382486272e+04 1.0e+00 1.45e+00  1e+00  2e+00 0:23.6
+   32   2272 2.965546976667052e+04 1.0e+00 1.94e+00  1e+00  3e+00 0:31.1
+   43   3053 2.963016656719221e+04 1.0e+00 2.48e+00  1e+00  4e+00 0:39.4
+   56   3976 2.962591610993545e+04 1.0e+00 3.07e+00  1e+00  6e+00 0:48.6
+   71   5041 2.961540798694000e+04 1.0e+00 4.54e+00  2e+00  8e+00 0:58.8
+   83   5893 2.961481901020018e+04 1.0e+00 5.71e+00  2e+00  1e+01 1:10.5
+   94   6674 2.961472684380307e+04 1.0e+00 5.87e+00  2e+00  1e+01 1:22.8
+  100   7100 2.961269006067350e+04 1.0e+00 5.73e+00  2e+00  1e+01 1:29.1
+  115   8165 2.961260485761894e+04 1.0e+00 6.44e+00  2e+00  1e+01 1:43.2
+  132   9372 2.961260460759302e+04 1.0e+00 6.09e+00  2e+00  1e+01 1:59.0
+  150  10650 2.961260099070319e+04 1.0e+00 6.88e+00  2e+00  1e+01 2:15.6
+  179  12709 2.961259863574493e+04 1.0e+00 8.23e+00  2e+00  2e+01 2:32.8
+  200  14200 2.961259863574493e+04 1.0e+00 7.82e+00  2e+00  2e+01 2:42.4
+  226  16046 2.961259863574493e+04 1.0e+00 5.46e+00  9e-01  1e+01 2:54.2
+--- Restart 1 (Used: 16046/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=488043, Sat Nov 29 07:04:25 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.973348532280929e+04 1.1e+00 1.13e+00  1e+00  1e+00 0:01.2
+    2    142 3.005491925385597e+04 1.0e+00 1.08e+00  1e+00  1e+00 0:02.3
+    3    213 2.980188388652678e+04 1.0e+00 1.06e+00  1e+00  1e+00 0:03.5
+    6    426 2.975540412914010e+04 1.0e+00 1.06e+00  9e-01  1e+00 0:07.1
+   10    710 2.975230198137808e+04 1.0e+00 1.07e+00  8e-01  1e+00 0:11.6
+   15   1065 2.971573978881968e+04 1.0e+00 1.15e+00  7e-01  1e+00 0:17.1
+   22   1562 2.971338454996160e+04 1.0e+00 1.34e+00  8e-01  2e+00 0:23.4
+   31   2201 2.968181926519539e+04 1.0e+00 1.73e+00  1e+00  2e+00 0:30.5
+   42   2982 2.965596045238264e+04 1.0e+00 2.06e+00  9e-01  3e+00 0:39.2
+   57   4047 2.963920730880342e+04 1.0e+00 3.09e+00  1e+00  5e+00 0:48.5
+   83   5893 2.963341055558598e+04 1.0e+00 4.32e+00  2e+00  7e+00 0:58.8
+  100   7100 2.963211091169470e+04 1.0e+00 5.42e+00  2e+00  9e+00 1:03.4
+  174  12354 2.963325458619407e+04 1.0e+00 5.00e+00  1e+00  1e+01 1:15.5
+  200  14200 2.963325458619407e+04 1.0e+00 4.87e+00  1e+00  1e+01 1:20.1
+  216  15336 2.963325458619407e+04 1.0e+00 4.49e+00  9e-01  2e+01 1:22.6
+--- Restart 2 (Used: 31382/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=497340, Sat Nov 29 07:05:48 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 3.060229132505264e+04 1.1e+00 1.32e+00  1e+00  1e+00 0:00.9
+    2    142 3.020550471273647e+04 1.0e+00 1.29e+00  1e+00  1e+00 0:01.6
+    3    213 2.989602307163183e+04 1.0e+00 1.27e+00  1e+00  1e+00 0:02.4
+    8    568 2.972846822540707e+04 1.0e+00 1.34e+00  1e+00  2e+00 0:06.1
+   13    923 2.971510003729178e+04 1.0e+00 1.53e+00  1e+00  2e+00 0:10.5
+   19   1349 2.971194984323647e+04 1.0e+00 1.66e+00  1e+00  2e+00 0:15.7
+   29   2059 2.968712814021318e+04 1.0e+00 2.46e+00  2e+00  3e+00 0:22.0
+   40   2840 2.966397360850345e+04 1.0e+00 3.30e+00  2e+00  5e+00 0:29.2
+   51   3621 2.963735608844697e+04 1.0e+00 4.44e+00  2e+00  7e+00 0:37.5
+   65   4615 2.963314469929993e+04 1.0e+00 5.74e+00  2e+00  1e+01 0:47.0
+   83   5893 2.962217153556705e+04 1.0e+00 8.08e+00  3e+00  2e+01 0:57.0
+  100   7100 2.961485309318163e+04 1.0e+00 8.49e+00  3e+00  1e+01 1:06.5
+  122   8662 2.961434404592992e+04 1.0e+00 1.02e+01  3e+00  2e+01 1:17.9
+Nov 29, 2025 7:07:06 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+Nov 29, 2025 7:07:06 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0 0 1 0 0 0 0 0 0 0]
+ [1 0 1 0 0 1 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 1 0 0 0 0]
+ [1 0 1 1 0 1 0 0 0 0]
+ [1 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 1 0 1 0 0]
+ [0 0 0 0 0 1 0 0 0 0]
+ [1 1 1 1 1 1 0 0 0 0]
+ [1 0 0 0 0 0 0 0 0 0]]
+Predicted B:
+[[0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 1 0 1 0 0 0 0]
+ [0 0 1 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 1 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 1]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 1 0 0 0]]
+True bic: 29615.730486843273
+Predicted bic: 29629.077556088745
+Thresholded bic: 29629.077556088745
+Thresholded SHD: 29.0
+Predicted ADMG SHD: 29.0
+
+
+RUN NUMBER: 184
+EXPLANATION: Run 184; CMA-ES; Frac directed = 0.7; Varying directed fraction. 33 of 120. First run in test = 151.
+
+Nov 29, 2025 7:07:07 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 20752.138043556813
+
+--- Restart 0 (Used: 0/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=489417, Sat Nov 29 07:07:07 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.130578669507903e+04 1.1e+00 9.35e-01  9e-01  1e+00 0:01.6
+    2    142 2.159196014961685e+04 1.0e+00 8.97e-01  8e-01  1e+00 0:02.9
+    3    213 2.103555013999637e+04 1.0e+00 8.78e-01  8e-01  1e+00 0:04.3
+    6    426 2.115965962332346e+04 1.0e+00 8.94e-01  8e-01  1e+00 0:08.3
+    9    639 2.090854201089771e+04 1.0e+00 9.37e-01  8e-01  1e+00 0:12.4
+   13    923 2.087162765214974e+04 1.0e+00 1.03e+00  8e-01  1e+00 0:17.8
+   18   1278 2.086382726898186e+04 1.0e+00 1.20e+00  8e-01  2e+00 0:24.1
+   25   1775 2.085932274117957e+04 1.0e+00 1.36e+00  9e-01  2e+00 0:31.9
+   36   2556 2.083582156318058e+04 1.0e+00 1.66e+00  1e+00  2e+00 0:40.0
+   53   3763 2.081599646113082e+04 1.0e+00 2.82e+00  2e+00  5e+00 0:49.3
+   72   5112 2.079274170394358e+04 1.0e+00 4.58e+00  2e+00  1e+01 0:59.8
+  100   7100 2.076697264877998e+04 1.0e+00 7.21e+00  3e+00  2e+01 1:10.1
+  136   9656 2.075445495670734e+04 1.0e+00 7.95e+00  2e+00  2e+01 1:22.2
+  161  11431 2.075391962507144e+04 1.0e+00 1.28e+01  3e+00  7e+01 1:35.9
+  173  12283 2.074687646742308e+04 1.0e+00 1.38e+01  3e+00  9e+01 1:50.4
+  186  13206 2.074687646742308e+04 1.0e+00 1.61e+01  3e+00  1e+02 2:06.0
+  199  14129 2.074687646742308e+04 1.0e+00 1.59e+01  2e+00  9e+01 2:22.1
+  200  14200 2.074687585715832e+04 1.0e+00 1.59e+01  3e+00  9e+01 2:23.3
+  249  17679 2.074687504228774e+04 1.0e+00 1.38e+01  2e+00  6e+01 2:40.2
+--- Restart 1 (Used: 17679/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=528076, Sat Nov 29 07:09:47 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.199585630576202e+04 1.1e+00 1.13e+00  1e+00  1e+00 0:01.2
+    2    142 2.156143881822506e+04 1.0e+00 1.11e+00  1e+00  1e+00 0:02.3
+    3    213 2.137855910637673e+04 1.0e+00 1.10e+00  1e+00  1e+00 0:03.3
+    7    497 2.096375719667216e+04 1.0e+00 1.18e+00  9e-01  1e+00 0:07.2
+   12    852 2.085544896002547e+04 1.0e+00 1.37e+00  1e+00  2e+00 0:12.2
+   18   1278 2.083306444892921e+04 1.0e+00 1.54e+00  1e+00  2e+00 0:18.0
+   25   1775 2.081848211962986e+04 1.0e+00 1.62e+00  1e+00  2e+00 0:24.6
+   34   2414 2.081349989621956e+04 1.0e+00 1.79e+00  1e+00  2e+00 0:31.6
+   46   3266 2.079898510110203e+04 1.0e+00 2.66e+00  2e+00  4e+00 0:39.7
+   63   4473 2.076540231142733e+04 1.0e+00 3.12e+00  2e+00  4e+00 0:49.1
+   82   5822 2.074536556647432e+04 1.0e+00 4.49e+00  2e+00  8e+00 0:59.3
+  100   7100 2.073037901181411e+04 1.0e+00 5.15e+00  2e+00  9e+00 1:08.2
+  116   8236 2.071597467826939e+04 1.0e+00 6.15e+00  1e+00  1e+01 1:20.8
+  147  10437 2.071769820068697e+04 1.0e+00 5.99e+00  1e+00  8e+00 1:33.9
+  194  13774 2.071769820068697e+04 1.0e+00 5.15e+00  8e-01  9e+00 1:46.5
+--- Restart 2 (Used: 31453/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=491598, Sat Nov 29 07:11:34 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.209222754411367e+04 1.1e+00 1.31e+00  1e+00  1e+00 0:01.2
+    2    142 2.147634209621392e+04 1.0e+00 1.28e+00  1e+00  1e+00 0:02.3
+    3    213 2.126596052051921e+04 1.0e+00 1.27e+00  1e+00  1e+00 0:03.6
+    6    426 2.089345124506680e+04 1.0e+00 1.30e+00  1e+00  1e+00 0:06.9
+   10    710 2.087878889213118e+04 1.0e+00 1.40e+00  1e+00  2e+00 0:11.2
+   15   1065 2.085285154079897e+04 1.0e+00 1.66e+00  1e+00  2e+00 0:16.5
+   22   1562 2.086205711060945e+04 1.0e+00 1.90e+00  1e+00  3e+00 0:23.1
+   30   2130 2.084494359798936e+04 1.0e+00 2.07e+00  1e+00  3e+00 0:30.5
+   39   2769 2.083555842977261e+04 1.0e+00 3.13e+00  2e+00  4e+00 0:38.6
+   50   3550 2.082134904339811e+04 1.0e+00 4.42e+00  2e+00  7e+00 0:47.7
+   65   4615 2.080555394291651e+04 1.0e+00 6.69e+00  3e+00  1e+01 0:58.0
+   84   5964 2.078202118318993e+04 1.0e+00 1.03e+01  5e+00  2e+01 1:09.6
+  100   7100 2.077061874749600e+04 1.0e+00 1.14e+01  4e+00  2e+01 1:17.0
+  121   8591 2.076833247560959e+04 1.0e+00 1.49e+01  4e+00  3e+01 1:24.4
+Nov 29, 2025 7:12:59 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+Nov 29, 2025 7:12:59 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 1 0 1 0 1 1 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [1 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 1 1 0 0 0 0 0 0]
+ [1 0 0 1 0 0 0 0 0 0]
+ [1 0 0 1 0 0 0 0 0 1]
+ [1 0 0 1 0 0 0 1 0 0]
+ [0 0 1 1 0 0 1 0 0 0]]
+Predicted B:
+[[0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 1 0 0 0]
+ [0 0 0 0 0 0 0 0 0 1]
+ [0 0 0 0 1 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 1 0 0 0 0]]
+True bic: 20752.138043556813
+Predicted bic: 20736.342338775758
+Thresholded bic: 20729.02522123494
+Thresholded SHD: 12.0
+Predicted ADMG SHD: 13.0
+
+
+RUN NUMBER: 185
+EXPLANATION: Run 185; CMA-ES; Frac directed = 0.9; Varying directed fraction. 34 of 120. First run in test = 151.
+
+Nov 29, 2025 7:12:59 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 19828.418698329704
+
+--- Restart 0 (Used: 0/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=569518, Sat Nov 29 07:12:59 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.158745314917016e+04 1.1e+00 9.44e-01  9e-01  1e+00 0:01.5
+    2    142 2.146398161261042e+04 1.0e+00 9.18e-01  8e-01  1e+00 0:02.8
+    3    213 2.118671065631652e+04 1.0e+00 9.01e-01  8e-01  1e+00 0:03.9
+    6    426 2.039853834142320e+04 1.0e+00 8.80e-01  8e-01  1e+00 0:07.3
+   10    710 1.995833086428309e+04 1.0e+00 9.36e-01  8e-01  1e+00 0:11.6
+   15   1065 1.993083519716986e+04 1.0e+00 1.02e+00  8e-01  1e+00 0:16.6
+   21   1491 1.991840546103303e+04 1.0e+00 1.11e+00  8e-01  2e+00 0:22.6
+   29   2059 1.989895100773118e+04 1.0e+00 1.25e+00  9e-01  2e+00 0:30.0
+   43   3053 1.986866843862359e+04 1.0e+00 1.91e+00  1e+00  3e+00 0:38.4
+   60   4260 1.985773546051155e+04 1.0e+00 3.35e+00  2e+00  7e+00 0:47.6
+   80   5680 1.984821704569135e+04 1.0e+00 4.74e+00  2e+00  1e+01 0:57.7
+  100   7100 1.983243810299172e+04 1.0e+00 5.66e+00  2e+00  1e+01 1:06.6
+  144  10224 1.982519156358427e+04 1.0e+00 1.01e+01  2e+00  2e+01 1:18.8
+  200  14200 1.982423818323030e+04 1.0e+00 1.40e+01  2e+00  4e+01 1:32.2
+  229  16259 1.982423818323030e+04 1.0e+00 1.37e+01  2e+00  4e+01 1:46.2
+  250  17750 1.982423818323030e+04 1.0e+00 1.15e+01  1e+00  3e+01 1:56.0
+--- Restart 1 (Used: 17750/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=454759, Sat Nov 29 07:14:56 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.483407682054615e+04 1.1e+00 1.12e+00  1e+00  1e+00 0:01.3
+    2    142 2.304612376947491e+04 1.0e+00 1.08e+00  1e+00  1e+00 0:02.7
+    3    213 2.288305845570447e+04 1.0e+00 1.07e+00  1e+00  1e+00 0:04.0
+    6    426 2.033913682873964e+04 1.0e+00 1.16e+00  1e+00  1e+00 0:08.0
+   10    710 1.999990494271808e+04 1.0e+00 1.31e+00  1e+00  2e+00 0:13.3
+   14    994 2.000979758389856e+04 1.0e+00 1.50e+00  1e+00  2e+00 0:18.5
+   19   1349 1.993691436539949e+04 1.0e+00 1.70e+00  1e+00  3e+00 0:25.3
+   25   1775 1.991927848994201e+04 1.0e+00 1.90e+00  2e+00  3e+00 0:32.9
+   32   2272 1.992603943313936e+04 1.0e+00 2.22e+00  2e+00  4e+00 0:41.0
+   42   2982 1.989847685567687e+04 1.0e+00 2.53e+00  2e+00  4e+00 0:50.6
+   55   3905 1.988634800716878e+04 1.0e+00 3.61e+00  2e+00  6e+00 1:00.8
+   77   5467 1.984555670089424e+04 1.0e+00 5.51e+00  2e+00  1e+01 1:11.9
+  100   7100 1.980982941298090e+04 1.0e+00 8.28e+00  3e+00  3e+01 1:21.6
+  136   9656 1.980830643651096e+04 1.0e+00 9.91e+00  2e+00  3e+01 1:34.9
+  179  12709 1.980830643651096e+04 1.0e+00 7.76e+00  1e+00  2e+01 1:49.1
+  184  13064 1.980830643651096e+04 1.0e+00 7.80e+00  1e+00  2e+01 1:50.7
+--- Restart 2 (Used: 30814/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=435862, Sat Nov 29 07:16:47 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.156249917736184e+04 1.1e+00 1.32e+00  1e+00  1e+00 0:01.3
+    2    142 2.141490674386545e+04 1.0e+00 1.27e+00  1e+00  1e+00 0:02.6
+    3    213 2.074861237425681e+04 1.0e+00 1.25e+00  1e+00  1e+00 0:04.0
+    6    426 2.096916102882543e+04 1.0e+00 1.22e+00  1e+00  1e+00 0:08.0
+    9    639 2.001473945802666e+04 1.0e+00 1.31e+00  1e+00  2e+00 0:12.1
+   13    923 2.002973049176304e+04 1.0e+00 1.56e+00  1e+00  2e+00 0:17.4
+   18   1278 1.994908244689189e+04 1.0e+00 1.77e+00  1e+00  3e+00 0:24.0
+   24   1704 1.992664508358256e+04 1.0e+00 1.92e+00  1e+00  3e+00 0:31.9
+   31   2201 1.991413206308961e+04 1.0e+00 2.07e+00  1e+00  3e+00 0:40.8
+   39   2769 1.989323719631379e+04 1.0e+00 2.23e+00  1e+00  3e+00 0:50.6
+   48   3408 1.987997806529486e+04 1.0e+00 2.77e+00  2e+00  4e+00 1:00.9
+   59   4189 1.986976560509598e+04 1.0e+00 3.06e+00  1e+00  5e+00 1:12.6
+   74   5254 1.986164665663639e+04 1.0e+00 3.13e+00  1e+00  5e+00 1:25.2
+   94   6674 1.985854082898882e+04 1.0e+00 3.81e+00  2e+00  7e+00 1:38.2
+  100   7100 1.985849709494973e+04 1.0e+00 4.10e+00  2e+00  7e+00 1:41.8
+  130   9230 1.985833978409312e+04 1.0e+00 5.85e+00  2e+00  1e+01 1:56.8
+Nov 29, 2025 7:18:44 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+Nov 29, 2025 7:18:44 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0 0 0 0 0 0 0 0 0 0]
+ [1 0 1 1 1 0 0 0 0 1]
+ [1 0 0 0 0 0 0 0 0 0]
+ [1 0 0 0 0 0 1 0 0 0]
+ [1 0 1 1 0 1 0 0 0 0]
+ [1 0 0 0 0 0 1 0 0 0]
+ [1 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 1 1 1 1 0 0 0]
+ [1 0 0 0 0 0 1 0 0 0]]
+Predicted B:
+[[0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 1 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 1 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 1 0 1 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]]
+True bic: 19828.418698329704
+Predicted bic: 19827.252398649332
+Thresholded bic: 19827.252398649332
+Thresholded SHD: 11.0
+Predicted ADMG SHD: 11.0
+
+
+RUN NUMBER: 186
+EXPLANATION: Run 186; CMA-ES; Avg degree = 2; Varying average degree. 35 of 120. First run in test = 151.
+
+Nov 29, 2025 7:18:44 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 24445.513940993478
+
+--- Restart 0 (Used: 0/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=536399, Sat Nov 29 07:18:44 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.461508917995262e+04 1.1e+00 9.35e-01  9e-01  1e+00 0:00.7
+    2    142 2.459667403323360e+04 1.0e+00 9.06e-01  8e-01  1e+00 0:01.3
+    3    213 2.458274863911816e+04 1.0e+00 8.92e-01  8e-01  1e+00 0:01.8
+   11    781 2.453636900162123e+04 1.0e+00 9.35e-01  7e-01  1e+00 0:05.1
+   22   1562 2.449332171459849e+04 1.0e+00 1.57e+00  1e+00  2e+00 0:09.1
+   35   2485 2.445953645430372e+04 1.0e+00 3.20e+00  2e+00  4e+00 0:14.1
+   50   3550 2.442247050268848e+04 1.0e+00 4.67e+00  2e+00  7e+00 0:20.5
+   71   5041 2.442188812020831e+04 1.0e+00 9.78e+00  3e+00  2e+01 0:27.5
+  100   7100 2.442169436908562e+04 1.0e+00 1.59e+01  4e+00  2e+01 0:31.5
+  176  12496 2.442169436908562e+04 1.0e+00 1.21e+01  2e+00  3e+01 0:34.8
+--- Restart 1 (Used: 12496/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=435782, Sat Nov 29 07:19:20 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.457052060958197e+04 1.1e+00 1.13e+00  1e+00  1e+00 0:00.7
+    2    142 2.457854969325564e+04 1.0e+00 1.10e+00  1e+00  1e+00 0:01.3
+    3    213 2.458383272905450e+04 1.0e+00 1.08e+00  1e+00  1e+00 0:02.0
+    8    568 2.455598733524693e+04 1.0e+00 1.16e+00  1e+00  1e+00 0:05.1
+   18   1278 2.449433546973926e+04 1.0e+00 1.75e+00  1e+00  3e+00 0:09.2
+   34   2414 2.445694925955166e+04 1.0e+00 2.91e+00  2e+00  5e+00 0:14.4
+   58   4118 2.443590588064088e+04 1.0e+00 5.66e+00  3e+00  8e+00 0:20.5
+   87   6177 2.443565016550045e+04 1.0e+00 5.31e+00  2e+00  8e+00 0:27.5
+  100   7100 2.443565016550045e+04 1.0e+00 5.12e+00  2e+00  8e+00 0:28.7
+  164  11644 2.443565016550044e+04 1.0e+00 4.48e+00  1e+00  8e+00 0:31.4
+--- Restart 2 (Used: 24140/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=527080, Sat Nov 29 07:19:51 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.459835422105310e+04 1.1e+00 1.31e+00  1e+00  1e+00 0:00.3
+    2    142 2.457383155349987e+04 1.0e+00 1.27e+00  1e+00  1e+00 0:00.6
+    3    213 2.458229417632830e+04 1.0e+00 1.26e+00  1e+00  1e+00 0:00.7
+   22   1562 2.448215173464528e+04 1.0e+00 2.32e+00  2e+00  3e+00 0:03.8
+   57   4047 2.444574493899422e+04 1.0e+00 1.03e+01  5e+00  2e+01 0:08.0
+  100   7100 2.442169346789453e+04 1.0e+00 1.68e+01  5e+00  3e+01 0:12.8
+  119   8449 2.442169342363547e+04 1.0e+00 1.53e+01  4e+00  3e+01 0:18.9
+  138   9798 2.442169342363547e+04 1.0e+00 1.39e+01  4e+00  2e+01 0:26.2
+  153  10863 2.442169342363547e+04 1.0e+00 1.42e+01  3e+00  2e+01 0:32.0
+--- Restart 3 (Used: 35003/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=406195, Sat Nov 29 07:20:24 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.463775081059248e+04 1.1e+00 1.51e+00  1e+00  2e+00 0:00.5
+    2    142 2.459064403619657e+04 1.0e+00 1.50e+00  1e+00  2e+00 0:01.0
+    3    213 2.459814596911805e+04 1.0e+00 1.51e+00  1e+00  2e+00 0:01.5
+   11    781 2.454880178377260e+04 1.0e+00 1.76e+00  1e+00  2e+00 0:04.7
+   23   1633 2.449495970846765e+04 1.0e+00 2.45e+00  2e+00  3e+00 0:08.7
+   40   2840 2.445782704224067e+04 1.0e+00 5.03e+00  3e+00  7e+00 0:14.0
+   63   4473 2.443131264672519e+04 1.0e+00 8.59e+00  4e+00  2e+01 0:20.2
+   71   5041 2.442929508610972e+04 1.0e+00 1.01e+01  4e+00  2e+01 0:22.2
+Nov 29, 2025 7:20:46 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+Nov 29, 2025 7:20:46 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0 0 0 0 0 0 0 0 0 0]
+ [1 0 0 0 1 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [1 0 0 0 0 0 0 0 0 1]
+ [0 0 0 0 0 0 0 0 1 1]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 1 0 0]
+ [0 0 0 0 0 0 0 0 0 0]]
+Predicted B:
+[[0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 1 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 1 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 1]
+ [0 0 0 0 0 0 0 0 1 0]]
+True bic: 24445.513940993478
+Predicted bic: 24442.215860276232
+Thresholded bic: 24442.215860276232
+Thresholded SHD: 10.0
+Predicted ADMG SHD: 10.0
+
+
+RUN NUMBER: 187
+EXPLANATION: Run 187; CMA-ES; Avg degree = 3; Varying average degree. 36 of 120. First run in test = 151.
+
+Nov 29, 2025 7:20:46 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 26709.324009554697
+
+--- Restart 0 (Used: 0/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=499660, Sat Nov 29 07:20:46 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.757683600596612e+04 1.1e+00 9.44e-01  9e-01  1e+00 0:01.0
+    2    142 2.732759705195089e+04 1.0e+00 9.20e-01  8e-01  1e+00 0:01.8
+    3    213 2.688069880208250e+04 1.0e+00 9.14e-01  8e-01  1e+00 0:02.6
+    8    568 2.683645504765129e+04 1.0e+00 1.01e+00  9e-01  1e+00 0:06.0
+   15   1065 2.682145230252882e+04 1.0e+00 1.23e+00  1e+00  2e+00 0:10.4
+   23   1633 2.679707845517549e+04 1.0e+00 1.77e+00  1e+00  3e+00 0:15.5
+   38   2698 2.674550998574709e+04 1.0e+00 2.87e+00  2e+00  5e+00 0:21.8
+   64   4544 2.671410512988764e+04 1.0e+00 6.12e+00  3e+00  1e+01 0:28.9
+  100   7100 2.669611727092546e+04 1.0e+00 9.86e+00  3e+00  2e+01 0:35.6
+  164  11644 2.669611284670988e+04 1.0e+00 1.13e+01  3e+00  3e+01 0:44.6
+  200  14200 2.669611284670988e+04 1.0e+00 8.67e+00  2e+00  2e+01 0:50.4
+  205  14555 2.669611284670988e+04 1.0e+00 8.00e+00  1e+00  2e+01 0:51.2
+--- Restart 1 (Used: 14555/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=482601, Sat Nov 29 07:21:38 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.785176622825161e+04 1.1e+00 1.12e+00  1e+00  1e+00 0:00.7
+    2    142 2.731011806781047e+04 1.0e+00 1.11e+00  1e+00  1e+00 0:01.2
+    3    213 2.701689105788745e+04 1.0e+00 1.11e+00  1e+00  1e+00 0:01.7
+    9    639 2.683839022150638e+04 1.0e+00 1.27e+00  1e+00  2e+00 0:04.8
+   18   1278 2.682836334807466e+04 1.0e+00 1.63e+00  1e+00  2e+00 0:08.8
+   34   2414 2.676585749564624e+04 1.0e+00 2.70e+00  2e+00  4e+00 0:13.9
+   64   4544 2.671257180819698e+04 1.0e+00 5.25e+00  2e+00  8e+00 0:20.0
+  100   7100 2.668719612239270e+04 1.0e+00 9.08e+00  2e+00  2e+01 0:25.8
+  135   9585 2.668717186636017e+04 1.0e+00 8.41e+00  1e+00  2e+01 0:34.0
+  170  12070 2.668717186636017e+04 1.0e+00 6.76e+00  7e-01  2e+01 0:42.3
+--- Restart 2 (Used: 26625/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=564742, Sat Nov 29 07:22:20 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.828681563610634e+04 1.1e+00 1.31e+00  1e+00  1e+00 0:00.7
+    2    142 2.735113218150249e+04 1.0e+00 1.27e+00  1e+00  1e+00 0:01.4
+    3    213 2.725180552725225e+04 1.0e+00 1.24e+00  1e+00  1e+00 0:02.1
+    9    639 2.682520883481197e+04 1.0e+00 1.36e+00  1e+00  2e+00 0:05.2
+   18   1278 2.681166525321698e+04 1.0e+00 1.84e+00  1e+00  2e+00 0:09.6
+   31   2201 2.676657490335238e+04 1.0e+00 2.63e+00  2e+00  4e+00 0:14.9
+   47   3337 2.672301718069410e+04 1.0e+00 4.82e+00  3e+00  7e+00 0:21.0
+   66   4686 2.669325315092306e+04 1.0e+00 6.78e+00  3e+00  1e+01 0:28.3
+   91   6461 2.668306157866765e+04 1.0e+00 1.13e+01  4e+00  3e+01 0:36.5
+  100   7100 2.667965935339288e+04 1.0e+00 1.11e+01  3e+00  3e+01 0:38.2
+  135   9585 2.667957183448183e+04 1.0e+00 1.62e+01  4e+00  3e+01 0:48.4
+  165  11715 2.667957183448183e+04 1.0e+00 1.45e+01  3e+00  3e+01 0:59.7
+  176  12496 2.667957183448183e+04 1.0e+00 1.37e+01  3e+00  2e+01 1:03.8
+--- Restart 3 (Used: 39121/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=492598, Sat Nov 29 07:23:25 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.712442717638498e+04 1.1e+00 1.52e+00  1e+00  2e+00 0:00.7
+    2    142 2.723708076089099e+04 1.0e+00 1.48e+00  1e+00  2e+00 0:01.4
+    3    213 2.718725385734019e+04 1.0e+00 1.46e+00  1e+00  2e+00 0:02.1
+    8    568 2.684668515058238e+04 1.0e+00 1.57e+00  1e+00  2e+00 0:05.5
+   13    923 2.681152215911541e+04 1.0e+00 1.87e+00  1e+00  2e+00 0:08.6
+Nov 29, 2025 7:23:33 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+Nov 29, 2025 7:23:34 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0 0 0 0 0 0 0 1 0 1]
+ [0 0 1 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 1 0 0]
+ [0 0 1 0 1 0 0 0 0 0]
+ [0 0 1 0 0 0 0 0 1 0]
+ [0 0 1 0 0 0 0 0 0 1]
+ [0 0 0 0 0 0 0 0 1 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]]
+Predicted B:
+[[0 0 0 1 0 0 0 0 0 0]
+ [0 0 0 0 1 0 0 0 0 1]
+ [0 0 0 0 0 0 0 0 0 0]
+ [1 0 0 0 0 0 0 1 1 0]
+ [0 1 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 1 0 0 0]
+ [0 0 0 0 0 1 0 0 0 0]
+ [0 0 0 1 0 0 0 0 0 0]
+ [0 0 0 1 0 0 0 0 0 0]
+ [0 1 0 0 0 0 0 0 0 0]]
+True bic: 26709.324009554697
+Predicted bic: 26700.094189681193
+Thresholded bic: 26700.094189681193
+Thresholded SHD: 16.0
+Predicted ADMG SHD: 16.0
+
+
+RUN NUMBER: 188
+EXPLANATION: Run 188; CMA-ES; Avg degree = 4; Varying average degree. 37 of 120. First run in test = 151.
+
+Nov 29, 2025 7:23:34 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 27548.32406575619
+
+--- Restart 0 (Used: 0/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=492640, Sat Nov 29 07:23:34 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.859796902266776e+04 1.1e+00 9.35e-01  9e-01  1e+00 0:01.5
+    2    142 2.781777252109598e+04 1.0e+00 9.06e-01  8e-01  1e+00 0:02.8
+    3    213 2.788028844144747e+04 1.0e+00 8.93e-01  8e-01  1e+00 0:04.1
+    6    426 2.769987480829395e+04 1.0e+00 9.37e-01  8e-01  1e+00 0:07.9
+   10    710 2.764502627157323e+04 1.0e+00 1.01e+00  8e-01  1e+00 0:12.8
+   15   1065 2.765834576073111e+04 1.0e+00 1.14e+00  9e-01  1e+00 0:18.1
+   22   1562 2.764814209595560e+04 1.0e+00 1.29e+00  9e-01  2e+00 0:24.2
+   33   2343 2.762369229520418e+04 1.0e+00 1.81e+00  1e+00  3e+00 0:31.7
+   49   3479 2.757225504980857e+04 1.0e+00 2.67e+00  1e+00  5e+00 0:40.0
+   68   4828 2.755791497300685e+04 1.0e+00 4.74e+00  2e+00  8e+00 0:49.2
+   91   6461 2.754112590692672e+04 1.0e+00 6.13e+00  2e+00  1e+01 0:59.4
+  100   7100 2.752662181124442e+04 1.0e+00 7.41e+00  3e+00  2e+01 1:02.2
+  138   9798 2.751545643970463e+04 1.0e+00 1.07e+01  2e+00  2e+01 1:14.3
+  200  14200 2.751545455409477e+04 1.0e+00 8.00e+00  2e+00  1e+01 1:27.2
+  208  14768 2.751545455409477e+04 1.0e+00 7.00e+00  1e+00  1e+01 1:28.8
+--- Restart 1 (Used: 14768/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=494357, Sat Nov 29 07:25:03 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.881477892864434e+04 1.2e+00 1.14e+00  1e+00  1e+00 0:01.1
+    2    142 2.809152669613032e+04 1.0e+00 1.11e+00  1e+00  1e+00 0:02.2
+    3    213 2.787575303264708e+04 1.0e+00 1.12e+00  1e+00  1e+00 0:03.4
+    6    426 2.766852559458610e+04 1.0e+00 1.15e+00  1e+00  1e+00 0:07.0
+   10    710 2.763777175820174e+04 1.0e+00 1.22e+00  1e+00  1e+00 0:11.3
+   16   1136 2.761210880549583e+04 1.0e+00 1.41e+00  1e+00  2e+00 0:16.9
+   23   1633 2.760650468811009e+04 1.0e+00 1.75e+00  1e+00  2e+00 0:23.2
+   32   2272 2.758023394746493e+04 1.0e+00 2.23e+00  1e+00  3e+00 0:30.9
+   43   3053 2.755091142972610e+04 1.0e+00 2.84e+00  2e+00  4e+00 0:39.4
+   61   4331 2.753486203498864e+04 1.0e+00 4.03e+00  2e+00  6e+00 0:48.5
+   84   5964 2.752776468390581e+04 1.0e+00 4.95e+00  2e+00  8e+00 0:58.8
+  100   7100 2.752023008003560e+04 1.0e+00 4.62e+00  2e+00  9e+00 1:04.7
+  132   9372 2.752019829725663e+04 1.0e+00 4.18e+00  1e+00  8e+00 1:16.9
+  170  12070 2.752019829725663e+04 1.0e+00 3.05e+00  7e-01  5e+00 1:30.2
+  178  12638 2.752019829725663e+04 1.0e+00 3.38e+00  8e-01  6e+00 1:33.0
+--- Restart 2 (Used: 27406/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=556432, Sat Nov 29 07:26:36 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 2.781764314584158e+04 1.1e+00 1.31e+00  1e+00  1e+00 0:01.1
+    2    142 2.842994297792825e+04 1.0e+00 1.26e+00  1e+00  1e+00 0:02.2
+    3    213 2.772405742855260e+04 1.0e+00 1.23e+00  1e+00  1e+00 0:03.5
+    6    426 2.764938382586498e+04 1.0e+00 1.28e+00  1e+00  2e+00 0:07.2
+   10    710 2.766042692649570e+04 1.0e+00 1.46e+00  1e+00  2e+00 0:12.2
+   15   1065 2.764554248080839e+04 1.0e+00 1.68e+00  1e+00  2e+00 0:18.3
+   20   1420 2.763607386383068e+04 1.0e+00 2.01e+00  1e+00  3e+00 0:24.5
+   30   2130 2.761376486690816e+04 1.0e+00 2.60e+00  2e+00  4e+00 0:31.7
+   57   4047 2.755380361477710e+04 1.0e+00 5.69e+00  3e+00  1e+01 0:39.8
+   90   6390 2.751689378321363e+04 1.0e+00 1.04e+01  3e+00  2e+01 0:48.8
+  100   7100 2.750866484140949e+04 1.0e+00 1.09e+01  3e+00  2e+01 0:51.3
+  157  11147 2.750672198775103e+04 1.0e+00 1.22e+01  2e+00  2e+01 1:02.4
+  178  12638 2.750672198775103e+04 1.0e+00 9.61e+00  2e+00  2e+01 1:06.1
+Nov 29, 2025 7:27:43 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+Nov 29, 2025 7:27:43 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0 0 0 0 0 0 0 0 0 0]
+ [1 0 1 0 1 0 0 1 0 1]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 1 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [1 0 0 0 0 0 0 0 0 0]
+ [1 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 1 1 0 0]
+ [1 0 1 0 0 1 1 0 0 0]]
+Predicted B:
+[[0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 1 0 1 0 0 0 0]
+ [0 0 0 0 0 0 0 1 0 0]
+ [0 1 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 1 0 0 0]
+ [0 1 0 0 0 0 1 1 0 0]
+ [0 0 0 0 1 1 0 0 0 0]
+ [0 0 1 0 0 1 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]]
+True bic: 27548.32406575619
+Predicted bic: 27527.244424391793
+Thresholded bic: 27527.244424391793
+Thresholded SHD: 20.0
+Predicted ADMG SHD: 20.0
+
+
+RUN NUMBER: 189
+EXPLANATION: Run 189; CMA-ES; Avg degree = 6; Varying average degree. 38 of 120. First run in test = 151.
+
+Nov 29, 2025 7:27:43 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 34200.23556118439
+
+--- Restart 0 (Used: 0/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=538510, Sat Nov 29 07:27:43 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 3.640158590998180e+04 1.1e+00 9.39e-01  9e-01  1e+00 0:01.2
+    2    142 3.624858080855532e+04 1.0e+00 9.09e-01  9e-01  1e+00 0:02.2
+    3    213 3.518862064467491e+04 1.0e+00 9.02e-01  8e-01  1e+00 0:03.3
+    7    497 3.453725155877420e+04 1.0e+00 9.93e-01  9e-01  1e+00 0:07.1
+   12    852 3.426192840666581e+04 1.0e+00 1.17e+00  1e+00  1e+00 0:11.4
+   20   1420 3.423592773758798e+04 1.0e+00 1.43e+00  1e+00  2e+00 0:16.6
+   31   2201 3.423065616090025e+04 1.0e+00 1.83e+00  1e+00  3e+00 0:23.0
+   47   3337 3.421465133327440e+04 1.0e+00 2.49e+00  1e+00  6e+00 0:30.1
+   69   4899 3.419088763028968e+04 1.0e+00 2.68e+00  1e+00  7e+00 0:38.4
+  100   7100 3.417780185798605e+04 1.0e+00 3.59e+00  1e+00  9e+00 0:47.5
+  139   9869 3.417037433088040e+04 1.0e+00 4.46e+00  1e+00  7e+00 0:57.5
+  178  12638 3.417037433088040e+04 1.0e+00 3.62e+00  8e-01  6e+00 1:07.1
+--- Restart 1 (Used: 12638/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=415245, Sat Nov 29 07:28:51 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 3.474510056620729e+04 1.1e+00 1.12e+00  1e+00  1e+00 0:00.9
+    2    142 3.460156332476233e+04 1.0e+00 1.08e+00  1e+00  1e+00 0:01.7
+    3    213 3.437599539783660e+04 1.0e+00 1.07e+00  1e+00  1e+00 0:02.6
+    7    497 3.427387999355569e+04 1.0e+00 1.11e+00  1e+00  1e+00 0:06.3
+   12    852 3.424411288509090e+04 1.0e+00 1.19e+00  1e+00  1e+00 0:10.5
+   18   1278 3.423167575562175e+04 1.0e+00 1.40e+00  1e+00  2e+00 0:15.7
+   26   1846 3.424033397766616e+04 1.0e+00 1.64e+00  1e+00  2e+00 0:22.0
+   37   2627 3.421139093795791e+04 1.0e+00 1.85e+00  1e+00  3e+00 0:29.5
+   57   4047 3.418429644164103e+04 1.0e+00 2.81e+00  1e+00  5e+00 0:37.5
+   88   6248 3.416181797245696e+04 1.0e+00 4.44e+00  2e+00  9e+00 0:46.5
+  100   7100 3.415012277129584e+04 1.0e+00 5.21e+00  2e+00  1e+01 0:50.6
+  143  10153 3.413694067151930e+04 1.0e+00 9.95e+00  2e+00  3e+01 1:01.8
+  194  13774 3.413694067151930e+04 1.0e+00 9.88e+00  1e+00  2e+01 1:13.8
+  200  14200 3.413694067151930e+04 1.0e+00 9.16e+00  1e+00  2e+01 1:15.1
+  216  15336 3.413694067151930e+04 1.0e+00 9.10e+00  1e+00  2e+01 1:18.3
+--- Restart 2 (Used: 27974/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=516858, Sat Nov 29 07:30:09 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 3.434243968247428e+04 1.1e+00 1.32e+00  1e+00  1e+00 0:00.9
+    2    142 3.442454463468159e+04 1.0e+00 1.27e+00  1e+00  1e+00 0:01.7
+    3    213 3.437350989971507e+04 1.0e+00 1.24e+00  1e+00  1e+00 0:02.6
+    7    497 3.423443864761134e+04 1.0e+00 1.24e+00  1e+00  1e+00 0:06.0
+   13    923 3.423659777048707e+04 1.0e+00 1.36e+00  1e+00  2e+00 0:10.6
+   20   1420 3.422488489540725e+04 1.0e+00 1.43e+00  1e+00  2e+00 0:15.7
+   30   2130 3.422869506021497e+04 1.0e+00 1.66e+00  1e+00  2e+00 0:22.2
+   42   2982 3.420508682762511e+04 1.0e+00 1.93e+00  1e+00  3e+00 0:29.3
+   59   4189 3.419943898917700e+04 1.0e+00 2.09e+00  8e-01  3e+00 0:37.6
+   78   5538 3.418774201694885e+04 1.0e+00 2.57e+00  9e-01  4e+00 0:46.8
+  100   7100 3.417656378943130e+04 1.0e+00 3.48e+00  8e-01  7e+00 0:55.1
+  137   9727 3.416903705424151e+04 1.0e+00 4.83e+00  8e-01  1e+01 1:06.2
+  165  11715 3.416045290749642e+04 1.0e+00 6.39e+00  9e-01  1e+01 1:18.4
+  170  12070 3.416045290749642e+04 1.0e+00 5.96e+00  9e-01  1e+01 1:21.1
+Nov 29, 2025 7:31:31 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+Nov 29, 2025 7:31:31 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0 0 0 0 0 1 0 0 0 0]
+ [1 0 0 1 0 0 0 1 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [1 0 0 1 0 0 0 0 0 0]
+ [0 0 0 1 0 0 0 0 0 0]
+ [1 0 1 0 0 1 0 1 0 0]
+ [0 0 1 1 0 1 0 0 0 0]
+ [1 0 0 1 1 0 1 1 0 1]
+ [0 0 0 1 1 1 1 0 0 0]]
+Predicted B:
+[[0 0 1 1 0 0 0 1 0 0]
+ [0 0 1 0 0 0 0 0 0 0]
+ [1 1 0 0 0 0 0 0 0 1]
+ [1 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [1 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 1 0 0 0 0 0 0 0]]
+True bic: 34200.23556118439
+Predicted bic: 34157.46310816006
+Thresholded bic: 34157.46310816006
+Thresholded SHD: 31.0
+Predicted ADMG SHD: 31.0
+
+
+RUN NUMBER: 190
+EXPLANATION: Run 190; CMA-ES; Avg degree = 8; Varying average degree. 39 of 120. First run in test = 151.
+
+Nov 29, 2025 7:31:31 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 31934.41818689686
+
+--- Restart 0 (Used: 0/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=492894, Sat Nov 29 07:31:31 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 3.416964789554589e+04 1.1e+00 9.44e-01  9e-01  1e+00 0:01.5
+    2    142 3.247168054261826e+04 1.0e+00 9.22e-01  9e-01  1e+00 0:02.8
+    3    213 3.475786779074383e+04 1.0e+00 9.13e-01  8e-01  1e+00 0:04.2
+    6    426 3.278456659285539e+04 1.0e+00 8.95e-01  8e-01  1e+00 0:08.2
+    9    639 3.248502126802616e+04 1.0e+00 9.55e-01  8e-01  1e+00 0:12.2
+   13    923 3.211961570425953e+04 1.0e+00 9.79e-01  8e-01  1e+00 0:17.7
+   18   1278 3.204950041213716e+04 1.0e+00 9.91e-01  8e-01  1e+00 0:24.5
+   24   1704 3.200244450420874e+04 1.0e+00 1.01e+00  7e-01  1e+00 0:32.7
+   30   2130 3.194647956706325e+04 1.0e+00 1.05e+00  7e-01  1e+00 0:40.8
+   37   2627 3.194895041877400e+04 1.0e+00 1.06e+00  6e-01  2e+00 0:49.9
+   45   3195 3.193629179199350e+04 1.0e+00 1.08e+00  6e-01  2e+00 1:00.4
+   54   3834 3.193446256737347e+04 1.0e+00 1.21e+00  6e-01  2e+00 1:12.2
+   64   4544 3.193033937079869e+04 1.0e+00 1.52e+00  7e-01  2e+00 1:24.3
+   78   5538 3.192234066383776e+04 1.0e+00 2.05e+00  9e-01  6e+00 1:37.8
+   97   6887 3.192177475336704e+04 1.0e+00 2.56e+00  8e-01  1e+01 1:52.1
+  100   7100 3.192174489455627e+04 1.0e+00 2.60e+00  8e-01  1e+01 1:54.3
+  123   8733 3.192149638111811e+04 1.0e+00 3.50e+00  7e-01  1e+01 2:10.3
+  165  11715 3.192140677669725e+04 1.0e+00 3.13e+00  6e-01  9e+00 2:27.4
+  200  14200 3.192140677669725e+04 1.0e+00 2.85e+00  5e-01  8e+00 2:39.0
+  202  14342 3.192140677669725e+04 1.0e+00 2.84e+00  5e-01  8e+00 2:39.5
+--- Restart 1 (Used: 14342/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=460819, Sat Nov 29 07:34:11 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 3.340450722750794e+04 1.1e+00 1.14e+00  1e+00  1e+00 0:01.3
+    2    142 3.207438283532953e+04 1.0e+00 1.11e+00  1e+00  1e+00 0:02.7
+    3    213 3.243447334443545e+04 1.0e+00 1.09e+00  1e+00  1e+00 0:04.0
+    6    426 3.199486722322689e+04 1.0e+00 1.15e+00  1e+00  1e+00 0:08.0
+   10    710 3.196188204531923e+04 1.0e+00 1.33e+00  1e+00  2e+00 0:13.1
+   15   1065 3.194411135160961e+04 1.0e+00 1.52e+00  1e+00  2e+00 0:19.1
+   21   1491 3.195133522135188e+04 1.0e+00 1.78e+00  1e+00  2e+00 0:25.6
+   28   1988 3.194285955742191e+04 1.0e+00 2.14e+00  1e+00  3e+00 0:32.6
+   37   2627 3.193780820251163e+04 1.0e+00 2.30e+00  1e+00  4e+00 0:40.9
+   47   3337 3.194137507479476e+04 1.0e+00 2.44e+00  1e+00  4e+00 0:50.5
+   57   4047 3.193591955815784e+04 1.0e+00 2.60e+00  1e+00  4e+00 1:00.8
+   69   4899 3.193233001421977e+04 1.0e+00 2.83e+00  1e+00  5e+00 1:12.1
+   83   5893 3.193094368503986e+04 1.0e+00 3.89e+00  1e+00  1e+01 1:24.7
+  100   7100 3.191539042092977e+04 1.0e+00 5.30e+00  2e+00  2e+01 1:38.0
+  119   8449 3.190837301308271e+04 1.0e+00 6.35e+00  2e+00  2e+01 1:52.2
+  142  10082 3.190751199166821e+04 1.0e+00 5.78e+00  1e+00  2e+01 2:07.7
+  169  11999 3.190751199166821e+04 1.0e+00 5.43e+00  8e-01  2e+01 2:23.9
+  199  14129 3.190751199166821e+04 1.0e+00 5.00e+00  5e-01  2e+01 2:41.4
+  200  14200 3.190751199166821e+04 1.0e+00 4.99e+00  5e-01  2e+01 2:42.0
+--- Restart 2 (Used: 28542/40000) ---
+(35_w,71)-aCMA-ES (mu_w=19.4,w_1=10%) in dimension 100 (seed=498360, Sat Nov 29 07:36:53 2025)
+   Covariance matrix is diagonal
+Iterat #Fevals   function value  axis ratio  sigma  min&max std  t[m:s]
+    1     71 3.308700600268379e+04 1.1e+00 1.32e+00  1e+00  1e+00 0:01.4
+    2    142 3.487253748481521e+04 1.0e+00 1.30e+00  1e+00  1e+00 0:02.7
+    3    213 3.325848131843846e+04 1.0e+00 1.29e+00  1e+00  1e+00 0:04.1
+    6    426 3.238946748821653e+04 1.0e+00 1.35e+00  1e+00  1e+00 0:08.1
+    9    639 3.210264434577696e+04 1.0e+00 1.49e+00  1e+00  2e+00 0:12.2
+   13    923 3.221738514167060e+04 1.0e+00 1.69e+00  1e+00  2e+00 0:17.7
+   18   1278 3.199923792341719e+04 1.0e+00 2.01e+00  2e+00  3e+00 0:24.6
+   24   1704 3.195800893143938e+04 1.0e+00 2.20e+00  2e+00  3e+00 0:33.0
+   30   2130 3.194566776316825e+04 1.0e+00 2.42e+00  2e+00  4e+00 0:41.3
+   37   2627 3.195090545078215e+04 1.0e+00 2.93e+00  2e+00  5e+00 0:51.1
+   45   3195 3.194839231678176e+04 1.0e+00 3.09e+00  2e+00  6e+00 1:02.3
+   53   3763 3.194234342924447e+04 1.0e+00 3.40e+00  2e+00  6e+00 1:13.4
+   62   4402 3.193646691008696e+04 1.0e+00 4.14e+00  2e+00  8e+00 1:25.7
+   72   5112 3.193423067134459e+04 1.0e+00 4.94e+00  2e+00  1e+01 1:39.4
+   83   5893 3.192106609490678e+04 1.0e+00 4.95e+00  2e+00  1e+01 1:54.5
+   94   6674 3.191576113266795e+04 1.0e+00 5.39e+00  2e+00  1e+01 2:09.6
+  100   7100 3.191453225139694e+04 1.0e+00 5.72e+00  2e+00  1e+01 2:17.8
+  113   8023 3.191412697904271e+04 1.0e+00 5.83e+00  2e+00  1e+01 2:35.2
+  129   9159 3.191397544777796e+04 1.0e+00 5.83e+00  1e+00  1e+01 2:53.4
+  149  10579 3.190650374090979e+04 1.0e+00 7.22e+00  2e+00  2e+01 3:12.9
+  162  11502 3.190650374090979e+04 1.0e+00 6.63e+00  1e+00  2e+01 3:25.2
+Nov 29, 2025 7:40:19 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+Nov 29, 2025 7:40:19 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0 0 0 0 0 0 0 0 0 0]
+ [1 0 0 1 0 1 0 0 1 1]
+ [1 0 0 0 1 1 0 0 1 0]
+ [0 0 0 0 1 0 0 0 0 1]
+ [0 0 0 0 0 0 0 0 0 1]
+ [1 0 0 0 1 0 0 0 0 1]
+ [0 0 0 0 1 1 0 0 0 1]
+ [1 1 0 0 1 1 0 0 0 0]
+ [0 0 0 0 1 1 0 0 0 1]
+ [1 0 0 0 0 0 0 0 0 0]]
+Predicted B:
+[[0 0 0 0 1 0 1 0 1 0]
+ [0 0 1 0 0 0 1 0 0 0]
+ [0 1 0 1 0 0 1 0 0 0]
+ [0 0 1 0 0 0 1 0 1 0]
+ [1 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [1 1 1 1 0 0 0 1 0 0]
+ [0 0 0 0 0 0 1 0 1 0]
+ [1 0 0 1 0 0 0 1 0 0]
+ [0 0 0 0 0 0 0 0 0 0]]
+True bic: 31934.41818689686
+Predicted bic: 31927.02617755055
+Thresholded bic: 31927.02617755055
+Thresholded SHD: 60.0
+Predicted ADMG SHD: 60.0
+
+
+RUN NUMBER: 191
+EXPLANATION: Run 191; DCD; Frac directed = 0.1; Varying directed fraction. 40 of 120. First run in test = 151.
+
+Nov 29, 2025 7:40:19 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 30770.24894314136
+
+Nov 29, 2025 7:41:10 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+Nov 29, 2025 7:41:10 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 1. 0. 0. 1. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 1. 1. 0. 0.]
+ [0. 0. 1. 0. 0. 0. 0. 0. 0. 1.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]
+Predicted B:
+[[0. 0. 0. 1. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [1. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 1. 1.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 1. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 1. 0. 0. 0. 0.]]
+True bic: 30770.24894314136
+Predicted bic: 30781.091160858832
+Thresholded bic: 30781.091160858832
+Thresholded SHD: 16.0
+Predicted ADMG SHD: 16.0
+
+
+RUN NUMBER: 192
+EXPLANATION: Run 192; DCD; Frac directed = 0.3; Varying directed fraction. 41 of 120. First run in test = 151.
+
+Nov 29, 2025 7:41:10 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 30588.81128665459
+
+Nov 29, 2025 7:41:58 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+Nov 29, 2025 7:41:58 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0. 0. 0. 0. 0. 0. 1. 0. 0. 0.]
+ [0. 0. 1. 0. 0. 1. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 1. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 1. 0. 0. 1. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [1. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 1. 0. 0. 0. 0. 0.]]
+Predicted B:
+[[0. 1. 0. 1. 0. 0. 0. 0. 0. 0.]
+ [1. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [1. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 1.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 1. 0. 0. 0. 0.]]
+True bic: 30588.81128665459
+Predicted bic: 30569.19674558852
+Thresholded bic: 30569.19674558852
+Thresholded SHD: 19.0
+Predicted ADMG SHD: 19.0
+
+
+RUN NUMBER: 193
+EXPLANATION: Run 193; DCD; Frac directed = 0.5; Varying directed fraction. 42 of 120. First run in test = 151.
+
+Nov 29, 2025 7:41:58 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 23827.44675783195
+
+Nov 29, 2025 7:42:51 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+Nov 29, 2025 7:42:51 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0. 0. 0. 0. 0. 0. 1. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 1. 1. 0.]
+ [0. 0. 0. 0. 0. 1. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 1. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 1. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 1. 0. 0. 0. 0. 0. 0. 1. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]
+Predicted B:
+[[0. 1. 0. 1. 0. 0. 0. 1. 0. 0.]
+ [1. 0. 0. 1. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 1. 0. 0. 0. 0. 0. 0.]
+ [1. 1. 1. 0. 0. 0. 1. 0. 1. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 1. 0. 0. 0. 0. 0. 0.]
+ [1. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 1. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]
+True bic: 23827.44675783195
+Predicted bic: 23840.208667582905
+Thresholded bic: 23840.208667582905
+Thresholded SHD: 16.0
+Predicted ADMG SHD: 16.0
+
+
+RUN NUMBER: 194
+EXPLANATION: Run 194; DCD; Frac directed = 0.7; Varying directed fraction. 43 of 120. First run in test = 151.
+
+Nov 29, 2025 7:42:51 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 25565.36721096281
+
+Nov 29, 2025 7:51:21 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+Nov 29, 2025 7:51:22 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0. 1. 0. 1. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [1. 0. 0. 0. 0. 0. 0. 1. 0. 0.]
+ [0. 1. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [1. 0. 1. 0. 0. 0. 0. 1. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 1. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [1. 0. 0. 0. 0. 1. 0. 0. 0. 0.]
+ [0. 1. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [1. 1. 0. 1. 0. 0. 1. 0. 0. 0.]]
+Predicted B:
+[[0. 0. 0. 0. 0. 1. 1. 0. 1. 0.]
+ [0. 0. 1. 0. 0. 1. 1. 0. 0. 0.]
+ [0. 1. 0. 1. 0. 1. 0. 0. 0. 0.]
+ [0. 0. 1. 0. 0. 1. 0. 0. 1. 0.]
+ [0. 0. 0. 0. 0. 1. 0. 0. 1. 0.]
+ [1. 1. 1. 1. 1. 0. 0. 0. 0. 0.]
+ [1. 1. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [1. 0. 0. 1. 1. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]
+True bic: 25565.36721096281
+Predicted bic: 25839.578447047286
+Thresholded bic: 25817.314595698404
+Thresholded SHD: 25.0
+Predicted ADMG SHD: 28.0
+
+
+RUN NUMBER: 195
+EXPLANATION: Run 195; DCD; Frac directed = 0.9; Varying directed fraction. 44 of 120. First run in test = 151.
+
+Nov 29, 2025 7:51:22 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 18130.848543360407
+
+Nov 29, 2025 7:55:48 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+Nov 29, 2025 7:55:48 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0. 1. 1. 0. 0. 0. 1. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 1. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 1. 0. 1. 0.]
+ [0. 0. 0. 0. 0. 0. 1. 0. 0. 0.]
+ [1. 0. 0. 0. 0. 0. 0. 0. 1. 1.]
+ [1. 0. 0. 0. 0. 0. 0. 0. 1. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 1. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 1. 0. 0. 0. 0.]]
+Predicted B:
+[[0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 1. 1. 1. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 1. 0. 0. 0. 0.]
+ [0. 1. 0. 0. 1. 1. 0. 0. 0. 0.]
+ [0. 1. 0. 1. 0. 1. 0. 0. 0. 0.]
+ [0. 1. 1. 1. 1. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 1. 0. 1.]
+ [0. 0. 0. 0. 0. 0. 1. 0. 1. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 1. 0. 1.]
+ [0. 0. 0. 0. 0. 0. 1. 0. 1. 0.]]
+True bic: 18130.848543360407
+Predicted bic: 18568.90028486599
+Thresholded bic: 18568.900284866024
+Thresholded SHD: 20.0
+Predicted ADMG SHD: 20.0
+
+
+RUN NUMBER: 196
+EXPLANATION: Run 196; DCD; Avg degree = 2; Varying average degree. 45 of 120. First run in test = 151.
+
+Nov 29, 2025 7:55:49 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 24075.410557636093
+
+Nov 29, 2025 7:56:25 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+Nov 29, 2025 7:56:25 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0. 0. 0. 0. 0. 0. 0. 0. 1. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [1. 0. 0. 0. 0. 1. 0. 0. 1. 0.]
+ [0. 1. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 1. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 1. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 1. 0. 0. 1. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 1. 0. 0. 0. 0. 0. 0.]]
+Predicted B:
+[[0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]
+True bic: 24075.410557636093
+Predicted bic: 24101.327262583196
+Thresholded bic: 24101.327262583196
+Thresholded SHD: 9.0
+Predicted ADMG SHD: 9.0
+
+
+RUN NUMBER: 197
+EXPLANATION: Run 197; DCD; Avg degree = 3; Varying average degree. 46 of 120. First run in test = 151.
+
+Nov 29, 2025 7:56:25 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 25039.676789402798
+
+Nov 29, 2025 7:57:24 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+Nov 29, 2025 7:57:24 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0. 0. 0. 0. 1. 0. 1. 0. 1. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 1. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 1. 0.]
+ [0. 1. 0. 1. 0. 0. 0. 0. 1. 0.]
+ [0. 1. 0. 0. 0. 0. 0. 0. 1. 1.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 1.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]
+Predicted B:
+[[0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 1. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 1. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]
+True bic: 25039.676789402798
+Predicted bic: 25063.67903058752
+Thresholded bic: 25056.393532173097
+Thresholded SHD: 7.0
+Predicted ADMG SHD: 8.0
+
+
+RUN NUMBER: 198
+EXPLANATION: Run 198; DCD; Avg degree = 4; Varying average degree. 47 of 120. First run in test = 151.
+
+Nov 29, 2025 7:57:24 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 22571.756534330612
+
+Nov 29, 2025 8:02:39 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+Nov 29, 2025 8:02:39 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 1. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 1. 0. 0. 0. 0. 0.]
+ [1. 0. 0. 0. 0. 0. 0. 0. 1. 0.]
+ [0. 0. 1. 1. 0. 0. 0. 0. 1. 1.]
+ [0. 1. 0. 0. 0. 0. 0. 0. 1. 0.]
+ [0. 0. 0. 1. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 1. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 1. 1. 1. 0. 0. 0. 0. 1. 0.]]
+Predicted B:
+[[0. 0. 0. 1. 0. 0. 0. 1. 1. 0.]
+ [0. 0. 0. 0. 0. 1. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 1. 0. 0. 1. 0. 0.]
+ [1. 0. 0. 0. 0. 0. 0. 0. 1. 0.]
+ [0. 0. 1. 0. 0. 0. 0. 1. 0. 0.]
+ [0. 1. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [1. 0. 1. 0. 1. 0. 0. 0. 1. 1.]
+ [1. 0. 0. 1. 0. 0. 0. 1. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 1. 0. 0.]]
+True bic: 22571.756534330612
+Predicted bic: 22676.827510098257
+Thresholded bic: 22676.827510098257
+Thresholded SHD: 32.0
+Predicted ADMG SHD: 32.0
+
+
+RUN NUMBER: 199
+EXPLANATION: Run 199; DCD; Avg degree = 6; Varying average degree. 48 of 120. First run in test = 151.
+
+Nov 29, 2025 8:02:39 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 28903.150119886912
+
+Nov 29, 2025 8:21:44 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+Nov 29, 2025 8:21:44 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0. 1. 1. 0. 1. 0. 0. 1. 1. 1.]
+ [0. 0. 0. 0. 0. 0. 0. 1. 0. 1.]
+ [0. 0. 0. 0. 0. 1. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 1.]
+ [0. 1. 1. 1. 0. 0. 0. 0. 0. 1.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [1. 0. 0. 0. 1. 0. 0. 0. 0. 1.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 1. 1. 0.]]
+Predicted B:
+[[0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 1. 0. 0. 1. 1. 0. 0. 0.]
+ [0. 1. 0. 0. 0. 0. 1. 0. 0. 1.]
+ [0. 0. 0. 0. 0. 1. 1. 0. 1. 0.]
+ [0. 0. 0. 0. 0. 1. 0. 1. 0. 0.]
+ [0. 1. 0. 1. 1. 0. 1. 1. 1. 1.]
+ [0. 1. 1. 1. 0. 1. 0. 1. 1. 0.]
+ [0. 0. 0. 0. 1. 1. 1. 0. 1. 0.]
+ [0. 0. 0. 1. 0. 1. 1. 1. 0. 0.]
+ [0. 0. 1. 0. 0. 1. 0. 0. 0. 0.]]
+True bic: 28903.150119886912
+Predicted bic: 29401.94511403963
+Thresholded bic: 29378.703921848806
+Thresholded SHD: 43.0
+Predicted ADMG SHD: 45.0
+
+
+RUN NUMBER: 200
+EXPLANATION: Run 200; DCD; Avg degree = 8; Varying average degree. 49 of 120. First run in test = 151.
+
+Nov 29, 2025 8:21:45 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 30986.427150400013
+
+Nov 29, 2025 8:23:27 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+Nov 29, 2025 8:23:27 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0. 0. 0. 0. 1. 0. 0. 0. 0. 0.]
+ [1. 0. 0. 0. 1. 1. 1. 0. 0. 1.]
+ [1. 1. 0. 0. 1. 1. 0. 1. 1. 0.]
+ [0. 0. 0. 0. 1. 0. 1. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 1. 1.]
+ [0. 0. 0. 1. 0. 0. 1. 0. 0. 1.]
+ [1. 0. 0. 0. 0. 0. 0. 0. 1. 0.]
+ [0. 0. 0. 0. 0. 1. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 1. 0.]]
+Predicted B:
+[[0. 0. 0. 0. 0. 0. 0. 0. 1. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 1. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 1. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 1. 0.]
+ [0. 0. 0. 0. 1. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 1. 0. 0. 0. 0. 1. 0.]
+ [1. 0. 0. 0. 0. 1. 0. 1. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]]
+True bic: 30986.427150400013
+Predicted bic: 31026.834428526494
+Thresholded bic: 31026.83442852651
+Thresholded SHD: 26.0
+Predicted ADMG SHD: 26.0
+
+
+RUN NUMBER: 201
+EXPLANATION: Run 201; Relcadilac; Frac directed = 0.1; Varying directed fraction. 50 of 120. First run in test = 151.
+
+Nov 29, 2025 8:23:28 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 35337.190606038275
+
+INFO:relcadilac.relcadilac:triggering learn
+Starting Entropy Coefficient Annealing:
+	self.initial_entropy = 0.3
+	self.min_entropy = 0.005
+	self.cycle_length = 16000
+	self.damping_factor = 0.5
+Step: 8; New least BIC found: 35626.12533569336
+Step: 16; New least BIC found: 35436.46240234375
+Step: 104; New least BIC found: 35417.9801940918
+Step: 496; New least BIC found: 35391.292572021484
+Step: 4408; New least BIC found: 35388.87405395508
+Step: 5936; New least BIC found: 35385.50567626953
+Step: 7768; New least BIC found: 35373.94714355469
+Step: 10128; New least BIC found: 35370.66650390625
+Step: 10544; New least BIC found: 35370.26596069336
+Step: 12464; New least BIC found: 35369.57550048828
+Step: 13064; New least BIC found: 35362.20169067383
+Step: 14016; New least BIC found: 35359.97772216797
+Step: 22264; New least BIC found: 35359.20715332031
+Step: 23632; New least BIC found: 35357.58972167969
+Step: 24408; New least BIC found: 35347.75924682617
+Step: 29400; New least BIC found: 35346.50802612305
+Step: 29832; New least BIC found: 35346.4241027832
+Step: 29864; New least BIC found: 35343.28842163086
+Step: 30056; New least BIC found: 35339.31350708008
+Step: 32240; New least BIC found: 35335.628509521484
+Step: 35456; New least BIC found: 35328.05252075195
+Step: 38608; New least BIC found: 35328.01055908203
+Step: 47344; New least BIC found: 35324.96643066406
+Step: 49256; New least BIC found: 35323.272705078125
+Step: 57088; New least BIC found: 35314.18228149414
+Step: 58632; New least BIC found: 35313.262939453125
+Step: 59504; New least BIC found: 35311.35559082031
+Step: 60240; New least BIC found: 35311.222076416016
+Step: 68584; New least BIC found: 35305.98831176758
+Step: 69400; New least BIC found: 35304.39758300781
+Step: 76232; New least BIC found: 35302.71530151367
+RL Training Progress: 100%|█████████████████████████████████████████████████████████████████████████████| 80000/80000 [08:06<00:00, 164.56step/s]
+Nov 29, 2025 8:31:57 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+INFO:relcadilac.relcadilac:
+Best BIC = 35302.71530151367
+INFO:relcadilac.relcadilac:Predicted ADMG (parents on columns) =
+Directed Edges:
+[[0 0 0 0 0 1 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 1 0 0 0]
+ [0 0 1 0 1 1 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [1 0 0 0 0 1 0 0 0 0]
+ [0 1 0 1 0 1 1 0 0 0]
+ [1 0 0 1 0 0 1 0 0 0]
+ [1 0 0 0 0 0 0 0 0 0]]
+Bidirected Edges:
+[[0 0 0 1 0 0 0 1 0 0]
+ [0 0 1 0 0 0 0 0 0 1]
+ [0 1 0 0 0 0 0 0 0 0]
+ [1 0 0 0 0 0 1 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 1 1]
+ [0 0 0 1 0 0 0 0 0 0]
+ [1 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 1 0 0 0 0]
+ [0 1 0 0 0 1 0 0 0 0]]
+Nov 29, 2025 8:31:57 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0 0 0 0 0 1 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 1 0 0 0]
+ [0 0 1 0 1 1 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [1 0 0 0 0 1 0 0 0 0]
+ [0 1 0 1 0 1 1 0 0 0]
+ [1 0 0 1 0 0 1 0 0 0]
+ [1 0 0 0 0 0 0 0 0 0]]
+Predicted B:
+[[0 0 0 1 0 0 0 1 0 0]
+ [0 0 1 0 0 0 0 0 0 1]
+ [0 1 0 0 0 0 0 0 0 0]
+ [1 0 0 0 0 0 1 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 1 1]
+ [0 0 0 1 0 0 0 0 0 0]
+ [1 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 1 0 0 0 0]
+ [0 1 0 0 0 1 0 0 0 0]]
+True bic: 35337.190606038275
+Predicted bic: 35302.71530151367
+Thresholded bic: 35319.12521292058
+Thresholded SHD: 31.0
+Predicted ADMG SHD: 36.0
+
+
+RUN NUMBER: 202
+EXPLANATION: Run 202; Relcadilac; Frac directed = 0.3; Varying directed fraction. 51 of 120. First run in test = 151.
+
+Nov 29, 2025 8:31:58 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 34536.01510211385
+
+INFO:relcadilac.relcadilac:triggering learn
+Starting Entropy Coefficient Annealing:
+	self.initial_entropy = 0.3
+	self.min_entropy = 0.005
+	self.cycle_length = 16000
+	self.damping_factor = 0.5
+Step: 8; New least BIC found: 36502.872467041016
+Step: 16; New least BIC found: 34976.90200805664
+Step: 88; New least BIC found: 34928.165435791016
+Step: 256; New least BIC found: 34920.8984375
+Step: 328; New least BIC found: 34834.110260009766
+Step: 592; New least BIC found: 34748.905181884766
+Step: 616; New least BIC found: 34731.109619140625
+Step: 696; New least BIC found: 34728.572845458984
+Step: 1088; New least BIC found: 34713.253021240234
+Step: 2632; New least BIC found: 34710.00289916992
+Step: 2920; New least BIC found: 34691.158294677734
+Step: 4328; New least BIC found: 34673.06900024414
+Step: 7504; New least BIC found: 34653.81622314453
+Step: 7576; New least BIC found: 34651.05056762695
+Step: 8040; New least BIC found: 34640.2587890625
+Step: 11176; New least BIC found: 34633.49914550781
+Step: 13504; New least BIC found: 34631.43539428711
+Step: 19152; New least BIC found: 34627.418518066406
+Step: 20136; New least BIC found: 34623.504638671875
+Step: 20312; New least BIC found: 34620.67413330078
+Step: 22080; New least BIC found: 34619.9951171875
+Step: 22560; New least BIC found: 34603.99627685547
+Step: 30000; New least BIC found: 34602.58102416992
+Step: 34904; New least BIC found: 34600.70037841797
+Step: 46680; New least BIC found: 34591.61376953125
+Step: 71672; New least BIC found: 34585.8154296875
+RL Training Progress: 100%|██████████████████████████████████████████████████████████████████████████████| 80000/80000 [21:15<00:00, 62.72step/s]
+Nov 29, 2025 8:53:37 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+INFO:relcadilac.relcadilac:
+Best BIC = 34585.8154296875
+INFO:relcadilac.relcadilac:Predicted ADMG (parents on columns) =
+Directed Edges:
+[[0 0 0 0 0 1 1 1 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 1 0 0 0 1 0 1 0 0]
+ [1 0 1 0 0 0 1 1 0 0]
+ [1 1 1 0 0 1 1 1 1 0]
+ [0 1 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [1 0 0 0 0 1 1 1 0 0]
+ [1 1 0 0 0 1 1 1 0 0]]
+Bidirected Edges:
+[[0 1 0 0 0 0 0 0 0 0]
+ [1 0 0 0 0 0 0 0 1 0]
+ [0 0 0 0 0 0 0 0 1 0]
+ [0 0 0 0 0 0 0 0 1 1]
+ [0 0 0 0 0 0 0 0 0 1]
+ [0 0 0 0 0 0 1 1 0 0]
+ [0 0 0 0 0 1 0 1 0 0]
+ [0 0 0 0 0 1 1 0 0 0]
+ [0 1 1 1 0 0 0 0 0 0]
+ [0 0 0 1 1 0 0 0 0 0]]
+Nov 29, 2025 8:53:37 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0 0 0 0 0 1 1 1 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 1 0 0 0 1 0 1 0 0]
+ [1 0 1 0 0 0 1 1 0 0]
+ [1 1 1 0 0 1 1 1 1 0]
+ [0 1 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [1 0 0 0 0 1 1 1 0 0]
+ [1 1 0 0 0 1 1 1 0 0]]
+Predicted B:
+[[0 1 0 0 0 0 0 0 0 0]
+ [1 0 0 0 0 0 0 0 1 0]
+ [0 0 0 0 0 0 0 0 1 0]
+ [0 0 0 0 0 0 0 0 1 1]
+ [0 0 0 0 0 0 0 0 0 1]
+ [0 0 0 0 0 0 1 1 0 0]
+ [0 0 0 0 0 1 0 1 0 0]
+ [0 0 0 0 0 1 1 0 0 0]
+ [0 1 1 1 0 0 0 0 0 0]
+ [0 0 0 1 1 0 0 0 0 0]]
+True bic: 34536.01510211385
+Predicted bic: 34585.8154296875
+Thresholded bic: 34580.57733719417
+Thresholded SHD: 33.0
+Predicted ADMG SHD: 41.0
+
+
+RUN NUMBER: 203
+EXPLANATION: Run 203; Relcadilac; Frac directed = 0.5; Varying directed fraction. 52 of 120. First run in test = 151.
+
+Nov 29, 2025 8:53:37 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 29856.3692220802
+
+INFO:relcadilac.relcadilac:triggering learn
+Starting Entropy Coefficient Annealing:
+	self.initial_entropy = 0.3
+	self.min_entropy = 0.005
+	self.cycle_length = 16000
+	self.damping_factor = 0.5
+Step: 8; New least BIC found: 31781.452178955078
+Step: 24; New least BIC found: 31136.491775512695
+Step: 112; New least BIC found: 30313.57765197754
+Step: 336; New least BIC found: 30117.977142333984
+Step: 4080; New least BIC found: 30049.96109008789
+Step: 4720; New least BIC found: 30036.800384521484
+Step: 5816; New least BIC found: 29989.662170410156
+Step: 8352; New least BIC found: 29980.327606201172
+Step: 8416; New least BIC found: 29972.30339050293
+Step: 8984; New least BIC found: 29960.31379699707
+Step: 15464; New least BIC found: 29951.53045654297
+Step: 23624; New least BIC found: 29942.1329498291
+Step: 25448; New least BIC found: 29937.063217163086
+RL Training Progress: 100%|██████████████████████████████████████████████████████████████████████████████| 80000/80000 [28:46<00:00, 46.34step/s]
+Nov 29, 2025 9:22:47 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+INFO:relcadilac.relcadilac:
+Best BIC = 29937.063217163086
+INFO:relcadilac.relcadilac:Predicted ADMG (parents on columns) =
+Directed Edges:
+[[0 0 1 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 1 0 0 0 0 0 0 0]
+ [1 0 1 1 0 0 0 0 0 1]
+ [1 1 0 1 0 0 1 0 0 1]
+ [1 1 1 0 0 0 0 0 0 0]
+ [1 0 0 1 0 0 1 0 0 1]
+ [0 1 1 1 0 1 1 0 0 0]
+ [1 1 1 1 0 0 1 0 0 0]]
+Bidirected Edges:
+[[0 1 0 0 0 0 0 0 1 0]
+ [1 0 0 0 1 0 0 0 0 0]
+ [0 0 0 0 0 0 0 1 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 1 0 0 0 1 1 1 1 0]
+ [0 0 0 0 1 0 0 1 0 0]
+ [0 0 0 0 1 0 0 0 0 0]
+ [0 0 1 0 1 1 0 0 0 0]
+ [1 0 0 0 1 0 0 0 0 1]
+ [0 0 0 0 0 0 0 0 1 0]]
+Nov 29, 2025 9:22:47 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0 0 1 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 1 0 0 0 0 0 0 0]
+ [1 0 1 1 0 0 0 0 0 1]
+ [1 1 0 1 0 0 1 0 0 1]
+ [1 1 1 0 0 0 0 0 0 0]
+ [1 0 0 1 0 0 1 0 0 1]
+ [0 1 1 1 0 1 1 0 0 0]
+ [1 1 1 1 0 0 1 0 0 0]]
+Predicted B:
+[[0 1 0 0 0 0 0 0 1 0]
+ [1 0 0 0 1 0 0 0 0 0]
+ [0 0 0 0 0 0 0 1 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 1 0 0 0 1 1 1 1 0]
+ [0 0 0 0 1 0 0 1 0 0]
+ [0 0 0 0 1 0 0 0 0 0]
+ [0 0 1 0 1 1 0 0 0 0]
+ [1 0 0 0 1 0 0 0 0 1]
+ [0 0 0 0 0 0 0 0 1 0]]
+True bic: 29856.3692220802
+Predicted bic: 29937.063217163086
+Thresholded bic: 29924.07041192757
+Thresholded SHD: 35.0
+Predicted ADMG SHD: 43.0
+
+
+RUN NUMBER: 204
+EXPLANATION: Run 204; Relcadilac; Frac directed = 0.7; Varying directed fraction. 53 of 120. First run in test = 151.
+
+Nov 29, 2025 9:22:48 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 28479.34532209243
+
+INFO:relcadilac.relcadilac:triggering learn
+Starting Entropy Coefficient Annealing:
+	self.initial_entropy = 0.3
+	self.min_entropy = 0.005
+	self.cycle_length = 16000
+	self.damping_factor = 0.5
+Step: 8; New least BIC found: 33147.647857666016
+Step: 24; New least BIC found: 29694.969177246094
+Step: 120; New least BIC found: 29443.95637512207
+Step: 504; New least BIC found: 29137.693405151367
+Step: 752; New least BIC found: 29088.253021240234
+Step: 1400; New least BIC found: 29005.37109375
+Step: 2392; New least BIC found: 28790.653228759766
+Step: 2752; New least BIC found: 28606.403350830078
+Step: 5984; New least BIC found: 28565.0634765625
+RL Training Progress: 100%|██████████████████████████████████████████████████████████████████████████████| 80000/80000 [29:45<00:00, 44.82step/s]
+Nov 29, 2025 9:52:54 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+INFO:relcadilac.relcadilac:
+Best BIC = 28565.0634765625
+INFO:relcadilac.relcadilac:Predicted ADMG (parents on columns) =
+Directed Edges:
+[[0 0 0 0 0 0 0 0 0 0]
+ [1 0 0 0 0 1 0 0 1 1]
+ [0 0 0 0 0 0 0 0 0 0]
+ [1 1 1 0 0 0 1 0 0 0]
+ [1 0 1 1 0 1 0 0 1 0]
+ [0 0 1 0 0 0 0 0 0 0]
+ [1 0 0 0 0 1 0 0 0 0]
+ [1 1 1 0 0 0 1 0 1 1]
+ [1 0 1 0 0 0 1 0 0 0]
+ [1 0 0 0 0 1 1 0 0 0]]
+Bidirected Edges:
+[[0 0 1 0 0 1 0 0 0 0]
+ [0 0 0 0 1 0 0 0 0 0]
+ [1 0 0 0 0 0 1 0 0 0]
+ [0 0 0 0 0 0 0 1 1 1]
+ [0 1 0 0 0 0 1 1 0 0]
+ [1 0 0 0 0 0 0 1 1 0]
+ [0 0 1 0 1 0 0 0 0 0]
+ [0 0 0 1 1 1 0 0 0 0]
+ [0 0 0 1 0 1 0 0 0 0]
+ [0 0 0 1 0 0 0 0 0 0]]
+Nov 29, 2025 9:52:55 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0 0 0 0 0 0 0 0 0 0]
+ [1 0 0 0 0 1 0 0 1 1]
+ [0 0 0 0 0 0 0 0 0 0]
+ [1 1 1 0 0 0 1 0 0 0]
+ [1 0 1 1 0 1 0 0 1 0]
+ [0 0 1 0 0 0 0 0 0 0]
+ [1 0 0 0 0 1 0 0 0 0]
+ [1 1 1 0 0 0 1 0 1 1]
+ [1 0 1 0 0 0 1 0 0 0]
+ [1 0 0 0 0 1 1 0 0 0]]
+Predicted B:
+[[0 0 1 0 0 1 0 0 0 0]
+ [0 0 0 0 1 0 0 0 0 0]
+ [1 0 0 0 0 0 1 0 0 0]
+ [0 0 0 0 0 0 0 1 1 1]
+ [0 1 0 0 0 0 1 1 0 0]
+ [1 0 0 0 0 0 0 1 1 0]
+ [0 0 1 0 1 0 0 0 0 0]
+ [0 0 0 1 1 1 0 0 0 0]
+ [0 0 0 1 0 1 0 0 0 0]
+ [0 0 0 1 0 0 0 0 0 0]]
+True bic: 28479.34532209243
+Predicted bic: 28565.0634765625
+Thresholded bic: 28532.448433302303
+Thresholded SHD: 30.0
+Predicted ADMG SHD: 40.0
+
+
+RUN NUMBER: 205
+EXPLANATION: Run 205; Relcadilac; Frac directed = 0.9; Varying directed fraction. 54 of 120. First run in test = 151.
+
+Nov 29, 2025 9:52:55 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 21854.469902230903
+
+INFO:relcadilac.relcadilac:triggering learn
+Starting Entropy Coefficient Annealing:
+	self.initial_entropy = 0.3
+	self.min_entropy = 0.005
+	self.cycle_length = 16000
+	self.damping_factor = 0.5
+Step: 8; New least BIC found: 27145.708084106445
+Step: 24; New least BIC found: 23665.517807006836
+Step: 120; New least BIC found: 23353.79409790039
+Step: 312; New least BIC found: 22978.511810302734
+Step: 688; New least BIC found: 22621.196746826172
+Step: 760; New least BIC found: 22565.582275390625
+Step: 4096; New least BIC found: 22491.376876831055
+Step: 5048; New least BIC found: 22354.4921875
+Step: 5696; New least BIC found: 22318.20297241211
+Step: 5984; New least BIC found: 22124.675750732422
+Step: 9816; New least BIC found: 22019.933700561523
+Step: 12864; New least BIC found: 21996.10137939453
+Step: 13864; New least BIC found: 21995.147705078125
+Step: 14936; New least BIC found: 21977.027893066406
+Step: 18032; New least BIC found: 21966.161727905273
+Step: 25824; New least BIC found: 21964.218139648438
+Step: 26656; New least BIC found: 21964.197158813477
+Step: 52848; New least BIC found: 21957.0255279541
+Step: 74416; New least BIC found: 21956.058502197266
+RL Training Progress: 100%|██████████████████████████████████████████████████████████████████████████████| 80000/80000 [30:34<00:00, 43.61step/s]
+Nov 29, 2025 10:23:51 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+INFO:relcadilac.relcadilac:
+Best BIC = 21956.058502197266
+INFO:relcadilac.relcadilac:Predicted ADMG (parents on columns) =
+Directed Edges:
+[[0 0 0 0 0 0 1 0 0 0]
+ [0 0 0 0 0 0 1 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 1 1 0 0 0 1 0 0 0]
+ [0 1 1 0 0 0 1 0 0 0]
+ [1 0 1 0 1 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 1 0 1 1 1 1 0 0 1]
+ [1 1 1 0 1 0 0 0 0 0]
+ [1 1 0 0 1 1 1 0 0 0]]
+Bidirected Edges:
+[[0 1 1 0 1 0 0 1 0 0]
+ [1 0 1 0 0 1 0 0 0 0]
+ [1 1 0 0 0 0 0 1 0 1]
+ [0 0 0 0 1 0 0 0 1 0]
+ [1 0 0 1 0 0 0 0 0 0]
+ [0 1 0 0 0 0 1 0 1 0]
+ [0 0 0 0 0 1 0 0 1 0]
+ [1 0 1 0 0 0 0 0 1 0]
+ [0 0 0 1 0 1 1 1 0 0]
+ [0 0 1 0 0 0 0 0 0 0]]
+Nov 29, 2025 10:23:52 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0 0 0 0 0 0 1 0 0 0]
+ [0 0 0 0 0 0 1 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 1 1 0 0 0 1 0 0 0]
+ [0 1 1 0 0 0 1 0 0 0]
+ [1 0 1 0 1 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 1 0 1 1 1 1 0 0 1]
+ [1 1 1 0 1 0 0 0 0 0]
+ [1 1 0 0 1 1 1 0 0 0]]
+Predicted B:
+[[0 1 1 0 1 0 0 1 0 0]
+ [1 0 1 0 0 1 0 0 0 0]
+ [1 1 0 0 0 0 0 1 0 1]
+ [0 0 0 0 1 0 0 0 1 0]
+ [1 0 0 1 0 0 0 0 0 0]
+ [0 1 0 0 0 0 1 0 1 0]
+ [0 0 0 0 0 1 0 0 1 0]
+ [1 0 1 0 0 0 0 0 1 0]
+ [0 0 0 1 0 1 1 1 0 0]
+ [0 0 1 0 0 0 0 0 0 0]]
+True bic: 21854.469902230903
+Predicted bic: 21956.058502197266
+Thresholded bic: 23321.696315491154
+Thresholded SHD: 33.0
+Predicted ADMG SHD: 37.0
+
+
+RUN NUMBER: 206
+EXPLANATION: Run 206; Relcadilac; Avg degree = 2; Varying average degree. 55 of 120. First run in test = 151.
+
+Nov 29, 2025 10:23:52 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 20708.079873329414
+
+INFO:relcadilac.relcadilac:triggering learn
+Starting Entropy Coefficient Annealing:
+	self.initial_entropy = 0.3
+	self.min_entropy = 0.005
+	self.cycle_length = 16000
+	self.damping_factor = 0.5
+Step: 8; New least BIC found: 20943.038940429688
+Step: 16; New least BIC found: 20908.029556274414
+Step: 64; New least BIC found: 20853.734970092773
+Step: 240; New least BIC found: 20838.878631591797
+Step: 400; New least BIC found: 20837.982177734375
+Step: 664; New least BIC found: 20830.6941986084
+Step: 1024; New least BIC found: 20820.789337158203
+Step: 1032; New least BIC found: 20819.98062133789
+Step: 1600; New least BIC found: 20818.159103393555
+Step: 2728; New least BIC found: 20817.11196899414
+Step: 2824; New least BIC found: 20815.919876098633
+Step: 4152; New least BIC found: 20806.747436523438
+Step: 4184; New least BIC found: 20805.622100830078
+Step: 4224; New least BIC found: 20804.38804626465
+Step: 5672; New least BIC found: 20802.824020385742
+Step: 7680; New least BIC found: 20796.630859375
+Step: 10728; New least BIC found: 20791.5096282959
+Step: 17904; New least BIC found: 20788.352966308594
+Step: 22448; New least BIC found: 20781.723022460938
+Step: 29312; New least BIC found: 20780.866622924805
+Step: 30128; New least BIC found: 20780.57289123535
+Step: 30208; New least BIC found: 20773.048400878906
+Step: 32240; New least BIC found: 20766.75796508789
+Step: 34528; New least BIC found: 20761.383056640625
+Step: 35456; New least BIC found: 20745.38803100586
+Step: 39536; New least BIC found: 20743.82781982422
+Step: 42208; New least BIC found: 20740.30303955078
+Step: 46680; New least BIC found: 20735.685348510742
+Step: 55144; New least BIC found: 20735.158920288086
+Step: 55320; New least BIC found: 20733.869552612305
+Step: 56072; New least BIC found: 20731.067657470703
+Step: 58864; New least BIC found: 20716.638565063477
+Step: 76232; New least BIC found: 20714.63394165039
+Step: 79008; New least BIC found: 20708.53042602539
+RL Training Progress: 100%|█████████████████████████████████████████████████████████████████████████████| 80000/80000 [12:10<00:00, 109.55step/s]
+Nov 29, 2025 10:36:24 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+INFO:relcadilac.relcadilac:
+Best BIC = 20708.53042602539
+INFO:relcadilac.relcadilac:Predicted ADMG (parents on columns) =
+Directed Edges:
+[[0 0 0 1 1 0 1 1 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 1 0 1 0 1 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 1 0 0 0 0 1 1 0 0]
+ [0 0 0 1 1 0 0 0 0 0]
+ [0 1 0 1 0 0 0 0 0 0]
+ [0 0 0 1 0 0 0 0 0 0]
+ [1 1 0 0 1 0 0 0 0 0]
+ [0 0 0 1 0 0 1 0 0 0]]
+Bidirected Edges:
+[[0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 1 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 1 0 0]
+ [0 0 1 0 0 0 0 0 1 0]
+ [0 0 0 0 0 1 0 0 0 0]
+ [0 0 0 0 0 0 1 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]]
+Nov 29, 2025 10:36:24 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0 0 0 1 1 0 1 1 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 1 0 1 0 1 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 1 0 0 0 0 1 1 0 0]
+ [0 0 0 1 1 0 0 0 0 0]
+ [0 1 0 1 0 0 0 0 0 0]
+ [0 0 0 1 0 0 0 0 0 0]
+ [1 1 0 0 1 0 0 0 0 0]
+ [0 0 0 1 0 0 1 0 0 0]]
+Predicted B:
+[[0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 1 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 1 0 0]
+ [0 0 1 0 0 0 0 0 1 0]
+ [0 0 0 0 0 1 0 0 0 0]
+ [0 0 0 0 0 0 1 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]]
+True bic: 20708.079873329414
+Predicted bic: 20708.53042602539
+Thresholded bic: 20705.21475889616
+Thresholded SHD: 8.0
+Predicted ADMG SHD: 22.0
+
+
+RUN NUMBER: 207
+EXPLANATION: Run 207; Relcadilac; Avg degree = 3; Varying average degree. 56 of 120. First run in test = 151.
+
+Nov 29, 2025 10:36:24 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 28453.311725641877
+
+INFO:relcadilac.relcadilac:triggering learn
+Starting Entropy Coefficient Annealing:
+	self.initial_entropy = 0.3
+	self.min_entropy = 0.005
+	self.cycle_length = 16000
+	self.damping_factor = 0.5
+Step: 8; New least BIC found: 31317.113876342773
+Step: 16; New least BIC found: 30728.08265686035
+Step: 24; New least BIC found: 29309.377670288086
+Step: 88; New least BIC found: 28675.912857055664
+Step: 152; New least BIC found: 28664.581298828125
+Step: 240; New least BIC found: 28618.53790283203
+Step: 1696; New least BIC found: 28575.64353942871
+Step: 5016; New least BIC found: 28575.27732849121
+Step: 7504; New least BIC found: 28573.741912841797
+Step: 10472; New least BIC found: 28571.86508178711
+Step: 10768; New least BIC found: 28556.819915771484
+Step: 25736; New least BIC found: 28552.593231201172
+Step: 25816; New least BIC found: 28549.62158203125
+Step: 38288; New least BIC found: 28549.495697021484
+Step: 38480; New least BIC found: 28539.663314819336
+Step: 56176; New least BIC found: 28537.681579589844
+RL Training Progress: 100%|██████████████████████████████████████████████████████████████████████████████| 80000/80000 [28:42<00:00, 46.44step/s]
+Nov 29, 2025 11:05:29 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+INFO:relcadilac.relcadilac:
+Best BIC = 28537.681579589844
+INFO:relcadilac.relcadilac:Predicted ADMG (parents on columns) =
+Directed Edges:
+[[0 0 0 0 0 1 0 0 0 1]
+ [1 0 0 0 0 1 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 1]
+ [1 0 1 0 1 0 0 0 0 0]
+ [1 0 0 0 0 1 0 0 1 1]
+ [0 0 0 0 0 0 0 0 1 1]
+ [1 0 1 1 0 1 0 0 1 1]
+ [0 0 1 0 1 1 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 1]
+ [0 0 0 0 0 0 0 0 0 0]]
+Bidirected Edges:
+[[0 0 0 0 0 0 0 0 1 0]
+ [0 0 0 1 1 0 1 0 1 1]
+ [0 0 0 0 1 1 0 0 1 0]
+ [0 1 0 0 0 0 0 1 1 0]
+ [0 1 1 0 0 0 1 0 0 0]
+ [0 0 1 0 0 0 0 0 0 0]
+ [0 1 0 0 1 0 0 0 0 0]
+ [0 0 0 1 0 0 0 0 0 0]
+ [1 1 1 1 0 0 0 0 0 0]
+ [0 1 0 0 0 0 0 0 0 0]]
+Nov 29, 2025 11:05:29 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0 0 0 0 0 1 0 0 0 1]
+ [1 0 0 0 0 1 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 1]
+ [1 0 1 0 1 0 0 0 0 0]
+ [1 0 0 0 0 1 0 0 1 1]
+ [0 0 0 0 0 0 0 0 1 1]
+ [1 0 1 1 0 1 0 0 1 1]
+ [0 0 1 0 1 1 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 1]
+ [0 0 0 0 0 0 0 0 0 0]]
+Predicted B:
+[[0 0 0 0 0 0 0 0 1 0]
+ [0 0 0 1 1 0 1 0 1 1]
+ [0 0 0 0 1 1 0 0 1 0]
+ [0 1 0 0 0 0 0 1 1 0]
+ [0 1 1 0 0 0 1 0 0 0]
+ [0 0 1 0 0 0 0 0 0 0]
+ [0 1 0 0 1 0 0 0 0 0]
+ [0 0 0 1 0 0 0 0 0 0]
+ [1 1 1 1 0 0 0 0 0 0]
+ [0 1 0 0 0 0 0 0 0 0]]
+True bic: 28453.311725641877
+Predicted bic: 28537.681579589844
+Thresholded bic: 28550.861521003146
+Thresholded SHD: 23.0
+Predicted ADMG SHD: 36.0
+
+
+RUN NUMBER: 208
+EXPLANATION: Run 208; Relcadilac; Avg degree = 4; Varying average degree. 57 of 120. First run in test = 151.
+
+Nov 29, 2025 11:05:30 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 29856.3692220802
+
+INFO:relcadilac.relcadilac:triggering learn
+Starting Entropy Coefficient Annealing:
+	self.initial_entropy = 0.3
+	self.min_entropy = 0.005
+	self.cycle_length = 16000
+	self.damping_factor = 0.5
+Step: 8; New least BIC found: 31781.452178955078
+Step: 24; New least BIC found: 31136.491775512695
+Step: 112; New least BIC found: 30313.57765197754
+Step: 336; New least BIC found: 30117.977142333984
+Step: 4080; New least BIC found: 30049.96109008789
+Step: 4720; New least BIC found: 30036.800384521484
+Step: 5816; New least BIC found: 29989.662170410156
+Step: 8352; New least BIC found: 29980.327606201172
+Step: 8416; New least BIC found: 29972.30339050293
+Step: 8984; New least BIC found: 29960.31379699707
+Step: 15464; New least BIC found: 29951.53045654297
+Step: 23624; New least BIC found: 29942.1329498291
+Step: 25448; New least BIC found: 29937.063217163086
+RL Training Progress: 100%|██████████████████████████████████████████████████████████████████████████████| 80000/80000 [28:51<00:00, 46.21step/s]
+Nov 29, 2025 11:34:43 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+INFO:relcadilac.relcadilac:
+Best BIC = 29937.063217163086
+INFO:relcadilac.relcadilac:Predicted ADMG (parents on columns) =
+Directed Edges:
+[[0 0 1 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 1 0 0 0 0 0 0 0]
+ [1 0 1 1 0 0 0 0 0 1]
+ [1 1 0 1 0 0 1 0 0 1]
+ [1 1 1 0 0 0 0 0 0 0]
+ [1 0 0 1 0 0 1 0 0 1]
+ [0 1 1 1 0 1 1 0 0 0]
+ [1 1 1 1 0 0 1 0 0 0]]
+Bidirected Edges:
+[[0 1 0 0 0 0 0 0 1 0]
+ [1 0 0 0 1 0 0 0 0 0]
+ [0 0 0 0 0 0 0 1 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 1 0 0 0 1 1 1 1 0]
+ [0 0 0 0 1 0 0 1 0 0]
+ [0 0 0 0 1 0 0 0 0 0]
+ [0 0 1 0 1 1 0 0 0 0]
+ [1 0 0 0 1 0 0 0 0 1]
+ [0 0 0 0 0 0 0 0 1 0]]
+Nov 29, 2025 11:34:44 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0 0 1 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 1 0 0 0 0 0 0 0]
+ [1 0 1 1 0 0 0 0 0 1]
+ [1 1 0 1 0 0 1 0 0 1]
+ [1 1 1 0 0 0 0 0 0 0]
+ [1 0 0 1 0 0 1 0 0 1]
+ [0 1 1 1 0 1 1 0 0 0]
+ [1 1 1 1 0 0 1 0 0 0]]
+Predicted B:
+[[0 1 0 0 0 0 0 0 1 0]
+ [1 0 0 0 1 0 0 0 0 0]
+ [0 0 0 0 0 0 0 1 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 1 0 0 0 1 1 1 1 0]
+ [0 0 0 0 1 0 0 1 0 0]
+ [0 0 0 0 1 0 0 0 0 0]
+ [0 0 1 0 1 1 0 0 0 0]
+ [1 0 0 0 1 0 0 0 0 1]
+ [0 0 0 0 0 0 0 0 1 0]]
+True bic: 29856.3692220802
+Predicted bic: 29937.063217163086
+Thresholded bic: 29924.07041192757
+Thresholded SHD: 35.0
+Predicted ADMG SHD: 43.0
+
+
+RUN NUMBER: 209
+EXPLANATION: Run 209; Relcadilac; Avg degree = 6; Varying average degree. 58 of 120. First run in test = 151.
+
+Nov 29, 2025 11:34:44 AM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 31188.534439497107
+
+INFO:relcadilac.relcadilac:triggering learn
+Starting Entropy Coefficient Annealing:
+	self.initial_entropy = 0.3
+	self.min_entropy = 0.005
+	self.cycle_length = 16000
+	self.damping_factor = 0.5
+Step: 8; New least BIC found: 41846.12274169922
+Step: 16; New least BIC found: 40446.71630859375
+Step: 24; New least BIC found: 36784.58023071289
+Step: 96; New least BIC found: 36079.2236328125
+Step: 120; New least BIC found: 34096.15707397461
+Step: 312; New least BIC found: 33634.06753540039
+Step: 808; New least BIC found: 33217.78869628906
+Step: 1456; New least BIC found: 32955.265045166016
+Step: 4920; New least BIC found: 32828.15933227539
+Step: 5320; New least BIC found: 32372.966766357422
+Step: 7504; New least BIC found: 32066.65802001953
+Step: 10344; New least BIC found: 31842.103958129883
+Step: 12304; New least BIC found: 31631.559371948242
+Step: 22464; New least BIC found: 31321.38442993164
+Step: 28904; New least BIC found: 31293.40934753418
+Step: 34616; New least BIC found: 31256.248474121094
+Step: 51816; New least BIC found: 31254.711151123047
+Step: 55400; New least BIC found: 31250.720977783203
+Step: 59672; New least BIC found: 31232.791900634766
+RL Training Progress: 100%|██████████████████████████████████████████████████████████████████████████████| 80000/80000 [29:53<00:00, 44.61step/s]
+Nov 29, 2025 12:05:00 PM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+INFO:relcadilac.relcadilac:
+Best BIC = 31232.791900634766
+INFO:relcadilac.relcadilac:Predicted ADMG (parents on columns) =
+Directed Edges:
+[[0 0 0 0 1 0 0 1 0 0]
+ [0 0 0 0 1 0 1 1 0 0]
+ [1 0 0 0 1 0 1 1 0 0]
+ [1 1 1 0 1 1 1 1 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [1 1 1 0 1 0 0 0 0 0]
+ [1 0 0 0 1 0 0 0 0 0]
+ [0 0 0 0 1 0 0 0 0 0]
+ [0 0 0 0 1 1 1 0 0 0]
+ [1 1 1 1 1 1 1 1 1 0]]
+Bidirected Edges:
+[[0 1 0 0 0 0 0 0 1 0]
+ [1 0 1 0 0 0 0 0 1 0]
+ [0 1 0 0 0 0 0 0 1 0]
+ [0 0 0 0 0 0 0 0 1 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 1 1 0 0]
+ [0 0 0 0 0 1 0 1 0 0]
+ [0 0 0 0 0 1 1 0 1 0]
+ [1 1 1 1 0 0 0 1 0 0]
+ [0 0 0 0 0 0 0 0 0 0]]
+Nov 29, 2025 12:05:00 PM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0 0 0 0 1 0 0 1 0 0]
+ [0 0 0 0 1 0 1 1 0 0]
+ [1 0 0 0 1 0 1 1 0 0]
+ [1 1 1 0 1 1 1 1 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [1 1 1 0 1 0 0 0 0 0]
+ [1 0 0 0 1 0 0 0 0 0]
+ [0 0 0 0 1 0 0 0 0 0]
+ [0 0 0 0 1 1 1 0 0 0]
+ [1 1 1 1 1 1 1 1 1 0]]
+Predicted B:
+[[0 1 0 0 0 0 0 0 1 0]
+ [1 0 1 0 0 0 0 0 1 0]
+ [0 1 0 0 0 0 0 0 1 0]
+ [0 0 0 0 0 0 0 0 1 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 1 1 0 0]
+ [0 0 0 0 0 1 0 1 0 0]
+ [0 0 0 0 0 1 1 0 1 0]
+ [1 1 1 1 0 0 0 1 0 0]
+ [0 0 0 0 0 0 0 0 0 0]]
+True bic: 31188.534439497107
+Predicted bic: 31232.791900634766
+Thresholded bic: 31764.586398754567
+Thresholded SHD: 32.0
+Predicted ADMG SHD: 40.0
+
+
+RUN NUMBER: 210
+EXPLANATION: Run 210; Relcadilac; Avg degree = 8; Varying average degree. 59 of 120. First run in test = 151.
+
+Nov 29, 2025 12:05:00 PM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+TRUE BIC: 36714.63679914347
+
+INFO:relcadilac.relcadilac:triggering learn
+Starting Entropy Coefficient Annealing:
+	self.initial_entropy = 0.3
+	self.min_entropy = 0.005
+	self.cycle_length = 16000
+	self.damping_factor = 0.5
+Step: 8; New least BIC found: 44058.91418457031
+Step: 24; New least BIC found: 41082.71408081055
+Step: 72; New least BIC found: 40994.441986083984
+Step: 104; New least BIC found: 40361.41586303711
+Step: 352; New least BIC found: 40229.209899902344
+Step: 496; New least BIC found: 38647.579193115234
+Step: 616; New least BIC found: 38614.45617675781
+Step: 1264; New least BIC found: 37535.80093383789
+Step: 5976; New least BIC found: 37215.06118774414
+Step: 7336; New least BIC found: 36952.884674072266
+Step: 9216; New least BIC found: 36761.741638183594
+Step: 17200; New least BIC found: 36745.582580566406
+Step: 21008; New least BIC found: 36731.651306152344
+Step: 26016; New least BIC found: 36726.88674926758
+Step: 26592; New least BIC found: 36725.914001464844
+Step: 36840; New least BIC found: 36722.67532348633
+Step: 37272; New least BIC found: 36722.190856933594
+Step: 39720; New least BIC found: 36721.736907958984
+Step: 42000; New least BIC found: 36721.622467041016
+Step: 43760; New least BIC found: 36718.03283691406
+Step: 47424; New least BIC found: 36717.689514160156
+Step: 51376; New least BIC found: 36716.156005859375
+RL Training Progress: 100%|██████████████████████████████████████████████████████████████████████████████| 80000/80000 [30:31<00:00, 43.69step/s]
+Nov 29, 2025 12:35:54 PM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+INFO:relcadilac.relcadilac:
+Best BIC = 36716.156005859375
+INFO:relcadilac.relcadilac:Predicted ADMG (parents on columns) =
+Directed Edges:
+[[0 0 0 0 1 0 0 1 0 0]
+ [1 0 0 0 0 0 0 1 0 0]
+ [1 0 0 1 1 0 1 1 0 0]
+ [1 0 0 0 1 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [1 1 1 0 1 0 0 1 0 0]
+ [1 0 0 1 1 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [1 1 0 1 1 1 1 1 0 1]
+ [1 1 0 0 1 0 1 1 0 0]]
+Bidirected Edges:
+[[0 0 0 0 0 0 0 0 0 0]
+ [0 0 1 1 1 0 1 0 0 0]
+ [0 1 0 0 0 0 0 0 1 1]
+ [0 1 0 0 0 1 0 0 0 1]
+ [0 1 0 0 0 0 0 1 0 0]
+ [0 0 0 1 0 0 1 0 0 1]
+ [0 1 0 0 0 1 0 1 0 0]
+ [0 0 0 0 1 0 1 0 0 0]
+ [0 0 1 0 0 0 0 0 0 0]
+ [0 0 1 1 0 1 0 0 0 0]]
+Nov 29, 2025 12:35:54 PM java.util.prefs.FileSystemPreferences loadCache
+WARNING: Prefs file removed in background /home/danish/.java/.userPrefs/prefs.xml
+
+Predicted D:
+[[0 0 0 0 1 0 0 1 0 0]
+ [1 0 0 0 0 0 0 1 0 0]
+ [1 0 0 1 1 0 1 1 0 0]
+ [1 0 0 0 1 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [1 1 1 0 1 0 0 1 0 0]
+ [1 0 0 1 1 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0]
+ [1 1 0 1 1 1 1 1 0 1]
+ [1 1 0 0 1 0 1 1 0 0]]
+Predicted B:
+[[0 0 0 0 0 0 0 0 0 0]
+ [0 0 1 1 1 0 1 0 0 0]
+ [0 1 0 0 0 0 0 0 1 1]
+ [0 1 0 0 0 1 0 0 0 1]
+ [0 1 0 0 0 0 0 1 0 0]
+ [0 0 0 1 0 0 1 0 0 1]
+ [0 1 0 0 0 1 0 1 0 0]
+ [0 0 0 0 1 0 1 0 0 0]
+ [0 0 1 0 0 0 0 0 0 0]
+ [0 0 1 1 0 1 0 0 0 0]]
+True bic: 36714.63679914347
+Predicted bic: 36716.156005859375
+Thresholded bic: 36713.71296730988
+Thresholded SHD: 57.0
+Predicted ADMG SHD: 59.0
+
+(causality_3-11)
+(main *%=)
+Sat Nov 29, 12:35:56
+/mnt/windows/Users/lordh/Documents/LibraryOfBabel/Projects/thesis
+danish@helium $
+

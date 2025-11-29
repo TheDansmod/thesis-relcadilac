@@ -110,6 +110,8 @@ class GraphGenerator:
         base_p_edge = avg_degree / (num_nodes - 1)
         
         # validate connectedness
+        # danish: check this:
+        degree_variance = 0.0
         while True:
             if degree_variance > 0:
                 # we want a beta(a, b) distribution with mean = base_p_edge
@@ -182,6 +184,15 @@ class GraphGenerator:
             adj_dir = adj_dir[perm, :][:, perm]
             adj_bidir = adj_bidir[perm, :][:, perm]
             
+            # ensure the number of actual edges and expected don't differ by more than 5 and the fraction of directed to bidirected edges is also close (no more than difference of 0.1)
+            actual_num_edges = np.sum(adj_dir) + (np.sum(adj_bidir) // 2)
+            expected_num_edges = avg_degree * num_nodes / 2
+            actual_frac_dir = np.sum(adj_dir) / actual_num_edges
+            if abs(expected_num_edges - actual_num_edges) > 5:
+                continue
+            if abs(actual_frac_dir - frac_directed) > 0.1:
+                continue
+
             # if not connected repeat
             if (not require_connected) or self._is_connected(adj_dir, adj_bidir):
                 break

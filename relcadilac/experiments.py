@@ -1224,10 +1224,161 @@ def plot_cmaes_results():
 
             print(f"Generated plot: {filename}")
 
+def plot_experiment_bundles(admg_model):
+    df = pd.read_csv('runs/runs-copy.csv').query('admg_model == @admg_model & run_number > 150')
+    algo_list = ['CMA-ES', 'DCD', 'Relcadilac']
+    algo_style_map = dict(zip(algo_list, ['-', '--', ':']))
+    frac_directed_vals = [0.1, 0.3, 0.5, 0.7, 0.9]
+    avg_degree_vals = [2, 3, 4, 6, 8]
+    default_configs = {'frac_directed': 0.6, 'avg_degree': 4}
+    metric_bundles = [['admg_tpr', 'admg_fdr', 'admg_f1'], 
+                      ['thresh_admg_tpr', 'thresh_admg_fdr', 'thresh_admg_f1'],
+                      ['admg_shd', 'thresh_admg_shd'],
+                      ['admg_skeleton_tpr', 'admg_skeleton_fdr', 'admg_skeleton_f1'],
+                      ['thresh_admg_skeleton_tpr', 'thresh_admg_skeleton_fdr', 'thresh_admg_skeleton_f1'],
+                      ['pag_skeleton_tpr', 'pag_skeleton_fdr', 'pag_skeleton_f1'],
+                      ['pag_circle_tpr', 'pag_circle_fdr', 'pag_circle_f1'],
+                      ['pag_head_tpr', 'pag_head_fdr', 'pag_head_f1'],
+                      ['pag_tail_tpr', 'pag_tail_fdr', 'pag_tail_f1'],
+                      ['thresh_pag_skeleton_tpr', 'thresh_pag_skeleton_fdr', 'thresh_pag_skeleton_f1'],
+                      ['thresh_pag_circle_tpr', 'thresh_pag_circle_fdr', 'thresh_pag_circle_f1'],
+                      ['thresh_pag_head_tpr', 'thresh_pag_head_fdr', 'thresh_pag_head_f1'],
+                      ['thresh_pag_tail_tpr', 'thresh_pag_tail_fdr', 'thresh_pag_tail_f1'],
+                      ['thresh_pred_bic_excess', 'pred_bic_excess'],
+                      ['runtime']]
+
+
+    # Define color palette for metrics. using a qualitative colormap.
+    # We generate a distinct color map for each bundle dynamically.
+    prop_cycle = plt.rcParams['axes.prop_cycle']
+    default_colors = prop_cycle.by_key()['color']
+
+    # 2. Define the Iteration Scenarios
+    # Each tuple: (varying_col, fixed_col, fixed_val_source, domain)
+    scenarios = [('frac_directed', 'avg_degree', default_configs['avg_degree'], frac_directed_vals),
+                 ('avg_degree', 'frac_directed', default_configs['frac_directed'], avg_degree_vals)]
+
+    for vary_col, fixed_col, fixed_val, domain in scenarios:
+        # 3. Data Filtration
+        # Select runs where the fixed parameter equals its default value.
+        # We use np.isclose for float comparison stability.
+        mask = np.isclose(df[fixed_col], fixed_val)
+        subset_df = df[mask].copy()
+
+        if subset_df.empty:
+            print(f"Warning: No data found for fixed {fixed_col}={fixed_val}")
+            continue
+
+        # 4. Aggregation
+        # Group by the varying parameter and algorithm, then compute mean and std
+        # We aggregate all numeric columns to handle all metrics at once efficiently.
+        agg_df = subset_df.groupby([vary_col, 'algorithm_name']).agg(['mean', 'std'])
+
+        # 5. Plotting per Bundle
+        for bundle_idx, metrics in enumerate(metric_bundles):
+            fig, ax = plt.subplots(figsize=(10, 6))
+
+            # Map colors to metrics within this specific bundle
+            metric_color_map = {m: default_colors[i % len(default_colors)] for i, m in enumerate(metrics)}
+
+            # Plotting Loop
+            for algo in algo_list:
+                style = algo_style_map.get(algo, '-')
+
+                for metric in metrics:
+                    if metric not in df.columns:
+                        print('SOMETHING MISSING ISSUE')
+                        continue
+
+                    color = metric_color_map[metric]
+
+                    # Extract series for specific algorithm
+                    # We use cross-section (xs) to select the algo from the MultiIndex
+                    try:
+                        data = agg_df.xs(algo, level='algorithm_name')
+
+                        # Reindex to ensure x-axis alignment with the domain
+                        # This handles missing configurations by leaving gaps or connecting available points
+                        data = data.reindex(domain)
+
+                        x = data.index
+                        y_mean = data[(metric, 'mean')]
+                        y_std = data[(metric, 'std')]
+
+                        # Plot Mean
+                        ax.plot(
+                            x, y_mean,
+                            linestyle=style,
+                            color=color,
+                            linewidth=2,
+                            alpha=0.8
+                        )
+
+                        # Plot Deviation (Shaded Region)
+                        ax.fill_between(
+                            x,
+                            y_mean - y_std,
+                            y_mean + y_std,
+                            color=color,
+                            alpha=0.15,
+                            linewidth=0
+                        )
+                    except KeyError:
+                        # Handle case where specific algorithm/config combo is missing
+                        print('SOMETHING MISSING ISSUE')
+                        continue
+
+            # 6. Constructing Dual Legends
+            # Legend 1: Algorithms (Styles) - Black lines with varying styles
+            algo_handles = [
+                Line2D([0], [0], color='black', linestyle=style, lw=2, label=algo)
+                for algo, style in algo_style_map.items()
+            ]
+            first_legend = ax.legend(
+                handles=algo_handles,
+                title='Algorithms',
+                loc='upper left',
+                bbox_to_anchor=(1.02, 1)
+            )
+            # Add the first legend manually to the artist list so the second doesn't overwrite it
+            ax.add_artist(first_legend)
+
+            # Legend 2: Metrics (Colors) - Solid colored lines
+            metric_handles = [
+                Line2D([0], [0], color=color, linestyle='-', lw=2, label=metric)
+                for metric, color in metric_color_map.items()
+            ]
+            ax.legend(
+                handles=metric_handles,
+                title='Metrics',
+                loc='upper left',
+                bbox_to_anchor=(1.02, 0.7)
+            )
+
+            # Formatting
+            ax.set_xlabel(vary_col.replace('_', ' ').title())
+            ax.set_ylabel('Metric Value')
+            ax.set_title(f'Varying {vary_col} (Fixed {fixed_col}={fixed_val})')
+            ax.grid(True, linestyle='--', alpha=0.5)
+
+            amalgam_name = '-'.join(list(set(('_'.join(metrics)).split('_'))))
+            filename = f"diagrams/frac_dir_avg_deg/{admg_model}_{amalgam_name}_vs_{vary_col}.png"
+            plt.tight_layout()
+            plt.savefig(filename, dpi=300)
+            plt.close()
+            print(f'generated plot {admg_model} {amalgam_name}')
+
+def compute_frac_bic_excess():
+    df = pd.read_csv('runs/runs-copy.csv')
+    df['pred_bic_excess'] = (df['pred_bic'] - df['true_bic']) / df['true_bic']
+    df['thresh_pred_bic_excess'] = (df['thresh_pred_bic'] - df['true_bic']) / df['true_bic']
+    df.to_csv('runs/runs-copy.csv', index=False)
+
 if __name__ == '__main__':
     seed = random.randint(1, 100)
     # seed = 2
     # generator = GraphGenerator(seed)
     # single_test_04(seed)
     # plot_some_pred_true_graphs()
-    plot_cmaes_results()
+    plot_experiment_bundles('ancestral')
+    plot_experiment_bundles('bow-free')

@@ -25,7 +25,7 @@ class Experiments:
     def __init__(self):
         self.algorithm_name = "Relcadilac"  # should be one of DCD or CMA-ES or Relcadilac
         self.algorithm = self.get_algorithm()
-        self.run_commit = "193bac23cfe5e44c95863f6104cc84a434e15315"
+        self.run_commit = "523edc868b40a71cd5658cf05af9dd1fc812947a"
 
         self.log_file = Path('runs/runs-copy.csv')
         self.log_df = pd.read_csv(self.log_file)
@@ -46,7 +46,7 @@ class Experiments:
         self.num_nodes = 10
         self.avg_degree = 4
         self.frac_directed = 0.6
-        self.degree_variance = 0.2
+        self.degree_variance = 0.0
         self.num_samples = 2000
         self.admg_model = 'ancestral'  # could be one of 'ancestral' or 'bow-free'
         self.beta_low = 0.5
@@ -298,7 +298,7 @@ def run_variation_test_02():
     frac_directed_list = [0.1, 0.3, 0.5, 0.7, 0.9]
     avg_degree_list = [2, 3, 4, 6, 8]
     admg_models = ['ancestral', 'bow-free']
-    it = 0
+    it = 1
     for curr_model in admg_models:
         for curr_algo in algos:
             for curr_frac in frac_directed_list:
@@ -306,7 +306,8 @@ def run_variation_test_02():
                 exp.frac_directed = curr_frac
                 exp.algorithm_name = curr_algo
                 exp.admg_model = curr_model
-                exp.explanation = f"Run {exp.run_number}; {exp.algorithm_name}; Frac directed = {exp.frac_directed}; Varying directed fraction. {it} of 120. First run in test = 151."
+                exp.algorithm = exp.get_algorithm()
+                exp.explanation = f"Run {exp.run_number}; {exp.algorithm_name}; Frac directed = {exp.frac_directed}; Varying directed fraction. {it} of 60. First run in test = 210."
                 exp.run_test()
                 it += 1
             for curr_deg in avg_degree_list:
@@ -314,7 +315,8 @@ def run_variation_test_02():
                 exp.avg_degree = curr_deg
                 exp.algorithm_name = curr_algo
                 exp.admg_model = curr_model
-                exp.explanation = f"Run {exp.run_number}; {exp.algorithm_name}; Avg degree = {exp.avg_degree}; Varying average degree. {it} of 120. First run in test = 151."
+                exp.algorithm = exp.get_algorithm()
+                exp.explanation = f"Run {exp.run_number}; {exp.algorithm_name}; Avg degree = {exp.avg_degree}; Varying average degree. {it} of 60. First run in test = 210."
                 exp.run_test()
                 it += 1
 
