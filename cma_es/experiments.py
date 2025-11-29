@@ -25,7 +25,7 @@ class Experiments:
     def __init__(self):
         self.algorithm_name = "Relcadilac"  # should be one of DCD or CMA-ES or Relcadilac
         self.algorithm = self.get_algorithm()
-        self.run_commit = "523edc868b40a71cd5658cf05af9dd1fc812947a"
+        self.run_commit = "dfa188beb83f19f4b1e62464ffd24b78a2d68eb2"
 
         self.log_file = Path('runs/runs-copy.csv')
         self.log_df = pd.read_csv(self.log_file)
@@ -208,8 +208,9 @@ class Experiments:
         p = [self.run_commit, self.explanation, self.data_file, self.log_file, self.generator_seed, self.num_nodes, self.avg_degree, self.frac_directed, self.degree_variance, self.num_samples, self.admg_model, self.beta_low, self.beta_high, self.omega_offdiag_low, self.omega_offdiag_high, self.omega_diag_low, self.omega_diag_high, self.standardize_data, self.center_data, self.get_pag, self.require_connected, self.do_thresholding, self.threshold, self.max_fevals, self.cmaes_verbose_level, self.popsize_ratio, self.cmaes_popsize, self.cmaes_num_parallel_workers, self.cmaes_output_folder, self.cmaes_lambda, self.cmaes_gamma, self.cmaes_delta, self.cmaes_obj_fn_type, self.steps_per_env, self.n_envs, self.normalize_advantage, self.n_epochs, self.device, self.n_steps, self.ent_coef, self.vec_envs_random_state, self.topo_order_known, self.use_logits_partition, self.use_sde, self.do_entropy_annealing, self.initial_entropy, self.min_entropy, self.cycle_length, self.damping_factor, self.dcd_num_restarts]
         # metrics
         m = [self.thresh_admg_tpr, self.thresh_admg_fdr, self.thresh_admg_f1, self.thresh_admg_shd, self.thresh_admg_skeleton_tpr, self.thresh_admg_skeleton_fdr, self.thresh_admg_skeleton_f1, self.thresh_pag_skeleton_f1, self.thresh_pag_skeleton_tpr, self.thresh_pag_skeleton_fdr, self.thresh_pag_circle_f1, self.thresh_pag_circle_tpr, self.thresh_pag_circle_fdr, self.thresh_pag_head_f1, self.thresh_pag_head_tpr, self.thresh_pag_head_fdr, self.thresh_pag_tail_f1, self.thresh_pag_tail_tpr, self.thresh_pag_tail_fdr, self.admg_tpr, self.admg_fdr, self.admg_f1, self.admg_shd, self.admg_skeleton_tpr, self.admg_skeleton_fdr, self.admg_skeleton_f1, self.pag_skeleton_f1, self.pag_skeleton_tpr, self.pag_skeleton_fdr, self.pag_circle_f1, self.pag_circle_tpr, self.pag_circle_fdr, self.pag_head_f1, self.pag_head_tpr, self.pag_head_fdr, self.pag_tail_f1, self.pag_tail_tpr, self.pag_tail_fdr, self.thresh_pred_bic, self.pred_bic, self.true_bic, self.runtime]
-        m = [round(val, 4) for val in m]
-        self.log_df.loc[len(self.log_df)] = f + m + p
+        ex = [self.pred_bic_excess, self.thresh_pred_bic_excess]
+        m = [round(val, 4) for val in m + e]
+        self.log_df.loc[len(self.log_df)] = f + m + p + e
         self.log_df.to_csv(self.log_file, index=False)
 
     def evaluate_and_set_metrics(self):
@@ -225,6 +226,7 @@ class Experiments:
                 self.thresh_pag_circle_f1, self.thresh_pag_circle_tpr, self.thresh_pag_circle_fdr = m['circle']['f1'], m['circle']['tpr'], m['circle']['fdr']
                 self.thresh_pag_head_f1, self.thresh_pag_head_tpr, self.thresh_pag_head_fdr = m['head']['f1'], m['head']['tpr'], m['head']['fdr']
                 self.thresh_pag_tail_f1, self.thresh_pag_tail_tpr, self.thresh_pag_tail_fdr = m['tail']['f1'], m['tail']['tpr'], m['tail']['fdr']
+                self.thresh_pred_bic_excess = (self.thresh_pred_bic - self.true_bic) / self.true_bic
             m = metrics.get_admg_metrics((self.true_D, self.true_B), (self.pred_D, self.pred_B))
             self.admg_tpr, self.admg_fdr, self.admg_f1, self.admg_shd = m['admg']['tpr'], m['admg']['fdr'], m['admg']['f1'], m['admg']['shd']
             self.admg_skeleton_tpr, self.admg_skeleton_fdr, self.admg_skeleton_f1 = m['skeleton']['tpr'], m['skeleton']['fdr'], m['skeleton']['f1']
@@ -233,6 +235,7 @@ class Experiments:
             self.pag_circle_f1, self.pag_circle_tpr, self.pag_circle_fdr = m['circle']['f1'], m['circle']['tpr'], m['circle']['fdr']
             self.pag_head_f1, self.pag_head_tpr, self.pag_head_fdr = m['head']['f1'], m['head']['tpr'], m['head']['fdr']
             self.pag_tail_f1, self.pag_tail_tpr, self.pag_tail_fdr = m['tail']['f1'], m['tail']['tpr'], m['tail']['fdr']
+            self.pred_bic_excess = (self.pred_bic - self.true_bic) / self.true_bic
 
     def run_test(self):
         try:
