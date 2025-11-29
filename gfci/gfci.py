@@ -24,7 +24,7 @@ def get_data():
     df = pd.DataFrame({f'{i}': X[:, i] for i in range(dim)}, dtype=np.float64)
     return df
 
-def gfci_search(X):
+def gfci_search(X, _data_cov=None, _admg_model=None):
     # X is a n x d numpy matrix (d is number of nodes)
     # returns a numpy matrix (d, d) for a PAG where
     # A[i, j] = 0 means no edge between i and j, else there is an edge

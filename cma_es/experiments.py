@@ -18,12 +18,14 @@ import cma_es.cma_es as cma_es
 import relcadilac.utils as utils
 import relcadilac.metrics as metrics
 import relcadilac.data_generator as data_generator
+import dcd.admg_discovery as dcd
+import relcadilac.relcadilac as relcd
 
 class Experiments:
     def __init__(self):
-        self.algorithm_name = "CMA-ES"
+        self.algorithm_name = "Relcadilac"  # should be one of DCD or CMA-ES or Relcadilac
         self.algorithm = self.get_algorithm()
-        self.run_commit = "acda492e0045a309f034fb3f86ca33ec672a20af"
+        self.run_commit = "193bac23cfe5e44c95863f6104cc84a434e15315"
 
         self.log_file = Path('runs/runs-copy.csv')
         self.log_df = pd.read_csv(self.log_file)
@@ -46,7 +48,7 @@ class Experiments:
         self.frac_directed = 0.6
         self.degree_variance = 0.2
         self.num_samples = 2000
-        self.admg_model = 'ancestral'
+        self.admg_model = 'ancestral'  # could be one of 'ancestral' or 'bow-free'
         self.beta_low = 0.5
         self.beta_high = 2.0
         self.omega_offdiag_low = 0.4
@@ -70,7 +72,8 @@ class Experiments:
         self.cmaes_popsize = int((4 + 3 * np.log(self.num_nodes * self.num_nodes)) * self.popsize_ratio)
         self.cmaes_num_parallel_workers = 12
         path = Path(f'runs/cmaes_{self.run_number:03}/')
-        path.mkdir(exist_ok=True)
+        if self.algorithm_name == 'CMA_ES':
+            path.mkdir(exist_ok=True)
         self.cmaes_output_folder = f"{path}{os.sep}"
         self.cmaes_lambda = 1e-4
         self.cmaes_delta = 1.0
@@ -78,7 +81,7 @@ class Experiments:
         self.cmaes_obj_fn_type = 'order_edge_stability'  # can be one of order_edge_stability or z_l2_regularization
 
     def set_relcadilac_params(self):
-        self.steps_per_env = 20_000
+        self.steps_per_env = 10_000
         self.n_envs = 8
         self.normalize_advantage = True
         self.n_epochs = 1
@@ -89,10 +92,10 @@ class Experiments:
         self.topo_order_known = False
         self.use_logits_partition = False
         self.use_sde = True
-        self.do_entropy_annealing = False
+        self.do_entropy_annealing = True
         self.initial_entropy = 0.3
         self.min_entropy = 0.005
-        self.cycle_length = 10_000
+        self.cycle_length = 16_000
         self.damping_factor = 0.5
 
     def set_dcd_params(self):
@@ -101,6 +104,11 @@ class Experiments:
     def get_algorithm(self):
         if self.algorithm_name == 'CMA-ES':
             return cma_es.cmaes_admg_search
+        elif self.algorithm_name == 'DCD':
+            dcd_admg_search = dcd.Discovery().discover_admg
+            return dcd_admg_search
+        elif self.algorithm_name == 'Relcadilac':
+            return relcd.relcadilac
 
     def set_run_number(self):
         if len(self.log_df) == 0:
@@ -174,6 +182,13 @@ class Experiments:
     def get_algorithm_params(self):
         if self.algorithm_name == 'CMA-ES':
             return {'max_fevals': self.max_fevals, 'verbose': self.cmaes_verbose_level, 'popsize': self.cmaes_popsize, 'num_parallel_workers': self.cmaes_num_parallel_workers, 'output_folder': self.cmaes_output_folder, 'cmaes_lambda': self.cmaes_lambda, 'gamma': self.cmaes_gamma, 'delta': self.cmaes_delta, 'obj_fn_type': self.cmaes_obj_fn_type}
+        elif self.algorithm_name == 'DCD':
+            return {'num_restarts': self.dcd_num_restarts, 'local': False}
+        elif self.algorithm_name == 'Relcadilac':
+            rl_params = {"normalize_advantage": self.normalize_advantage, "n_epochs": self.n_epochs, "device": self.device, "verbose": 0, 'n_steps': self.n_steps, 'ent_coef': self.ent_coef, 'use_sde': self.use_sde}
+            entropy_params = {'initial_entropy': self.initial_entropy, 'min_entropy': self.min_entropy, 'cycle_length': self.cycle_length, 'damping_factor': self.damping_factor}
+            # the None for topo order should be fixed, currently it is difficult to pass a topo order
+            return {'steps_per_env': self.steps_per_env, 'n_envs': self.n_envs, 'rl_params': rl_params, 'verbose': 1, 'random_state': self.vec_envs_random_state, 'topo_order': None, 'use_logits_partition': self.use_logits_partition, 'do_entropy_annealing': self.do_entropy_annealing, 'entropy_params': entropy_params}
 
     def plot_admgs(self):
         file_prefix = f'run_{self.run_number:03}_{self.admg_model}_'
@@ -198,7 +213,7 @@ class Experiments:
         self.log_df.to_csv(self.log_file, index=False)
 
     def evaluate_and_set_metrics(self):
-        if self.algorithm_name in ['CMA-ES', 'Relcadilac']:
+        if self.algorithm_name in ['CMA-ES', 'Relcadilac', 'DCD']:
             if self.do_thresholding:
                 self.pred_thresh_D, self.pred_thresh_B, self.thresh_pred_bic = utils.get_thresholded_admg(self.pred_D, self.pred_B, self.data, self.data_cov, threshold=self.threshold, get_bic=True)
                 self.pred_thresh_pag = utils.convert_admg_to_pag(self.pred_thresh_D, self.pred_thresh_B)
@@ -236,7 +251,7 @@ class Experiments:
             traceback.print_exc()
             print("CONTINUING ANYWAY")
 
-def run_variation_test():
+def run_variation_test_01():
     # with this test, for each of ancestral and bow-free admg types, I am varying the number of nodes while keeping the sample size at 2k, and then varying the sample size while keeping the number of nodes at 10
     num_nodes = [5, 10, 15, 20, 30]
     sample_sizes = [500, 1000, 3000, 4000]  # since 2k is already covered
@@ -275,8 +290,33 @@ def run_cmaes_obj_fn_test():
         for curr_model in admg_models:
             exp = Experiments()
             exp.admg_model = curr_model
-            exp.explanation = f"Run {exp.run_number}; {exp.algorithm_name}; Checking out the stability modification to the objective function. I have updated the value of gamma to be more theoretically consistent and made it larger so it actually has an impact but not made it so large that it becomes greater than the benefit of a single edge. The value of gamma is {exp.cmaes_gamma}. Test suite varies the admg model. This is iteration {repeat + 1} of {repetitions} with admg model as {exp.admg_model}. Using {exp.num_nodes} nodes and {exp.num_samples} samples. The maximum number of evaluations is {exp.max_fevals}."
+            exp.explanation = f"Run {exp.run_number}; {exp.algorithm_name}; Checking out the stability modification to the objective function. I have updated the value of gamma to be more theoretically consistent and made it larger so it actually has an impact but not made it so large that it becomes greater than the benefit of a single edge. The value of gamma is {exp.cmaes_gamma}. Test suite varies the admg model. I have increased the proportion of directed edges. I think this might help. This is iteration {repeat + 1} of {repetitions} with admg model as {exp.admg_model}. Using {exp.num_nodes} nodes and {exp.num_samples} samples. The maximum number of evaluations is {exp.max_fevals}."
             exp.run_test()
 
+def run_variation_test_02():
+    algos = ['CMA-ES', 'DCD', 'Relcadilac']
+    frac_directed_list = [0.1, 0.3, 0.5, 0.7, 0.9]
+    avg_degree_list = [2, 3, 4, 6, 8]
+    admg_models = ['ancestral', 'bow-free']
+    it = 0
+    for curr_model in admg_models:
+        for curr_algo in algos:
+            for curr_frac in frac_directed_list:
+                exp = Experiments()
+                exp.frac_directed = curr_frac
+                exp.algorithm_name = curr_algo
+                exp.admg_model = curr_model
+                exp.explanation = f"Run {exp.run_number}; {exp.algorithm_name}; Frac directed = {exp.frac_directed}; Varying directed fraction. {it} of 120. First run in test = 151."
+                exp.run_test()
+                it += 1
+            for curr_deg in avg_degree_list:
+                exp = Experiments()
+                exp.avg_degree = curr_deg
+                exp.algorithm_name = curr_algo
+                exp.admg_model = curr_model
+                exp.explanation = f"Run {exp.run_number}; {exp.algorithm_name}; Avg degree = {exp.avg_degree}; Varying average degree. {it} of 120. First run in test = 151."
+                exp.run_test()
+                it += 1
+
 if __name__ == '__main__':
-    run_cmaes_obj_fn_test()
+    run_variation_test_02()

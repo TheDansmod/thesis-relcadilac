@@ -14,7 +14,7 @@ from dcd.ricf import bic
 # danish mod: importing get_pag_matrix as well
 from dcd.utils.admg2pag import admg_to_pag, pprint_pag, get_pag_matrix
 # danish mod: I need to convert the ananke graph to adjacency matrices
-from relcadilac.utils import get_adj_from_ananke_graph
+from relcadilac.utils import get_adj_from_ananke_graph, get_bic
 
 @primitive
 def cycle_loss(W):
@@ -418,7 +418,8 @@ class Discovery:
         return self.get_graph(final_W1, final_W2, data.columns, w_threshold), convergence
 
     # danish mod: added local attrubute so that I can also return matrices instead which I need
-    def discover_admg(self, data, admg_class, tiers=None, unconfounded_vars=[], max_iter=100,
+    # danish mod: added input for data covariance to make the api identical. It is not used internally except for computing the bic before returning
+    def discover_admg(self, data, _data_cov, admg_class, tiers=None, unconfounded_vars=[], max_iter=100,
                       h_tol=1e-8, rho_max=1e+16, num_restarts=5, w_threshold=0.05,
                       ricf_increment=1, ricf_tol=1e-4, verbose=False, detailed_output=False, local=True):
         """
@@ -438,6 +439,13 @@ class Discovery:
         :param detailed_output: Boolean indicating whether to print detailed intermediate outputs.
         :return: best fitting Ananke ADMG that is found.
         """
+
+        # danish mod: I am actually feeding in admg_class as either 'ancestral' or 'bow-free' with a hyphen in bow-free, but this class expects it to be bowfree, so am making that change below
+        # danish mod: I am actually passing in a numpy.ndarray as data, but this class needs a dataframe, so I am doing the conversion below
+        if not local:
+            admg_class = 'bowfree' if admg_class == 'bow-free' else 'ancestral'
+            n_nodes = data.shape[1]
+            data = pd.DataFrame({f'{i}': data[:, i] for i in range(n_nodes)})
 
         best_bic = np.inf
 
@@ -469,7 +477,7 @@ class Discovery:
         # below is what I need, need to have local=False for this
         pag = get_pag_matrix(admg_to_pag(self.G_))
         D, B = get_adj_from_ananke_graph(self.G_)
-        return D, B, pag
+        return D, B, pag, get_bic(D, B, data.to_numpy(), _data_cov), None
 
 
 if __name__ == "__main__":
