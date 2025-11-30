@@ -25,7 +25,7 @@ class Experiments:
     def __init__(self):
         self.algorithm_name = "Relcadilac"  # should be one of DCD or CMA-ES or Relcadilac
         self.algorithm = self.get_algorithm()
-        self.run_commit = "97371ee5e62ae27eb96228a0fd0db8580ef18c38"
+        self.run_commit = "99fda0f486605dbd38ed31e129c6edefda73333b"
 
         self.log_file = Path('runs/runs-copy.csv')
         self.log_df = pd.read_csv(self.log_file)
@@ -210,7 +210,7 @@ class Experiments:
         m = [self.thresh_admg_tpr, self.thresh_admg_fdr, self.thresh_admg_f1, self.thresh_admg_shd, self.thresh_admg_skeleton_tpr, self.thresh_admg_skeleton_fdr, self.thresh_admg_skeleton_f1, self.thresh_pag_skeleton_f1, self.thresh_pag_skeleton_tpr, self.thresh_pag_skeleton_fdr, self.thresh_pag_circle_f1, self.thresh_pag_circle_tpr, self.thresh_pag_circle_fdr, self.thresh_pag_head_f1, self.thresh_pag_head_tpr, self.thresh_pag_head_fdr, self.thresh_pag_tail_f1, self.thresh_pag_tail_tpr, self.thresh_pag_tail_fdr, self.admg_tpr, self.admg_fdr, self.admg_f1, self.admg_shd, self.admg_skeleton_tpr, self.admg_skeleton_fdr, self.admg_skeleton_f1, self.pag_skeleton_f1, self.pag_skeleton_tpr, self.pag_skeleton_fdr, self.pag_circle_f1, self.pag_circle_tpr, self.pag_circle_fdr, self.pag_head_f1, self.pag_head_tpr, self.pag_head_fdr, self.pag_tail_f1, self.pag_tail_tpr, self.pag_tail_fdr, self.thresh_pred_bic, self.pred_bic, self.true_bic, self.runtime]
         # extra
         ex = [self.pred_bic_excess, self.thresh_pred_bic_excess]
-        m = [round(val, 4) for val in m + ex]
+        m = [round(val, 4) for val in m]
         self.log_df.loc[len(self.log_df)] = f + m + p + ex
         self.log_df.to_csv(self.log_file, index=False)
 
