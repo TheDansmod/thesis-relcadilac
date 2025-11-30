@@ -25,7 +25,7 @@ class Experiments:
     def __init__(self):
         self.algorithm_name = "DCD"  # should be one of DCD or CMA-ES or Relcadilac
         self.algorithm = self.get_algorithm()
-        self.run_commit = "3d72a400e1396d7ec83fe7ff7c6136c82b7b2d2d"
+        self.run_commit = "c0d64fe763f26529666e68bafcae44bf7d8331ee"
 
         self.log_file = Path('runs/runs-copy.csv')
         self.log_df = pd.read_csv(self.log_file)
@@ -100,7 +100,7 @@ class Experiments:
         self.damping_factor = 0.5
 
     def set_dcd_params(self):
-        self.dcd_num_restarts = 1
+        self.dcd_num_restarts = 5
 
     def get_algorithm(self):
         if self.algorithm_name == 'CMA-ES':
@@ -214,7 +214,7 @@ class Experiments:
         if self.algorithm_name == 'CMA-ES':
             return {'max_fevals': self.max_fevals, 'verbose': self.cmaes_verbose_level, 'popsize': self.cmaes_popsize, 'num_parallel_workers': self.cmaes_num_parallel_workers, 'output_folder': self.cmaes_output_folder, 'cmaes_lambda': self.cmaes_lambda, 'gamma': self.cmaes_gamma, 'delta': self.cmaes_delta, 'obj_fn_type': self.cmaes_obj_fn_type}
         elif self.algorithm_name == 'DCD':
-            return {'num_restarts': self.dcd_num_restarts, 'local': False}
+            return {'num_restarts': self.dcd_num_restarts, 'local': False, 'verbose': True}
         elif self.algorithm_name == 'Relcadilac':
             rl_params = {"normalize_advantage": self.normalize_advantage, "n_epochs": self.n_epochs, "device": self.device, "verbose": 0, 'n_steps': self.n_steps, 'ent_coef': self.ent_coef, 'use_sde': self.use_sde}
             entropy_params = {'initial_entropy': self.initial_entropy, 'min_entropy': self.min_entropy, 'cycle_length': self.cycle_length, 'damping_factor': self.damping_factor}
