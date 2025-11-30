@@ -20,19 +20,20 @@ import relcadilac.metrics as metrics
 import relcadilac.data_generator as data_generator
 import dcd.admg_discovery as dcd
 import relcadilac.relcadilac as relcd
+import gfci.gfci as gfci
 
 class Experiments:
     def __init__(self):
-        self.algorithm_name = "DCD"  # should be one of DCD or CMA-ES or Relcadilac
+        self.algorithm_name = "GFCI"  # should be one of DCD or CMA-ES or Relcadilac or GFCI
         self.algorithm = self.get_algorithm()
-        self.run_commit = "4a68fb651ec2ab138e13a52b4a4ba97cac59fe5c"
+        self.run_commit = "feee244793a74529c971ceeca596baee59b2704c"
 
         self.log_file = Path('runs/runs-copy.csv')
         self.log_df = pd.read_csv(self.log_file)
         self.set_run_number()
         self.data_file = Path(f'runs/run_{self.run_number:03}_data.pkl')
 
-        self.sachs_data = True
+        self.sachs_data = False
         self.set_graph_generation_params()
         self.set_post_prediction_params()
         self.set_relcadilac_params()
@@ -63,7 +64,7 @@ class Experiments:
         self.generator = data_generator.GraphGenerator(self.generator_seed)
 
     def set_post_prediction_params(self):
-        self.do_thresholding = True
+        self.do_thresholding = False
         self.threshold = 0.05
 
     def set_cmaes_params(self):
@@ -110,6 +111,8 @@ class Experiments:
             return dcd_admg_search
         elif self.algorithm_name == 'Relcadilac':
             return relcd.relcadilac
+        elif self.algorithm_name == "GFCI":
+            return gfci.gfci_search
 
     def set_run_number(self):
         if len(self.log_df) == 0:
@@ -221,6 +224,8 @@ class Experiments:
             entropy_params = {'initial_entropy': self.initial_entropy, 'min_entropy': self.min_entropy, 'cycle_length': self.cycle_length, 'damping_factor': self.damping_factor}
             # the None for topo order should be fixed, currently it is difficult to pass a topo order
             return {'steps_per_env': self.steps_per_env, 'n_envs': self.n_envs, 'rl_params': rl_params, 'verbose': 1, 'random_state': self.vec_envs_random_state, 'topo_order': None, 'use_logits_partition': self.use_logits_partition, 'do_entropy_annealing': self.do_entropy_annealing, 'entropy_params': entropy_params}
+        elif self.algorithm_name == "GFCI":
+            return dict()
 
     def plot_admgs(self):
         file_prefix = f'run_{self.run_number:03}_{self.admg_model}_'
@@ -269,12 +274,13 @@ class Experiments:
             m = metrics.get_admg_metrics((self.true_D, self.true_B), (self.pred_D, self.pred_B))
             self.admg_tpr, self.admg_fdr, self.admg_f1, self.admg_shd = m['admg']['tpr'], m['admg']['fdr'], m['admg']['f1'], m['admg']['shd']
             self.admg_skeleton_tpr, self.admg_skeleton_fdr, self.admg_skeleton_f1 = m['skeleton']['tpr'], m['skeleton']['fdr'], m['skeleton']['f1']
+            self.pred_bic_excess = (self.pred_bic - self.true_bic) / self.true_bic
+        if self.algorithm_name in ['CMA-ES', 'Relcadilac', 'DCD', 'GFCI']:
             m = metrics.get_pag_metrics(self.true_pag, self.pred_pag)
             self.pag_skeleton_f1, self.pag_skeleton_tpr, self.pag_skeleton_fdr = m['skeleton']['f1'], m['skeleton']['tpr'], m['skeleton']['fdr']
             self.pag_circle_f1, self.pag_circle_tpr, self.pag_circle_fdr = m['circle']['f1'], m['circle']['tpr'], m['circle']['fdr']
             self.pag_head_f1, self.pag_head_tpr, self.pag_head_fdr = m['head']['f1'], m['head']['tpr'], m['head']['fdr']
             self.pag_tail_f1, self.pag_tail_tpr, self.pag_tail_fdr = m['tail']['f1'], m['tail']['tpr'], m['tail']['fdr']
-            self.pred_bic_excess = (self.pred_bic - self.true_bic) / self.true_bic
 
     def run_test(self):
         try:
@@ -290,7 +296,8 @@ class Experiments:
             self.evaluate_and_set_metrics()
             print(f'\nPredicted D:\n{self.pred_D}\nPredicted B:\n{self.pred_B}\nTrue bic: {self.true_bic}\nPredicted bic: {self.pred_bic}\nThresholded bic: {self.thresh_pred_bic}\nThresholded SHD: {self.thresh_admg_shd}\nPredicted ADMG SHD: {self.admg_shd}\n'), 
             self.log_metrics_and_data()
-            self.plot_admgs()
+            if not self.algorithm_name == 'GFCI':
+                self.plot_admgs()
         except Exception as e:
             print("THERE WAS AN EXCEPTION")
             traceback.print_exc()
@@ -373,5 +380,7 @@ def run_sachs_dataset():
         exp.explanation = f"Run {exp.run_number}; {exp.algorithm_name}; Running DCD, CMA-ES, Relcadilac for sachs dataset. First run = 271"
         exp.run_test()
     
+def run_gfci():
+    exp = Experiments()
 if __name__ == '__main__':
     run_sachs_dataset()

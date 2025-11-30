@@ -40,8 +40,9 @@ def gfci_search(X, _data_cov=None, _admg_model=None):
 
     ## Run the search
     search.run_gfci()
-    result = search.get_graph_to_matrix().to_numpy()
-    return result
+    pred_pag = search.get_graph_to_matrix().to_numpy()
+    pred_D, pred_B, pred_bic, captured_metrics = None, None, None, None
+    return pred_D, pred_B, pred_pag, pred_bic, captured_metrics
 
 if __name__ == '__main__':
     df = get_data()
