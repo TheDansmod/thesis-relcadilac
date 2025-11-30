@@ -23,9 +23,9 @@ import relcadilac.relcadilac as relcd
 
 class Experiments:
     def __init__(self):
-        self.algorithm_name = "CMA-ES"  # should be one of DCD or CMA-ES or Relcadilac
+        self.algorithm_name = "DCD"  # should be one of DCD or CMA-ES or Relcadilac
         self.algorithm = self.get_algorithm()
-        self.run_commit = "fae00976cf73dc08726598939e799e163787ec54"
+        self.run_commit = "3d72a400e1396d7ec83fe7ff7c6136c82b7b2d2d"
 
         self.log_file = Path('runs/runs-copy.csv')
         self.log_df = pd.read_csv(self.log_file)
@@ -204,8 +204,8 @@ class Experiments:
         D[3, 8] = 1
         D[9, 8] = 1
         D[10, 8] = 1
-        self.avg_degree = 16 * 2 / self.num_nodes
-        self.frac_directed = 14 / 16
+        self.avg_degree = 15 * 2 / self.num_nodes
+        self.frac_directed = 14 / 15
         self.true_D, self.true_B = D, B
         self.true_bic = utils.get_bic(self.true_D, self.true_B, self.data, self.data_cov)
         self.true_pag = utils.convert_admg_to_pag(self.true_D, self.true_B)
