@@ -184,7 +184,7 @@ class Experiments:
         path = 'real_data/sachs.data.csv'
         X = pd.read_csv(path).to_numpy()
         self.num_samples, self.num_nodes = X.shape
-        self.data = X - X.mean(X, axis=0)  # centering
+        self.data = X - np.mean(X, axis=0)  # centering
         self.data_cov = np.cov(X.T)
         D = np.zeros((self.num_nodes, self.num_nodes))
         B = np.zeros((self.num_nodes, self.num_nodes))
@@ -365,7 +365,7 @@ def run_variation_test_02():
                 it += 1
 
 def run_sachs_dataset():
-    exp = Experiment()
+    exp = Experiments()
     exp.explanation = f"Run {exp.run_number}; {exp.algorithm_name}; Running sachs dataset"
     exp.run_test()
     
