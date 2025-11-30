@@ -23,7 +23,7 @@ import relcadilac.relcadilac as relcd
 
 class Experiments:
     def __init__(self):
-        self.algorithm_name = "Relcadilac"  # should be one of DCD or CMA-ES or Relcadilac
+        self.algorithm_name = "CMA-ES"  # should be one of DCD or CMA-ES or Relcadilac
         self.algorithm = self.get_algorithm()
         self.run_commit = "fae00976cf73dc08726598939e799e163787ec54"
 
@@ -32,6 +32,7 @@ class Experiments:
         self.set_run_number()
         self.data_file = Path(f'runs/run_{self.run_number:03}_data.pkl')
 
+        self.sachs_data = True
         self.set_graph_generation_params()
         self.set_post_prediction_params()
         self.set_relcadilac_params()
@@ -48,7 +49,7 @@ class Experiments:
         self.frac_directed = 0.6
         self.degree_variance = 0.0
         self.num_samples = 2000
-        self.admg_model = 'ancestral'  # could be one of 'ancestral' or 'bow-free'
+        self.admg_model = 'bow-free'  # could be one of 'ancestral' or 'bow-free'
         self.beta_low = 0.5
         self.beta_high = 2.0
         self.omega_offdiag_low = 0.4
@@ -179,6 +180,36 @@ class Experiments:
             require_connected=self.require_connected,
         )
 
+    def set_sachs_data(self):
+        path = 'real_data/sachs.data.csv'
+        X = pd.read_csv(path).to_numpy()
+        self.num_samples, self.num_nodes = X.shape
+        self.data = X - X.mean(X, axis=0)  # centering
+        self.data_cov = np.cov(X.T)
+        D = np.zeros((self.num_nodes, self.num_nodes))
+        B = np.zeros((self.num_nodes, self.num_nodes))
+        B[3, 4] = 1
+        B[4, 3] = 1
+        D[1, 0] = 1
+        D[5, 1] = 1
+        D[3, 2] = 1
+        D[8, 2] = 1
+        D[6, 4] = 1
+        D[0, 7] = 1
+        D[5, 7] = 1
+        D[6, 7] = 1
+        D[9, 7] = 1
+        D[10, 7] = 1
+        D[0, 8] = 1
+        D[3, 8] = 1
+        D[9, 8] = 1
+        D[10, 8] = 1
+        self.avg_degree = 16 * 2 / self.num_nodes
+        self.frac_directed = 14 / 16
+        self.true_D, self.true_B = D, B
+        self.true_bic = utils.get_bic(self.true_D, self.true_B, self.data, self.data_cov)
+        self.true_pag = utils.convert_admg_to_pag(self.true_D, self.true_B)
+
     def get_algorithm_params(self):
         if self.algorithm_name == 'CMA-ES':
             return {'max_fevals': self.max_fevals, 'verbose': self.cmaes_verbose_level, 'popsize': self.cmaes_popsize, 'num_parallel_workers': self.cmaes_num_parallel_workers, 'output_folder': self.cmaes_output_folder, 'cmaes_lambda': self.cmaes_lambda, 'gamma': self.cmaes_gamma, 'delta': self.cmaes_delta, 'obj_fn_type': self.cmaes_obj_fn_type}
@@ -193,9 +224,15 @@ class Experiments:
     def plot_admgs(self):
         file_prefix = f'run_{self.run_number:03}_{self.admg_model}_'
         directory = Path('diagrams')
-        utils.draw_admg(self.true_D, self.true_B, f'{file_prefix}true', directory)
-        utils.draw_admg(self.pred_D, self.pred_B, f'{file_prefix}pred', directory)
-        utils.draw_admg(self.pred_thresh_D, self.pred_thresh_B, f'{file_prefix}pred_thresh', directory)
+        if not self.sachs_data:
+            utils.draw_admg(self.true_D, self.true_B, f'{file_prefix}true', directory)
+            utils.draw_admg(self.pred_D, self.pred_B, f'{file_prefix}pred', directory)
+            utils.draw_admg(self.pred_thresh_D, self.pred_thresh_B, f'{file_prefix}pred_thresh', directory)
+        else:
+            vertex_names = 'Raf,Mek,Plcg,PIP2,PIP3,Erk,Akt,PKA,PKC,P38,Jnk'.split(',')
+            utils.draw_admg_named_vertices(self.true_D, self.true_B, vertex_names, f'{file_prefix}true', directory)
+            utils.draw_admg_named_vertices(self.pred_D, self.pred_B, vertex_names, f'{file_prefix}pred', directory)
+            utils.draw_admg_named_vertices(self.pred_thresh_D, self.pred_thresh_B, vertex_names, f'{file_prefix}pred_thresh', directory)
 
     def log_metrics_and_data(self):
         # data
@@ -209,7 +246,7 @@ class Experiments:
         # metrics
         m = [self.thresh_admg_tpr, self.thresh_admg_fdr, self.thresh_admg_f1, self.thresh_admg_shd, self.thresh_admg_skeleton_tpr, self.thresh_admg_skeleton_fdr, self.thresh_admg_skeleton_f1, self.thresh_pag_skeleton_f1, self.thresh_pag_skeleton_tpr, self.thresh_pag_skeleton_fdr, self.thresh_pag_circle_f1, self.thresh_pag_circle_tpr, self.thresh_pag_circle_fdr, self.thresh_pag_head_f1, self.thresh_pag_head_tpr, self.thresh_pag_head_fdr, self.thresh_pag_tail_f1, self.thresh_pag_tail_tpr, self.thresh_pag_tail_fdr, self.admg_tpr, self.admg_fdr, self.admg_f1, self.admg_shd, self.admg_skeleton_tpr, self.admg_skeleton_fdr, self.admg_skeleton_f1, self.pag_skeleton_f1, self.pag_skeleton_tpr, self.pag_skeleton_fdr, self.pag_circle_f1, self.pag_circle_tpr, self.pag_circle_fdr, self.pag_head_f1, self.pag_head_tpr, self.pag_head_fdr, self.pag_tail_f1, self.pag_tail_tpr, self.pag_tail_fdr, self.thresh_pred_bic, self.pred_bic, self.true_bic, self.runtime]
         # extra
-        ex = [self.pred_bic_excess, self.thresh_pred_bic_excess]
+        ex = [self.pred_bic_excess, self.thresh_pred_bic_excess, self.sachs_data]
         m = [round(val, 4) for val in m]
         self.log_df.loc[len(self.log_df)] = f + m + p + ex
         self.log_df.to_csv(self.log_file, index=False)
@@ -241,7 +278,10 @@ class Experiments:
     def run_test(self):
         try:
             print(f'\nRUN NUMBER: {self.run_number}\nEXPLANATION: {self.explanation}\n')
-            self.set_data()
+            if self.sachs_data:
+                self.set_sachs_data()
+            else:
+                self.set_data()
             print(f'\nTRUE BIC: {self.true_bic}\n')
             start = time.perf_counter()
             self.pred_D, self.pred_B, self.pred_pag, self.pred_bic, self.captured_metrics = self.algorithm(self.data, self.data_cov, self.admg_model, **self.get_algorithm_params())
@@ -324,5 +364,10 @@ def run_variation_test_02():
                 exp.run_test()
                 it += 1
 
+def run_sachs_dataset():
+    exp = Experiment()
+    exp.explanation = f"Run {exp.run_number}; {exp.algorithm_name}; Running sachs dataset"
+    exp.run_test()
+    
 if __name__ == '__main__':
-    run_variation_test_02()
+    run_sachs_dataset()
