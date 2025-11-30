@@ -26,7 +26,7 @@ class Experiments:
     def __init__(self):
         self.algorithm_name = "GFCI"  # should be one of DCD or CMA-ES or Relcadilac or GFCI
         self.algorithm = self.get_algorithm()
-        self.run_commit = "feee244793a74529c971ceeca596baee59b2704c"
+        self.run_commit = "76dc168d50bcbd2a93a79aa723eceda5a48e6960"
 
         self.log_file = Path('runs/runs-copy.csv')
         self.log_df = pd.read_csv(self.log_file)
@@ -164,6 +164,8 @@ class Experiments:
         self.pred_bic = None
         self.true_bic = None
         self.runtime = None
+        self.pred_bic_excess = None
+        self.thresh_pred_bic_excess = None
 
     def get_sampling_params(self):
         return {'beta_low': self.beta_low, 'beta_high': self.beta_high, 'omega_offdiag_low': self.omega_offdiag_low, 'omega_offdiag_high': self.omega_offdiag_high, 'omega_diag_low': self.omega_diag_low, 'omega_diag_high': self.omega_diag_high, 'standardize_data': self.standardize_data, 'center_data': self.center_data}
@@ -253,7 +255,7 @@ class Experiments:
         m = [self.thresh_admg_tpr, self.thresh_admg_fdr, self.thresh_admg_f1, self.thresh_admg_shd, self.thresh_admg_skeleton_tpr, self.thresh_admg_skeleton_fdr, self.thresh_admg_skeleton_f1, self.thresh_pag_skeleton_f1, self.thresh_pag_skeleton_tpr, self.thresh_pag_skeleton_fdr, self.thresh_pag_circle_f1, self.thresh_pag_circle_tpr, self.thresh_pag_circle_fdr, self.thresh_pag_head_f1, self.thresh_pag_head_tpr, self.thresh_pag_head_fdr, self.thresh_pag_tail_f1, self.thresh_pag_tail_tpr, self.thresh_pag_tail_fdr, self.admg_tpr, self.admg_fdr, self.admg_f1, self.admg_shd, self.admg_skeleton_tpr, self.admg_skeleton_fdr, self.admg_skeleton_f1, self.pag_skeleton_f1, self.pag_skeleton_tpr, self.pag_skeleton_fdr, self.pag_circle_f1, self.pag_circle_tpr, self.pag_circle_fdr, self.pag_head_f1, self.pag_head_tpr, self.pag_head_fdr, self.pag_tail_f1, self.pag_tail_tpr, self.pag_tail_fdr, self.thresh_pred_bic, self.pred_bic, self.true_bic, self.runtime]
         # extra
         ex = [self.pred_bic_excess, self.thresh_pred_bic_excess, self.sachs_data]
-        m = [round(val, 4) for val in m]
+        m = [round(val, 4) for val in m if val is not None]
         self.log_df.loc[len(self.log_df)] = f + m + p + ex
         self.log_df.to_csv(self.log_file, index=False)
 
@@ -346,31 +348,30 @@ def run_cmaes_obj_fn_test():
             exp.run_test()
 
 def run_variation_test_02():
-    algos = ['CMA-ES', 'DCD', 'Relcadilac']
+    # algos = ['CMA-ES', 'DCD', 'Relcadilac'] - rerun only for GFCI
     frac_directed_list = [0.1, 0.3, 0.5, 0.7, 0.9]
     avg_degree_list = [2, 3, 4, 6, 8]
     admg_models = ['ancestral', 'bow-free']
     it = 1
     for curr_model in admg_models:
-        for curr_algo in algos:
-            for curr_frac in frac_directed_list:
-                exp = Experiments()
-                exp.frac_directed = curr_frac
-                exp.algorithm_name = curr_algo
-                exp.admg_model = curr_model
-                exp.algorithm = exp.get_algorithm()
-                exp.explanation = f"Run {exp.run_number}; {exp.algorithm_name}; Frac directed = {exp.frac_directed}; Varying directed fraction. {it} of 60. First run in test = 210."
-                exp.run_test()
-                it += 1
-            for curr_deg in avg_degree_list:
-                exp = Experiments()
-                exp.avg_degree = curr_deg
-                exp.algorithm_name = curr_algo
-                exp.admg_model = curr_model
-                exp.algorithm = exp.get_algorithm()
-                exp.explanation = f"Run {exp.run_number}; {exp.algorithm_name}; Avg degree = {exp.avg_degree}; Varying average degree. {it} of 60. First run in test = 210."
-                exp.run_test()
-                it += 1
+        for curr_frac in frac_directed_list:
+            exp = Experiments()
+            exp.frac_directed = curr_frac
+            # exp.algorithm_name = curr_algo
+            exp.admg_model = curr_model
+            # exp.algorithm = exp.get_algorithm()
+            exp.explanation = f"Run {exp.run_number}; {exp.algorithm_name}; Frac directed = {exp.frac_directed}; Varying directed fraction. {it} of 20. First run in test = 274."
+            exp.run_test()
+            it += 1
+        for curr_deg in avg_degree_list:
+            exp = Experiments()
+            exp.avg_degree = curr_deg
+            # exp.algorithm_name = curr_algo
+            exp.admg_model = curr_model
+            # exp.algorithm = exp.get_algorithm()
+            exp.explanation = f"Run {exp.run_number}; {exp.algorithm_name}; Avg degree = {exp.avg_degree}; Varying average degree. {it} of 20. First run in test = 274."
+            exp.run_test()
+            it += 1
 
 def run_sachs_dataset():
     for algo in ['DCD', 'CMA-ES', 'Relcadilac']:
@@ -380,7 +381,5 @@ def run_sachs_dataset():
         exp.explanation = f"Run {exp.run_number}; {exp.algorithm_name}; Running DCD, CMA-ES, Relcadilac for sachs dataset. First run = 271"
         exp.run_test()
     
-def run_gfci():
-    exp = Experiments()
 if __name__ == '__main__':
-    run_sachs_dataset()
+    run_variation_test_02()
