@@ -25,7 +25,7 @@ class Experiments:
     def __init__(self):
         self.algorithm_name = "Relcadilac"  # should be one of DCD or CMA-ES or Relcadilac
         self.algorithm = self.get_algorithm()
-        self.run_commit = "99fda0f486605dbd38ed31e129c6edefda73333b"
+        self.run_commit = "fae00976cf73dc08726598939e799e163787ec54"
 
         self.log_file = Path('runs/runs-copy.csv')
         self.log_df = pd.read_csv(self.log_file)
