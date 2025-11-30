@@ -25,7 +25,7 @@ class Experiments:
     def __init__(self):
         self.algorithm_name = "DCD"  # should be one of DCD or CMA-ES or Relcadilac
         self.algorithm = self.get_algorithm()
-        self.run_commit = "c0d64fe763f26529666e68bafcae44bf7d8331ee"
+        self.run_commit = "4a68fb651ec2ab138e13a52b4a4ba97cac59fe5c"
 
         self.log_file = Path('runs/runs-copy.csv')
         self.log_df = pd.read_csv(self.log_file)
@@ -198,10 +198,11 @@ class Experiments:
         D[0, 7] = 1
         D[5, 7] = 1
         D[6, 7] = 1
+        D[2, 4] = 1
         D[9, 7] = 1
         D[10, 7] = 1
         D[0, 8] = 1
-        D[3, 8] = 1
+        D[8, 3] = 1
         D[9, 8] = 1
         D[10, 8] = 1
         self.avg_degree = 15 * 2 / self.num_nodes
@@ -365,9 +366,12 @@ def run_variation_test_02():
                 it += 1
 
 def run_sachs_dataset():
-    exp = Experiments()
-    exp.explanation = f"Run {exp.run_number}; {exp.algorithm_name}; Running sachs dataset"
-    exp.run_test()
+    for algo in ['DCD', 'CMA-ES', 'Relcadilac']:
+        exp = Experiments()
+        exp.algorithm_name = algo
+        exp.algorithm = exp.get_algorithm()
+        exp.explanation = f"Run {exp.run_number}; {exp.algorithm_name}; Running DCD, CMA-ES, Relcadilac for sachs dataset. First run = 271"
+        exp.run_test()
     
 if __name__ == '__main__':
     run_sachs_dataset()
