@@ -1374,11 +1374,83 @@ def compute_frac_bic_excess():
     df['thresh_pred_bic_excess'] = (df['thresh_pred_bic'] - df['true_bic']) / df['true_bic']
     df.to_csv('runs/runs-copy.csv', index=False)
 
+def do_plotting_again():
+    plt.rcParams.update({
+        "pgf.texsystem": "pdflatex",
+        "lines.linewidth": 1,
+        "font.family": "serif",
+        "font.serif": ["Times", "Times New Roman"], # Match IEEEtran font
+        "text.usetex": True,                        # Use LaTeX for text rendering
+        "pgf.rcfonts": False,                       # Disables Matplotlib's internal font handling
+        "font.size": 10,                            # IEEEtran main text size
+        "axes.labelsize": 10,
+        "legend.fontsize": 8,                       # Legends are typically smaller
+        "xtick.labelsize": 8,
+        "ytick.labelsize": 8,
+        "figure.figsize": (9.4, 3.0),              # Width matched to IEEEtran \textwidth (double column)
+                                                    # Use (3.5, 3.5) if targeting a single column width. (7.6, 4.0) otherwise
+    })
+    # thresh_admg_shd, for frac and degree var - both ancestral and bow-free in same graph - for DCD relcadilac CMA-ES
+    metric = 'thresh_pag_skeleton_f1'
+    df = pd.read_csv("runs/runs-copy.csv").query('run_number > 150 & num_nodes == 10 & num_samples == 2000')[['algorithm_name', 'frac_directed', 'avg_degree', 'admg_model', metric]]
+    algos = ['DCD', 'Relcadilac', 'CMA-ES', 'GFCI']
+    # algos = ['DCD', 'Relcadilac', 'CMA-ES']
+    colors = ['g', 'b', 'r', 'm']
+    models = ['ancestral', 'bow-free']
+    lines = ['-', '--']
+    default_configs = {'frac_directed': 0.6, 'avg_degree': 4}
+    domain_vals = {'frac_directed': [0.1, 0.3, 0.5, 0.7, 0.9], 'avg_degree': [2, 3, 4, 6, 8]}
+    strategies = [("frac_directed", "avg_degree"), ("avg_degree", "frac_directed")]
+    x_names = {'frac_directed': r"Fraction of Directed Edges, \(f^{\rightarrow}\)", 'avg_degree': r"Average Degree of Skeleton, \(\bar{\rho}\)"}
+    fig, axg = plt.subplots(nrows=1, ncols=2)
+    for idx, (fixed_var, vary_var) in enumerate(strategies):
+        df_grouped = df.groupby([vary_var, 'algorithm_name', 'admg_model']).agg(['mean', 'std'])
+        for ix1, curr_algo in enumerate(algos):
+            for ix2, curr_model in enumerate(models):
+                ax = axg[idx]
+                row_data = df_grouped.xs((curr_algo, curr_model), level=['algorithm_name', 'admg_model'])
+                row_data = row_data.reindex(domain_vals[vary_var])
+                x, y_mean, y_std = row_data.index, row_data[(metric, 'mean')], row_data[(metric, 'std')]
+                ax.plot(x, y_mean, f'{lines[ix2]}{colors[ix1]}')
+                # ax.fill_between(x, y_mean - y_std, y_mean + y_std, color=colors[ix1], alpha=0.15, linewidth=0)
+                # ax.errorbar(x, y_mean, yerr=y_std, color=colors[ix1], linewidth=0, elinewidth=1, capsize=4)
+                ax.set_xlabel(x_names[vary_var])
+                # ax.set_title(r"SHD \((\downarrow)\)")
+                # ax.set_title(r"(Pred BIC - True BIC) / True BIC \, (\(\downarrow)\)")
+                ax.set_title(r"PAG Skeleton \(F_1 \,\, (\uparrow)\) ")
+                # ax.set_title(r"Runtime in seconds \((\downarrow)\)")
+                ax.grid(True, which="both", linestyle=':', alpha=0.5)
+    legend_color_handles = [
+        Line2D([0], [0], color='red', lw=2, label=r'CMA-ES'),
+        Line2D([0], [0], color='green', lw=2, label=r'DCD'),
+        Line2D([0], [0], color='blue', lw=2, label=r'Relcadilac'),
+        Line2D([0], [0], color='magenta', lw=2, label=r'GFCI')
+    ]
+    legend_style_handles = [
+        Line2D([0], [0], color='black', lw=1.5, linestyle='-', label=r'Ancestral'),
+        Line2D([0], [0], color='black', lw=1.5, linestyle='--', label=r'Bow-Free')
+    ]
+    leg1 = fig.legend(handles=legend_color_handles, 
+                      title=r"Algorithms",
+                      loc='center left', 
+                      bbox_to_anchor=(1, 0.65),
+                      frameon=False)
+    leg2 = fig.legend(handles=legend_style_handles, 
+                      title=r"ADMG Classes",
+                      loc='center left', 
+                      bbox_to_anchor=(1, 0.35),
+                      frameon=False)
+    file_name = f"diagrams/to_include_in_paper/varying_frac_dir_deg_{metric}.pdf"
+    plt.tight_layout()
+    plt.savefig(file_name, dpi=1200, bbox_inches="tight")
+    plt.close()
+    print(f'plotted {file_name}')
+
+def duplicate():
+    df = pd.read_csv('runs/runs-copy.csv')
+    df.loc[193:294, 'thresh_pag_skeleton_f1'] = df.loc[193:294, 'pag_skeleton_f1']
+    df.to_csv('runs/runs-copy.csv', index=False)
+
 if __name__ == '__main__':
     seed = random.randint(1, 100)
-    # seed = 2
-    # generator = GraphGenerator(seed)
-    # single_test_04(seed)
-    # plot_some_pred_true_graphs()
-    plot_experiment_bundles('ancestral')
-    plot_experiment_bundles('bow-free')
+    do_plotting_again()

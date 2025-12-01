@@ -26,7 +26,7 @@ class Experiments:
     def __init__(self):
         self.algorithm_name = "GFCI"  # should be one of DCD or CMA-ES or Relcadilac or GFCI
         self.algorithm = self.get_algorithm()
-        self.run_commit = "a48c4e868e9830fbf1e5979e3f90290f0e773311"
+        self.run_commit = "e6c5e33e306b44ca6c07a711b3e400865a1be023"
 
         self.log_file = Path('runs/runs-copy.csv')
         self.log_df = pd.read_csv(self.log_file)
@@ -352,26 +352,27 @@ def run_variation_test_02():
     frac_directed_list = [0.1, 0.3, 0.5, 0.7, 0.9]
     avg_degree_list = [2, 3, 4, 6, 8]
     admg_models = ['ancestral', 'bow-free']
-    it = 1
-    for curr_model in admg_models:
-        for curr_frac in frac_directed_list:
-            exp = Experiments()
-            exp.frac_directed = curr_frac
-            # exp.algorithm_name = curr_algo
-            exp.admg_model = curr_model
-            # exp.algorithm = exp.get_algorithm()
-            exp.explanation = f"Run {exp.run_number}; {exp.algorithm_name}; Frac directed = {exp.frac_directed}; Varying directed fraction. {it} of 20. First run in test = 274."
-            exp.run_test()
-            it += 1
-        for curr_deg in avg_degree_list:
-            exp = Experiments()
-            exp.avg_degree = curr_deg
-            # exp.algorithm_name = curr_algo
-            exp.admg_model = curr_model
-            # exp.algorithm = exp.get_algorithm()
-            exp.explanation = f"Run {exp.run_number}; {exp.algorithm_name}; Avg degree = {exp.avg_degree}; Varying average degree. {it} of 20. First run in test = 274."
-            exp.run_test()
-            it += 1
+    it, repetitions = 1, 4
+    for repeat in range(repetitions):
+        for curr_model in admg_models:
+            for curr_frac in frac_directed_list:
+                exp = Experiments()
+                exp.frac_directed = curr_frac
+                # exp.algorithm_name = curr_algo
+                exp.admg_model = curr_model
+                # exp.algorithm = exp.get_algorithm()
+                exp.explanation = f"Run {exp.run_number}; {exp.algorithm_name}; Frac directed = {exp.frac_directed}; Varying directed fraction. {it} of 80. First run in test = 274."
+                exp.run_test()
+                it += 1
+            for curr_deg in avg_degree_list:
+                exp = Experiments()
+                exp.avg_degree = curr_deg
+                # exp.algorithm_name = curr_algo
+                exp.admg_model = curr_model
+                # exp.algorithm = exp.get_algorithm()
+                exp.explanation = f"Run {exp.run_number}; {exp.algorithm_name}; Avg degree = {exp.avg_degree}; Varying average degree. {it} of 80. First run in test = 274."
+                exp.run_test()
+                it += 1
 
 def run_sachs_dataset():
     for algo in ['DCD', 'CMA-ES', 'Relcadilac']:

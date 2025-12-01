@@ -25,7 +25,7 @@ def relcadilac(
         X,
         sample_cov,
         admg_model,   # could be either bow-free or ancestral
-        steps_per_env=2000,
+        steps_per_env=20000,
         n_envs=8,
         rl_params={"normalize_advantage": True, "n_epochs": 1, "device": "cuda", "verbose": 0, 'n_steps': 16, 'ent_coef': 0.05},
         verbose=1,
