@@ -1,0 +1,48 @@
+[Title Page]
+This is a presentation on "Causal Discovery in the presence of Latent Confounding: A Continuous Optimization Approach"
+[todo: Overview of what you'll be going over]
+
+[Introduction]
+In Causal Discovery, we try and extract cause and effect relationships from data.
+This is a much stronger relationship than mere correlation: ice cream sales and shark attacks might be correlated, but one doesn't cause the other.
+
+Informally, cause-effect relationships can be defined using the do-calculus:
+We say that a variable X has a causal effect on another variable Y if, when we force X to take on a value x_0, the distribution of Y explicitly depends on x.
+
+As might be expected from such a foundational concept, Causal Discovery is useful in several scientific disciplines. It has been used in the domains of Medicine, Computer Science, Climate and Earth Science, and Economics, among others, to do everything from determining failure causes in cloud-based micro services architectures, to [todo: what]
+
+Causal Discovery often involves trying to find causal links between multiple variables. Graphs, with nodes representing the variables and edges representing relationships between variables, become invaluable representational tools and help capture and understand the structure of the probabilistic relationships between variables. [todo: re-write this a little better]. A directed edge from variable A to variable B, indicates that A is a direct cause of B.
+
+[Problem Statement]
+The problem we are trying to solve is: Causal Discovery on observational data for Linear Gaussian Structural Causal Models (SCMs), targeting ancestral and bow-free Acyclic Directed Mixed Graphs (ADMGs).
+
+Now, we'll break down each aspect of the problem statement, starting with Structural Causal Models, called SCMs for short.
+An SCM is composed of the 4-tuple: V, U, F, and P. Here, V is the set of observable variables. U is set of unobservable variables, distinct from V. F is a set of structural functions, one per observable variable. Each function associated with a variable maps the parents of that variable [show: parents could be both U, V] to itself. Finally, P, is the joint probability distribution over the unobservable variables.
+An SCM induces a probability distribution over the observable variables, which is the push-forward of the distribution on the unobserved variables through the structural functions.
+
+In a Linear Gaussian SCM, the structural functions are linear and the distribution over the unobservable variables is the zero-mean multivariate normal distribution with covariance matrix Omega. [show: equations]
+
+A common assumption for Causal Discovery algorithms is Causal Sufficiency. Causal Sufficiency means that all common causes of two or more observable variables are part of the set of observable variables, itself.
+This assumption is, however, frequently violated in practice. A set of observable variables, whose common cause is unobserved, are said to be confounded.
+
+In the canonical Markovian formulation, each unobservable variable is independent of the others. [show: equation]
+In the presence of latent confounding the unobservable variables become dependent on one-another. In the linear Gaussian case, the off-diagonal elements of the covariance matrix, Omega, become non-zero.
+
+
+
+
+
+=============================================================================================================================================
+Total words available: 1500
+1. problem statement: 100
+2. description of methods: 500 words
+3. demonstration of practical implementation work: 300
+4. summary of work: 300
+5. presentation of result - positive and negative: 200
+=============================================================================================================================================
+
+In causal discovery we try and recover the existence or absence of cause-effect relationships between the variables in some data. 
+
+Causal discovery algorithms often assume causal sufficiency, which means that all common causes of two or more observed variables are assumed to be present in the observed data. This assumption is, however, often violated in practice, and we say that the data suffers from latent confounding.
+
+Causal relations between variables are canonically represented through Directed Acyclic Graphs or DAGs. When two variables are confounded - that is, they have an unobserved common cause, we add bidirected edges between them. These graphs, containing acyclic directed component and bidirected edges, are called Acyclic Directed Mixed Graphs or ADMGs.
