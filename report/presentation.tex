@@ -1,0 +1,405 @@
+\documentclass[9pt]{beamer}
+
+% there was some issue with the fonts. using exactly what normal latex does is pretty good enough
+\usefonttheme{serif}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+% theme
+\usetheme{Boadilla}
+\usecolortheme{crane}
+
+% danish added below line to be able to add references and citations and links in the document
+\usepackage{hyperref}
+
+% to be able to add references
+\usepackage{biblatex}
+\addbibresource{references.bib}
+
+% \usepackage{annotate-equations}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,math,positioning,fit}
+\tikzset{
+    declare function={
+        objective(\x,\y) = 0.5*(\x-1)^2 + (\y-2)^2;
+    }
+}
+
+\usepackage{threeparttable}
+
+\title[MSc. AI Thesis]{Causal Discovery in the presence of Latent Confounders}
+\subtitle{A Stochastic Optimization Approach}
+\author[Danish Mohammad]{Danish Shakeel Mohammad}
+\date{\today}
+
+\institute[QMUL]{Queen Mary, University of London}
+
+\begin{document}
+    \maketitle
+    \begin{frame}{Introduction}
+        \begin{block}{}
+            \centering
+            Causal Discovery is the automated extraction of cause and effect relationships from data.
+        \end{block}
+
+        \begin{columns}[T, onlytextwidth]
+            \begin{column}{0.60\textwidth}
+                \begin{tikzpicture}[node distance=5mm]
+                    \node[draw, circle] (a) {\(A\)};
+                    \node[draw, circle, below left=of a, yshift=-2mm] (b) {\(B\)};
+                    \node[draw, circle, below right=of a, yshift=-2mm] (c) {\(C\)};
+                    \node[draw, circle, below right=of b, yshift=-2mm] (d) {\(D\)};
+                    \draw[-{Stealth}, blue] (a) -- (b);
+                    \draw[-{Stealth}, blue] (a) -- (c);
+                    \draw[-{Stealth}, blue] (b) -- (d);
+                    \draw[-{Stealth}, blue] (c) -- (d);
+                    \node[below=of d, yshift=3mm] (e) {DAG};
+                    \node[below=of e, yshift=5mm] (f) {Causally Sufficient};
+                    \node[draw, circle, right=of c, xshift=5mm] (b1) {\(B\)};
+                    \node[draw, circle, above right=of b1, yshift=2mm, gray, dashed] (a1) {\(A\)};
+                    \node[draw, circle, below right=of a1, yshift=-2mm] (c1) {\(C\)};
+                    \node[draw, circle, below right=of b1, yshift=-2mm] (d1) {\(D\)};
+                    \draw[-{Stealth}, blue, color=gray, dashed] (a1) -- (b1);
+                    \draw[-{Stealth}, blue, color=gray, dashed] (a1) -- (c1);
+                    \draw[-{Stealth}, blue] (b1) -- (d1);
+                    \draw[-{Stealth}, blue] (c1) -- (d1);
+                    \draw[<->, >={Stealth}, red] (b1) -- (c1);
+                    \node[below=of d1, yshift=3mm] (e1) {ADMG};
+                    \node[below=of e1, yshift=5mm] (f1) {Causally Insufficient};
+                \end{tikzpicture}
+            \end{column}
+            \begin{column}{0.40\textwidth}
+                \begin{center}
+                    \underline{\textbf{Linear Gaussian SCMs}}
+                \end{center}
+                \[\mathbf{V} = \mathbf{\Theta V + U}\]
+                \[\mathbf{U} \sim \mathcal{N}(\mathbf{0}, \mathbf{\Omega})\]
+                \(\mathbf{V}\): observable variables \\
+                \(\mathbf{U}\): unobservable variables \\
+                \(\mathbf{\Theta}\): structural coefficients matrix \\
+                \(\mathbf{\Omega}\): error covariances matrix \\
+            \end{column}
+        \end{columns}
+        In the presence of latent confounding, off-diagonal elements of \(\mathbf{\Omega}\) are non-zero.
+        \begin{definition}[Causal effect --- real world definition]
+            A variable \(X\) has a causal effect on the variable \(Y\) if forcing \(X\) to take some value \(x\), the distribution of \(Y\)  explicitly depends on \(x\):
+            \[\exists \,\, x \in \mathcal{X} : P(Y|\textnormal{do}(X=x)) \neq P(Y)\]
+        \end{definition}
+    \end{frame}
+
+    \begin{frame}{Graph Classes and Problem Statement}
+        \begin{columns}[T, onlytextwidth]
+            \begin{column}{0.49\textwidth}
+                \begin{tikzpicture}[node distance=5mm]
+                    % Bow-free
+                    \node[] (bf) {Bow-free};
+                    \node[draw, circle, below=of bf, yshift=3mm] (a) {\(A\)};
+                    \node[draw, circle, below left=of a, yshift=-3mm] (b) {\(B\)};
+                    \node[draw, circle, below right=of a, yshift=-3mm] (c) {\(C\)};
+                    \draw[->, >={Stealth}, blue] (b) -- (a);
+                    \draw[->, >={Stealth}, blue] (c) -- (a);
+                    \draw[<->, >={Stealth}, red] (b) -- (c);
+                    % Non bow-free
+                    \node[below=of a, yshift=-12mm] (nbf) {Non Bow-free};
+                    \node[draw, circle, below=of nbf, yshift=3mm] (a1) {\(A\)};
+                    \node[draw, circle, below left=of a1, yshift=-3mm] (b1) {\(B\)};
+                    \node[draw, circle, below right=of a1, yshift=-3mm] (c1) {\(C\)};
+                    \draw[->, >={Stealth}, blue] (b1) -- (a1);
+                    \draw[->, >={Stealth}, blue] (c1) -- (a1);
+                    % Ancestral
+                    \node[right=of bf, xshift=15mm] (an) {Ancestral};
+                    \node[draw, circle, below left=of an, xshift=5mm, yshift=1mm] (a2) {\(A\)};
+                    \node[draw, circle, below right=of an, xshift=-5mm, yshift=1mm] (b2) {\(B\)};
+                    \node[draw, circle, below=of a2] (c2) {\(C\)};
+                    \node[draw, circle, below=of b2] (d2) {\(D\)};
+                    \draw[->, >={Stealth}, blue] (a2) -- (c2);
+                    \draw[->, >={Stealth}, blue] (b2) -- (d2);
+                    \draw[<->, >={Stealth}, red] (c2) -- (d2);
+                    % Non Ancestral
+                    \node[right=of nbf, xshift=9mm] (nan) {Non Ancestral};
+                    \node[draw, circle, below left=of nan, xshift=9mm, yshift=1mm] (a3) {\(A\)};
+                    \node[draw, circle, below right=of nan, xshift=-9mm, yshift=1mm] (b3) {\(B\)};
+                    \node[draw, circle, below=of a3] (c3) {\(C\)};
+                    \node[draw, circle, below=of b3] (d3) {\(D\)};
+                    \draw[->, >={Stealth}, blue] (a3) -- (c3);
+                    \draw[->, >={Stealth}, blue] (b3) -- (d3);
+                    \draw[->, >={Stealth}, blue] (d3) -- (c3);
+                    \draw[<->, >={Stealth}, red] (c3) -- (b3);
+                \end{tikzpicture}
+            \end{column}
+            \begin{column}{0.49\textwidth}
+                \textbf{Bow-free ADMGs}
+                \begin{enumerate}
+                    \item In the case of Linear Gaussian SCMs are almost-everywhere identifiable, in the limit of infinite data
+                    \item Can capture Verma Constraints
+                \end{enumerate}
+                \vspace{\baselineskip}
+                \textbf{Ancestral ADMGs}
+                \begin{enumerate}
+                    \item In the case of Linear Gaussian SCMs are globally identifiable, in the limit of infinte data
+                    \item Can't capture Verma Constraints
+                    \item Are a subset of Bow-free ADMGs
+                \end{enumerate}
+            \end{column}
+        \end{columns}
+        \begin{block}{Problem Statement}
+            Causal Discovery on observational data for Linear Gaussian Structural Causal Models (SCMs), targeting ancestral and bow-free Acyclic Directed Mixed Graphs (ADMGs).
+        \end{block}
+    \end{frame}
+
+    \begin{frame}{Methodology}
+        \begin{center}
+            \begin{tikzpicture}
+                \node[draw, inner sep=0] (optim) {
+                    \begin{tikzpicture}[scale=1]
+                        \clip (-1,-1) rectangle (1,1);
+                        \draw[step=0.25, gray!30, very thin] (-1,-1) grid (1,1);
+                        \draw[gray!50, thin] (-1,0) -- (1,0);
+                        \draw[gray!50, thin] (0,-1) -- (0,1);
+                        \draw[red] plot [smooth, tension=0.7] coordinates {
+                            (-0.8, 0.8)
+                            (-0.2, 0.5)
+                            (0.6, 0.6)
+                            (0.3, -0.2)
+                            (-0.5, -0.4)
+                            (0.2, -0.7)
+                            (0.7, -0.5)
+                        };
+                        \fill[red!70] (0.7, -0.5) circle (1pt);
+                    \end{tikzpicture}
+                };
+                \node[below=of optim, yshift=10mm] (label1) {CMA-ES, PPO};
+                \node[above=of optim, yshift=-10mm] (label2) {search high dim space};
+                \node[draw, inner sep=0, right=of optim, xshift=20mm] (samples) {
+                    \begin{tikzpicture}[scale=1]
+                        \clip (-1,-1) rectangle (1,1);
+                        \draw[step=0.25, gray!30, very thin] (-1,-1) grid (1,1);
+                        \draw[gray!50, thin] (-1,0) -- (1,0);
+                        \draw[gray!50, thin] (0,-1) -- (0,1);
+                        \fill[blue] (0.7, -0.5) circle (1.0pt);
+                        \fill[blue] (-0.2, 0.3) circle (1.0pt);
+                        \fill[blue] (0.4, -0.7) circle (1.0pt);
+                        \fill[blue] (-0.9, -0.4) circle (1.0pt);
+                        \fill[blue] (-0.4, -0.3) circle (1.0pt);
+                        \fill[blue] (0.5, 0.2) circle (1.0pt);
+                    \end{tikzpicture}
+                };
+                \node[above=of samples, yshift=-10mm] (label3) {\(z \in \mathbb{R}^{d^2}\)};
+                \draw[->, >={Stealth}, teal!70, thick] (optim) to node [black, auto, swap] {sample points} (samples);
+                \node[below=of samples, yshift=-15mm] (sd) {Space of ADMGs};
+                \draw[->, >={Stealth}, teal!70, thick] (samples) to node [black, auto] {\(\Phi_d(z)\)} (sd);
+                \node[below=of optim, yshift=-15mm] (bic) {BIC};
+                \draw[->, >={Stealth}, teal!70, thick] (sd) to node [black, auto, swap] {RICF + data} (bic);
+                \draw[->, >={Stealth}, teal!70, thick] (bic) to node [black, auto] {update} node [black, auto, swap] {params} (label1);
+                \node[above left=of optim, xshift=-2mm, yshift=1mm] (label4) {data};
+                \node[below right=of sd, xshift=-8mm, yshift=3mm] (label5) {ADMG, PAG};
+                \node[fit=(optim) (label1) (label2) (samples) (label3) (sd) (bic),draw, violet] (enclose) {};
+                \draw[->, >={Stealth}, teal!70, thick, double] (label4) to (enclose);
+                \draw[->, >={Stealth}, teal!70, thick, double] (enclose) to (label5);
+                \node[above=of enclose, yshift=-10mm] (algo) {\textsc{Cadilac Algorithm}};
+            \end{tikzpicture}
+        \end{center}
+    \end{frame}
+
+    \begin{frame}{Vec2ADMG Mappings}
+        \vspace{-1em}
+        \begin{columns}[T, onlytextwidth]
+            \begin{column}{0.56\textwidth}
+                \begin{definition}
+                    \label{vec2admg}
+                    \(\forall \,\, d \in \mathbb{N}^{+} \textnormal{ and } z \in \mathbb{R}^{d^2}\), \(p \in \mathbb{R}^d\) is the vector formed from the first \(d\) elements of \(z\), \(E_{\rightarrow}, E_{\leftrightarrow} \in \mathbb{R}^{d \times d}\) are strictly lower triangular matrices formed from the next \(\frac{d(d-1)}{2}\) and final \(\frac{d(d-1)}{2}\) elements of \(z\), respectively:
+                    \begin{align*}
+                        \Phi_{d}^{BF}(z)[D] &:= H\left(E_{\rightarrow} + E_{\rightarrow}^\top\right) \odot H\left(\textnormal{grad}(p)\right) \\
+                        \Phi_d^{BF}(z)[B] &:= H\left(E_{\leftrightarrow} + E_{\leftrightarrow}^\top\right) \odot \Psi(D) \\
+                        \Phi_d^{AN}(z)[D] &:= H\left(E_{\rightarrow} + E_{\rightarrow}^\top\right) \odot H\left(\textnormal{grad}(p)\right) \\
+                        \Phi_d^{AN}(z)[B] &:= H\left(E_{\leftrightarrow} + E_{\leftrightarrow}^{\top}\right) \odot \Psi(D^+)
+                    \end{align*}
+                    where \(\Psi(M) := (I-M)\odot(I-M^\top)\), \(H(x) := 
+                    \begin{cases}
+                        1, & \textnormal{if } x > 0 \\
+                        0, & \textnormal{if } x \leq 0
+                    \end{cases}
+                    \) is the Heaviside step function, \(\odot\) is the element-wise product, \(\textnormal{grad}(u)_{ij} := u_j - u_i\), and \(A^+\) is the transitive closure of \(A\).
+                \end{definition}
+            \end{column}
+            \hfill
+            \begin{column}{0.40\textwidth}
+                \vspace{\baselineskip}
+                \textbf{Properties}
+                \begin{enumerate}
+                    \item \(\Phi_d^{BF}\) has time complexity \(\mathcal{O}(d^2)\)
+                    \item \(\Phi_d^{AN}\) has time complexity \(\mathcal{O}(d^{2.8})\)
+                    \item Automatic acyclicity
+                    \item No differentiable constraints needed
+                    \item Surjective
+                    \item Scale and Translation Invariance
+                \end{enumerate}
+            \end{column}
+        \end{columns}
+    \end{frame}
+
+    \begin{frame}{Optimization Algorithms}
+        \begin{columns}[T, onlytextwidth]
+            \begin{column}{0.49\textwidth}
+                \textbf{PPO}
+                \begin{enumerate}
+                    \item Deep RL algorithm
+                    \item Stochastic Gradient Descent based optimizer
+                    \item Tries to find optimal policy \(\pi_{\theta}\) which maximises \(J(\pi_{\theta}) = \mathbb{E}_{\tau \sim \pi_{\theta}}[\sum_{t=0}^{\infty}\gamma^{t}r_t]\)
+                    \item Policy updates are limited to trust region to add stability to training
+                    \item \(\pi_{\theta}(z) = \mathcal{N}(z;\mu_{\theta}, \textnormal{diag}(\sigma_{\theta}^2))\)
+                    \item \(R(z) = -\frac{1}{n}\textnormal{BIC}(X, \Phi_d(z))\)
+                    \item We do entropy annealing to help escape local minima
+                    \item One-step environment
+                    \item Designed to function well in high dimensional spaces
+                    \item On-policy algorithm, sample in-efficient
+                \end{enumerate}
+            \end{column}
+            \begin{column}{0.49\textwidth}
+                \textbf{CMA-ES}
+                \begin{enumerate}
+                    \item Evolutionary algorithm
+                    \item Stochastic derivative-free black-box optimizer
+                    \item Iterative algorithm: sample, rank, update loop
+                    \item Tries to find samples from the search space that maximise an objective function
+                    \item We restrict covariance matrix to be diagonal for scalability
+                    \item Objective fn 
+                        \(f_d(z) = \textnormal{BIC}\left(X, \Phi_d(z)\right) - \gamma \Gamma(z)\)
+                        \(\Gamma(z) = \sum_{i < j}^{\{i, j\} < d} \min(|z_i - z_j|, \delta) + \sum_{k, k \geq d} \min(|z_k|, \delta)\)
+                    \item Designed to function even in non-convex or ill-behaved landscapes
+                    \item Sample efficient
+                \end{enumerate}
+            \end{column}
+        \end{columns}
+    \end{frame}
+
+    \begin{frame}{Comparison Algorithms and Data Generation}
+        \begin{columns}[T, onlytextwidth]
+            \begin{column}{0.49\textwidth}
+                \textbf{GFCI}
+                \begin{enumerate}
+                    \item Hybrid Algorithm: Has constraint based and score based phases
+                    \item Only outputs a PAG.
+                    \item Used as a baseline for comparison.
+                \end{enumerate}
+                \vspace{\baselineskip}
+                \textbf{DCD}
+                \begin{enumerate}
+                    \item Differentiable constraints for acyclicity and to restrict search to bow-free/arid/ancestral graph classes
+                    \item Uses modified RICF algorithm
+                    \item Uses augmented Lagrangian to obtain unconstrained optimization problem
+                    \item Solves the optimization problem with dual descent
+                \end{enumerate}
+            \end{column}
+            \begin{column}{0.49\textwidth}
+                \textbf{Synthetic Data Generation}
+                \begin{enumerate}
+                    \item Uses modified version of Erd\H{o}s-R\'{e}nyi random graph generation model
+                    \item Modification accounts for existence of bidirected edges, requirement for bow-free/ancestral graphs
+                    \item Inputs: average degree of graph skeleton \(\bar{\rho}\), fraction of directed edges \(f^{\rightarrow}\)
+                    \item Guarantees: \(|\hat{E}| = \bar{\rho}d/{2} \pm 5\) and \(\widehat{f^{\rightarrow}} = f^{\rightarrow} \pm 0.1\)
+                \end{enumerate}
+                \begin{table}
+                    \caption{\(\mathbf{\Theta}\) is the structural coefficients matrix and \(\mathbf{\Omega}\) error covariances matrix}
+                    \begin{tabular}{l | l}
+                        \hline
+                        \textbf{Matrix} & \textbf{Distribution} \\ \hline
+                        \(\mathbf{\Theta}\) & \(\mathcal{U}(\pm[0.5, 2])\) \\
+                        Off-diag \(\mathbf{\Omega}\) & \(\mathcal{U}(\pm[0.4, 0.7])\) \\
+                        Diag \(\mathbf{\Omega}\) & \(\mathcal{U}([0.7, 1.2] + \sum(|\mathbf{\Omega}_{i,-i}|)\) \\
+                        \hline
+                    \end{tabular}
+                \end{table}
+            \end{column}
+        \end{columns}
+    \end{frame}
+    
+    \begin{frame}{Sachs Dataset}
+        \begin{table}
+            \centering
+            \begin{threeparttable}[b]
+                \caption{Performance of Algorithms on Sachs Dataset \label{sachs_table}}
+                \begin{tabular}{l | c | c | c | c}
+                    \hline
+                    & \textbf{SHD} (\(\downarrow\)) & \(|E \cap \hat{E}| / |\hat{E}|\)\tnote{1} (\(\uparrow\)) & \textbf{PAG} \(\mathbf{F}_1\)\tnote{3} (\(\uparrow\)) & \(\tau\)\tnote{2} (\(\downarrow\)) \\ \hline
+                    \textbf{DCD} & 53 & 3 / 43 & 0.47 & 249.5 \\
+                    \textbf{CMA-ES} & 22 & 1 / 8& 0.58 & 105.7 \\
+                    \textbf{Relcadilac} & 23 & 1 / 9 & 0.48 & 1029.2 \\
+                    \hline
+                \end{tabular}
+                \begin{tablenotes}
+                    \item [1] \(|E \cap \hat{E}|\) is the number of correct predicted edges, and \(|\hat{E}|\) is the total number of predicted edges.
+                    \item [2] \(\tau\) is the runtime of the algorithm in seconds.
+                    \item [3] The \(F_1\) score is computed on the skeleton of the PAG.
+                \end{tablenotes}
+            \end{threeparttable}
+        \end{table}
+        \vspace{\baselineskip}
+        \begin{tikzpicture}[node distance=5mm]
+            \node[] (pip3) {PIP3};
+            \node[right=of pip3] (plcg) {PLC\(_\gamma\)};
+            \node[above right=of plcg] (pip2) {PIP2};
+            \node[right=of pip2] (pkc) {PKC};
+            \node[above right=of pkc] (raf) {Raf};
+            \node[below right=of raf] (mek) {Mek};
+            \node[below right=of mek] (erk) {Erk};
+            \node[below=of raf] (p38) {p38};
+            \node[below=of p38] (jnk) {JNK};
+            \node[below=of jnk] (akt) {Akt};
+            \node[below=of pkc] (pka) {PKA};
+            \draw[->, >={Stealth}, teal] (pip3) -- (plcg);
+            \draw[->, >={Stealth}, teal] (pip3) -- (akt);
+            \draw[<->, >={Stealth}, teal] (pip3) -- (pip2);
+            \draw[->, >={Stealth}, teal] (plcg) -- (pip2);
+            \draw[->, >={Stealth}, teal] (plcg) -- (pkc);
+            \draw[->, >={Stealth}, teal] (pip2) -- (pkc);
+            \draw[->, >={Stealth}, teal] (pkc) -- (raf);
+            \draw[->, >={Stealth}, teal] (pkc) -- (p38);
+            \draw[->, >={Stealth}, teal] (pkc) -- (jnk);
+            \draw[->, >={Stealth}, teal] (pka) -- (raf);
+            \draw[->, >={Stealth}, teal] (pka) -- (p38);
+            \draw[->, >={Stealth}, teal] (pka) -- (jnk);
+            \draw[->, >={Stealth}, teal] (pka) -- (erk);
+            \draw[->, >={Stealth}, teal] (pka) -- (akt);
+            \draw[->, >={Stealth}, teal] (raf) -- (mek);
+            \draw[->, >={Stealth}, teal] (mek) -- (erk);
+            % CMA-ES
+            \draw[->, >={Stealth}, red] (pip3) to[bend left] (plcg);
+            \draw[->, >={Stealth}, red] (pip3) to[bend left] (pip2);
+            \draw[->, >={Stealth}, red] (akt) to[bend left] (erk);
+            \draw[->, >={Stealth}, red] (akt) to[bend left] (pka);
+            \draw[->, >={Stealth}, red] (erk) to[bend left] (pka);
+            \draw[->, >={Stealth}, red] (jnk) to[bend left] (pkc);
+            \draw[<->, >={Stealth}, red] (pkc) to[bend left] (p38);
+            \node[right=of erk] (label1) {};
+            \node[right=of label1] (label2) {};
+            \node[right=of label2, xshift=-5mm] (title1) {CMA-ES};
+            \node[above=of label1] (label3) {};
+            \node[above=of label2] (label4) {};
+            \node[right=of label4, xshift=-5mm] (title2) {True};
+            \draw[>={Stealth}, red, thick] (label1) -- (label2);
+            \draw[>={Stealth}, teal, thick] (label3) -- (label4);
+        \end{tikzpicture}
+    \end{frame}
+
+    \begin{frame}{Performance Plots I}
+        \textbf{Varying Parameters}: Sample Size, Number of Nodes, Average Degree of Skeleton, Fraction of Directed Edges \\
+        \textbf{Metrics Captured}: Structural Hamming Distance (lower is better), \(F_1\) score of the edges of the PAG Skeleton (higher is better), Fractional Excess BIC score (lower is better)
+        \includegraphics[width=\textwidth]{/mnt/windows/Users/lordh/Documents/LibraryOfBabel/Projects/thesis/diagrams/to_include_in_paper/pag_skeleton_f1_shd_nodes_samples.pdf}
+    \end{frame}
+
+    \begin{frame}{Performance Plots II}
+        \includegraphics[width=\textwidth]{/mnt/windows/Users/lordh/Documents/LibraryOfBabel/Projects/thesis/diagrams/to_include_in_paper/varying_frac_dir_deg_thresh_pag_skeleton_f1.pdf} \\
+        \includegraphics[width=\textwidth]{/mnt/windows/Users/lordh/Documents/LibraryOfBabel/Projects/thesis/diagrams/to_include_in_paper/varying_frac_dir_deg_thresh_pred_bic_excess.pdf}
+    \end{frame}
+
+    \begin{frame}{Future Work}
+        \begin{enumerate}
+            \item Explore the SAC RL algorithm for potentially better sample efficiency than PPO
+            \item RICF algorithm bi-directed connected components-based decomposition and caching for potential speedup in sparse graphs
+            \item Extend the Vec2ADMG mappings to include other graph classes like arid graphs
+        \end{enumerate}
+    \end{frame}
+\end{document}

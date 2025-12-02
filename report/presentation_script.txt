@@ -34,15 +34,57 @@ In the presence of latent confounding the unobservable variables become dependen
 
 =============================================================================================================================================
 Total words available: 1500
-1. problem statement: 100
-2. description of methods: 500 words
+1. problem statement: 231 done
+2. description of methods: 496 done
 3. demonstration of practical implementation work: 300
 4. summary of work: 300
 5. presentation of result - positive and negative: 200
 =============================================================================================================================================
 
+[Problem statement]
 In causal discovery we try and recover the existence or absence of cause-effect relationships between the variables in some data. 
 
-Causal discovery algorithms often assume causal sufficiency, which means that all common causes of two or more observed variables are assumed to be present in the observed data. This assumption is, however, often violated in practice, and we say that the data suffers from latent confounding.
+Causal discovery algorithms often assume causal sufficiency, which means that all common causes of two or more observed variables are assumed to be present in the observed data. This assumption is, however, often violated in practice, and we say that the data suffers from latent confounding. Confounded causal structures are commonly represented using Acyclic Directed Mixed Graphs or ADMGs, which use directed edges for cause-effect relationships and bi-directed edges for confounded variables. In Linear Gaussian Structural Causal Models (SCMs) the data is assumed to be generated through a linear function of the variables and the noise is sampled from a multivariate normal distribution. In the case of latent confounding the noise covariance matrix has non-zero off-diagonal elements. Bow-free ADMGs do not have both directed and bi-directed edges between the same pair of variables. Ancestral ADMGs are a subset of bow-free ADMGs and do not have bi-directed edges on variables connected by a directed path.
 
-Causal relations between variables are canonically represented through Directed Acyclic Graphs or DAGs. When two variables are confounded - that is, they have an unobserved common cause, we add bidirected edges between them. These graphs, containing acyclic directed component and bidirected edges, are called Acyclic Directed Mixed Graphs or ADMGs.
+The problem we are trying to solve is: Causal Discovery on observational data for Linear Gaussian SCMs, targeting ancestral and bow-free ADMGs.
+
+We restrict our graph classes to be either ancestral or bow-free since, in the case of Linear SCMs, the former are globally identifiable, while the latter are almost-everywhere identifiable, in the limit of infinite data.
+
+[Methodology]
+The proposed causal discovery algorithm, called Cadilac works as follows:
+It takes as input an observational dataset and a graph class - either ancestral or bow-free.
+It works by repeatedly executing the below three steps for a specified number of iterations:
+1) Use a continuous optimization algorithm (PPO and CMA-ES in our case) to search through, and sample points from, a high dimensional Euclidean space.
+2) Use the two novel proposed surjective vector-to-admg mappings to convert the points sampled from the continuous space into the discrete topological space of bow-free or ancestral ADMG graphs.
+3) Use the RICF algorithm to compute the BIC score of the derived graphs on the input dataset. This is the score that the optimization algorithm attempts to minimize.
+
+The main crux of the algorithm are the vector-to-admg mappings, one each for ancestral and bow-free ADMGs. The bow-free mapping is quadratic in the number of nodes while the ancestral mapping is slightly better than cubic so they are quite fast. They automatically enforce acyclicity and bow-free-ness or ancestrality, so we don't require expensive differentiable constraints for either. The mapping is also surjective, guaranteeing a valid graph for every input. The mapping also shows scaling and sub-space translation invariance, suggesting a dense parameter space.
+
+The first optimizer we look at is Proximal Policy Optimization (PPO). It is a Deep Reinforcement Learning based optimizer that tries to find the optimal policy that maximises the expected discounted reward computed over the trajectory of actions sampled from that policy. It is designed to function well in high dimensional spaces, but is sample inefficient due to being an on-policy algorithm. Our policy is parameterised with a diagonal Gaussian to maintain efficiency in the high-dimensional search space. The reward for each sample is the negative BIC score, scaled to ensure training stability. The environment for the PPO algorithm is a one-step environment since every sampling from the search space immediately provides a valid ADMG graph. We use entropy cycling to aid the algorithm in escaping local minima.
+
+The CMA-ES algorithm was the other optimizer that was explored. It is a stochastic genetic algorithm often used for derivative free black-box optimization in non-convex and ill-behaved optimization landscapes. It is an iterative algorithm and works by sampling candidates from a normal Gaussian, ranking the fitness of the individuals using the objective function and updating the mean, step size and covariance matrix of the Gaussian. Since the CMA-ES algorithm relies on the ranking of sampled individuals and the search space is composed of large conical regions of constant BIC score, we use an augmented BIC score as the objective function. The augmentation tries to push the gaussian away from the origin upto a threshold and tries to maintain the stability of the causal order of the nodes. This augmentation is scaled so that it is always smaller than the change in the BIC score due to a single edge flip, so as not to violate the consistency of the BIC score.
+
+The framework outputs a candidate ADMG graph and the PAG derived by first converting the ADMG into a MAG and then converting the MAG into a PAG. This is done to accommodate the absence of guaranteed identifiability for bow-free graphs and the lack of a known equivalence class.
+
+[Experiments]
+The GFCI algorithm is a hybrid algorithm which uses both score based and constraint based methods to output a PAG and can account for latent confounding. It is used as a baseline for comparison. The DCD algorithm is a more recent algorithm that uses differentiable constraints for acyclicity and restriction to graph classes and a differentiable BIC score. It uses a modified version of the RICF algorithm and the augmented Lagrangian formulation to arrive at an unconstrained optimization problem which it solves with a dual descent approach. These two algorithms are compared against the 2 versions of the Cadilac framework, one with PPO (called Relcadilac) and another with CMA-ES (referred to as CMA-ES).
+
+Synthetic datasets were generated with a modified Erdos-Renyi random graph generation model to account for the existence of bi-directed edges and the bow-free and ancestral requirements. The data generation code uses average graph degree and fraction of directed edges as inputs and guarantees that the produced graph will have a number of edges that is within 5 of the expected value and a directed fraction of edges that is within 0.1 of the expected value. The sampling parameters for the coefficients and error covariance matrices are shown in the table.
+
+In order to sample a wide range of graphs, 4 parameters were varied individually: number of nodes, number of samples, average graph degree and fraction of directed edges. The metrics used to compare the algorithms were the Structural Hamming Distance against the ground truth ADMG graph, the F-1 score on the skeleton of the PAG graph, and the fractional excess of the predicted BIC score - which is the difference in the predicted and true BIC scores divided by the true BIC score.
+
+Finally, for evaluation of performance on real-world datasets, the popular Sachs protein signalling network was used.
+
+[work summary]
+
+[results]
+In nearly all experiments, Relcadilac is consistently suboptimal, suffering from sample inefficiency and large runtimes. It yields higher SHD values across varying node counts and sample sizes. As the number of nodes increases, Relcadilac's performance degrades logarithmically worse than the competition. It, however, mostly demonstrates superior performance to the GFCI algorithm on the F-1 scores for the PAG skeleton with across varying number of nodes, average graph degree, and fraction of directed edges. The most likely cause for this poor performance is the sample efficiency of the PPO algorithm. This can be seen by allowing the algorithm to run longer, where it continues to find better graphs in the search space, as shown in the diagram.
+
+The CMA-ES algorithm exhibits good structure recovery as seen in the SHD scores. In synthetic experiments (Figure 1), its SHD scores are comparable to, and occasionally better than, those of DCD. On the Sachs real-world dataset, it achieves the lowest SHD scores amongst the compared algorithms, but the performance is only due to the low number of predicted edges since it only got one correct edge out of the 8 predicted edges. CMA-ES is also robust against sample size variation and variations in the average degree of the graph skeleton, as demonstrated by its high F-1 scores throughout. The CMA-ES algorithm also frequently finds graphs with slightly smaller BIC scores than the BIC score of the ground truth ADMG graph. This is likely an artifact due to the small value of the sample size since the BIC score is consistent only in the limit of large sample sizes.
+
+[conclusion and future work]
+In this work, we propose an adaptable, modular framework for Causal Discovery on observational Linear Gaussian data in the presence of Latent Confounding. The framework leverages the proposed one-step characterizations of bow-free and ancestral ADMGs to bypass the requirement for differentiable constraints for acyclicity and for bow-free-ness and ancestrality. The framework was evaluated with two black-box optimization algorithms: PPO and CMA-ES, whose performance was evaluated across several synthetic graph parameters and on one real- world dataset.
+
+Future work can explore using a more sample efficient off-policy reinforcement learning algorithm like SAC to improve the convergence time of the framework. Another potential avenue for speeding up the algorithm is to use a decomposition of the RICF algorithm score computation over bidirected connected components in the graph. The partial scores for these components can then be cached and re-used. These partial scores will likely be more beneficial on a sequential graph generation algorithm where successive graphs are closely related to one another than in the current framework which, between distribution updates, essentially samples graphs i.i.d. Since the decomposition relies on the existence of small bi-directed components, it might be more useful in sparser or smaller graphs since denser graphs might have large and few bidirected connected components.
+
+Linear Gaussian arid ADMGs, which are subsets of bow- free ADMGs, have strong identifiability guarantees in contrast to bow-free ADMGs which are only almost-everywhere iden- tifiable. Arid ADMGs, however, unlike ancestral ADMGs, are able to encode Verma Constraints. Future work might try and come up with vector-to-arid-admg formulations in line with the proposals for bow-free and ancestral ADMGs in this paper.
