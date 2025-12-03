@@ -113,7 +113,7 @@ MSc in Artificial Intelligence}
     where \(p\) is the likelihood function and \(\hat{\theta}\) are the model parameters that maximise that likelihood, and \(k\) is the number of model parameters and for the graph \(\mathcal{G}(V, E)\), \(k = |V| + |E|\). If the candidate models form smooth curved exponential families, then in the limit of infinite data (\(n \rightarrow \infty\)), the BIC score is consistent in that it assigns the minimum value to the ground truth model \cite{1988haughton}. Linear Gaussian ancestral ADMGs are globally identifiable and form smooth curved exponential families \cite{2002richardson}. Linear Gaussian bow-free ADMGs are only almost-everywhere identifiable and the BIC score is not consistent for them \cite{2017nowzohur}. However, as we show empirically, the BIC metric functions well enough in practice, even for bow-free ADMGs.
     
     \subsection{Residual Iterative Conditional Fitting}
-    The Residual Iterative Conditional Fitting (RICF) algorithm \cite{2009drton} is designed to compute the Maximum Likelihood Estimate (MLE) for bow-free ADMGs. Unlike other optimization methods like Newton-Raphson, it ensures that the positive definiteness of the covariance matrix is maintained. By exploiting the conditional independence structure of bow-free ADMGs, it is able to compute the MLE only using least square regressions, without requiring costly Hessian computations. In the code, we modify and use an implementation of the RICF algorithm from the \lstinline[basicstyle=\ttfamily, breaklines=True]{ananke-causal} python library \cite{2023lee}. The modifications leverage the \lstinline[basicstyle=\ttfamily, breaklines=True]{numba}\footnote{https://numba.pydata.org} python library along with specific adaptations like pre-computing the covariance matrix before invoking the algorithm to achieve an approximate\(50\%\) speedup, which is significant over the tens of thousands of invocations per run for the proposed algorithms.
+    The Residual Iterative Conditional Fitting (RICF) algorithm \cite{2009drton} is designed to compute the Maximum Likelihood Estimate (MLE) for bow-free ADMGs. Unlike other optimization methods like Newton-Raphson, it ensures that the positive definiteness of the covariance matrix is maintained. By exploiting the conditional independence structure of bow-free ADMGs, it is able to compute the MLE only using least square regressions, without requiring costly Hessian computations. In the code, we modify and use an implementation of the RICF algorithm from the \lstinline[basicstyle=\ttfamily, breaklines=True]{ananke-causal} python library \cite{2023lee}. The modifications leverage the \lstinline[basicstyle=\ttfamily, breaklines=True]{numba}\footnote{https://numba.pydata.org} python library along with specific adaptations like pre-computing the covariance matrix before invoking the algorithm to consistently achieve a better than \(50\%\) speedup (see appendix \ref{ricf_comp}), which is significant over the tens of thousands of invocations per run for the proposed algorithms.
 
     \subsection{Proximal Policy Optimization}
     Proximal Policy Optimization (PPO) \cite{2017schulman} is a stochastic gradient descent optimizer functioning in the framework of Markov Decision Processes (MDPs) \cite{2018sutton}. % which are given by the tuple \((S, A, P, R, \gamma)\) where \(S\) is the set of states an agent can operate in, \(A\) is the set of actions the agent can take, \(P\) is the distribution over state transitions, \(R\) is the reward distribution and \(\gamma\) is the discount factor.
@@ -434,4 +434,22 @@ MSc in Artificial Intelligence}
     \section{Sachs Dataset}
     \label{sachs_appendix}
     The ground truth graph of the Sachs Dataset is reproduced in figure \ref{sachs_gt}
+
+    \section{RICF Implementation Comparison}
+    \label{ricf_comp}
+    BIC scores were computed using my modification of \lstinline[basicstyle=\ttfamily, breaklines=True]{ananke-causal} python library's \cite{2023lee} implementation of the RICF algorithm and the unmodified implementation. The runtime of the algorithm's (in seconds) were compared in table \ref{ricf_table} with varying number of nodes \(d\) in the graph. All metrics were calculated while comparing the algorithms on the same data. Average degree of the nodes was sampled uniformly from all valid degrees (between 2 and \(d-1\)). The fraction of directed edges in graphs was sampled uniformly from 0.2 to 0.7. The graph class was randomly chosen between bow-free and ancestral. The number of samples in the graphs was restricted to be 2000 for all runs. As is apparent from the data in the table, my algorithm consistently provides at least a 2x speedup over the library implementation.
+    \begin{table}
+        \caption{RICF Runtime comparison in seconds \label{ricf_table}}
+        \begin{tabular}{c | l l l}
+            \hline
+            \textbf{Number of Nodes} & \textbf{My Implementation} & \textbf{Ananke} & \textbf{Ratio} \\ \hline
+            5 & \(0.002 \pm 0.001\) & \(0.011 \pm 0.003\) & 5.50 \\
+            10 & \(0.014 \pm 0.020\) & \(0.040 \pm 0.056\) & 2.86 \\
+            15 & \(0.038 \pm 0.049\) & \(0.104 \pm 0.230\) & 2.74 \\
+            20 & \(0.108 \pm 0.148\) & \(0.371 \pm 1.130\) & 3.44 \\
+            25 & \(0.270 \pm 0.342\) & \(14.706 \pm 95.367\) & 54.47 \\
+            30 & \(0.399 \pm 0.484\) & \(3.049 \pm 9.300\) & 7.64 \\
+            \hline
+        \end{tabular}
+    \end{table}
 \end{document}

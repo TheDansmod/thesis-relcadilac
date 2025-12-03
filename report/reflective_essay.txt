@@ -1,5 +1,22 @@
 1. Analysis of Strenths and Weaknesses
-- 
+    Strengths:
+    a. Vec2ADMG mappings
+    The primary theoretical contribution in the report is the introduction of two surjective mappings, which project a continuous vector on the discrete combinatorial spaces of bow-free and ancestral ADMGs. The results for surjectivity, scale invariance, and reachability, ensure that all valid ADMGs are reachable during the optimization process.
+
+    b. Modularity
+    The components of the proposed framework, including the scoring metric, the optimization algorithm, and the vec2admg mapping, are all decoupled from one-another. One can, in principle, use different scores like the Akaike Information Criterion (AIC), or use different optimizers like Bayesian Optimization, or if one can come up with a vector-2-graph mapping with the right set of identifiability and consistency constriaints depending on the scoring metric, then that can also be swapped out.
+
+    c. Improvement RICF algorithm implementation
+    As highlighted in the report, my modification of the ananke-causal python library's implementation of the RICF algorithm was able to consistently achieve a better than 50% speedup over the library's base implementation.
+
+
+    Weaknesses:
+    d. Absence of theoretical guarantees for bow-free algorithms: The Linear Gaussian bow-free ADMGs are only almost-everywhere identifiable, in contrast to the ancestral ADMGs which are gloablly identifiable. This means that for certain parameter configurations, the BIC score is no longer consistent and the minimum value of the BIC score might be achieved on a graph different from the ground truth graph, irrespective of the sample size.
+
+    e. Linear Gaussian Assumption: The framework is designed for only linear gaussian confounded data. However, many real world systems (like in biology, earth science, climatology, economics etc where systems are governed by sysems of differential equations) are non-linear or have non-gaussian noise. The framework requires that the functional class of causal relationships and error distributions be known a-priori, which is not commonly the case.
+
+    f. High Time Complexity: The RICF algorithm essentially acts as a bottleneck on the scalability of the proposed framework to graph sizes larger than 30 nodes. Several real-world systems, however are larger. For example biologicial systems like perturbational gene expression datasets could have thousands of variables.
+
 2. Presentation of the possibilities for future work
     a. Alternatives to Proximal Policy Optimization
     The work done during the project and the extensive set of set of experiments performed, highlight the large sample in-efficiency of the Proximal Policy Optimization (PPO) algorithm. The contrast with the much better performance and faster runtime of the Covariance Matrix Adaptation - Evolutionary Strategy (CMA-ES) approach indicates that the issue lies with the PPO algorithm rather than with the general framework. Thus, it would be instructive to evaluate the performance of other more sample efficient deep reinforcement learning based algorithms on this problem. The primary reason for using deep RL is that, as demonstrated in [1], they can be effective in really high dimensional spaces. While the work done in the thesis only looks at graphs that have at-most 30 nodes, the authors of [1], for the comparatively simpler problem of Directed Acyclic Graph (DAG) discovery, demonstrate the effectiveness of PPO even in searching through a 20,000 dimensional space (for 200 node graphs). The main limitation in translating that performance to Acyclic Directed Mixed Graph (ADMG) search is that the computation of the BIC score is much more expensive. Thus, a more sample efficient algorithm than PPO can make better use of each BIC score evaluation.
@@ -22,6 +39,14 @@
     Another potential improvement to the test suite would be to include more algorithms to compare against. The set of algorithms compared against was limited due to the large amount of time required to test the current set of algorithms. Even the DCD algorithm required more than an hour on the 30-node graphs. Due to limitations of space in the report, some recent algorithms for causal discovery were not mentioned since they weren't directly relevant to the approach taken in the report. One such algorithm is the N-ADMG or Neural ADMG algorithm [2]. The authors establish that under conditions of non-linear additive noise SCMs, bow-free ADMGs, and observable and unobservable variable non-modulation, the ADMG is identifiable. They transform the ADMG into a DAG through "magnification" where they introduce a latent variable for each confounded edge, parameterize the non-linear functions using neural networks, use variational inference to approximate the posterior over the graphs and the latent variables, and use a differentiable constraint to enforce acyclicity, similar to the constraint used in DCD. As a point of comparison, this algorithm could be interesting in that it is a more general algorithm for non-linear confounding being compared to algorithms specifically designed for linear gaussian confounded data, like the one we propose.
 
 4. Critical analysis of the relationship between theory and practical work produced
+    The theoretical basis of the proposed framework is the asymptotic consistency of the BIC score. Ancestral ADMGs are globally identifiable and form smooth curved exponential families for which the BIC score is consistent in the limit of infinite data. In the case of bow-free ADMGs, they don't form smooth curved exponential families and are only almost-everywhere identifiable. Thus, BIC is not consistent for this class of graphs. However, in practice, we don't see an apparent difference in the performance of algorithms between the two graph classes. 
+    
+    The finite sample reality also introduces a disconnect between theory and practice. In some cases, the CMA-ES algorithm was able to find negative fraction BIC excess (fractional BIC excess is the ratio of the difference between the BIC scores of the predicted and ground truth ADMGs divided by the ground truth BIC score) values indicating that it was able to find a graph with a BIC score that was lower than the BIC score of the ground truth ADMG. Although this indicates the effective search capability of the CMA-ES algorithm, in practice it means that using the BIC score as a goodness-of-fit measure is suboptimal.
+
+    Another wrinkle is the unknown markov equivalence class of bow-free ADMGs, requiring that we output a graph that actually belongs to the equivalence class of ancestral graphs.
+
+    The construction of the margin maximization term which is used in the objective function of the CMA-ES algorithm and the restriction of the search space in the PPO algorithm are contingent on the theoretical results of scale invariance, surjectivity, and reachability proposed and proved in the report.
+
 5. Awareness of the Legal, Social, Ethical and Sustainability Issues
 
 References:
