@@ -23,7 +23,7 @@ def objective_fn_z_l2_regularization(z, d, tril_ind, data, data_cov, vec2admg, c
     bic = utils.get_bic(D, B, data, data_cov)
     return bic + cmaes_lambda * np.linalg.norm(z) ** 2
 
-def cmaes_admg_search(data, data_cov, admg_model, max_fevals=20_000, verbose=3, popsize=100, num_parallel_workers=8, output_folder='runs/cmaes/', cmaes_lambda=1e-4, gamma=1e-4, delta=1.0, obj_fn_type='order_edge_stability'):
+def cmaes_admg_search(data, data_cov, admg_model, max_fevals=20_000, verbose=3, popsize=100, num_parallel_workers=8, output_folder='runs/cmaes/', cmaes_lambda=1e-4, gamma=1e-4, delta=1.0, obj_fn_type='order_edge_stability', cmaes_diagonal=True):
     if obj_fn_type not in ['order_edge_stability', 'z_l2_regularization']:
         raise ValueError("`obj_fn_type` must be one of `order_edge_stability` or `z_l2_regularization`")
     n, d = data.shape
@@ -48,7 +48,7 @@ def cmaes_admg_search(data, data_cov, admg_model, max_fevals=20_000, verbose=3, 
             opts = cma.CMAOptions()
             opts.set('maxfevals', rem_fevals)  # max number of fn evaluations
             opts.set('verbose', verbose)
-            opts.set('CMA_diagonal', True)  # always only take diagonal updates - else it gave option to i think set probability or something
+            opts.set('CMA_diagonal', cmaes_diagonal)  # always only take diagonal updates - else it gave option to i think set probability or something
             opts.set('popsize', popsize)
             opts.set('verb_filenameprefix', f'{output_folder}restart_{restart_count:02}_')
             es = cma.CMAEvolutionStrategy(x0, sigma0, inopts=opts)

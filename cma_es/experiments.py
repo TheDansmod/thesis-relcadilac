@@ -24,7 +24,7 @@ import gfci.gfci as gfci
 
 class Experiments:
     def __init__(self):
-        self.algorithm_name = "GFCI"  # should be one of DCD or CMA-ES or Relcadilac or GFCI
+        self.algorithm_name = "CMA-ES"  # should be one of DCD or CMA-ES or Relcadilac or GFCI
         self.algorithm = self.get_algorithm()
         self.run_commit = "e6c5e33e306b44ca6c07a711b3e400865a1be023"
 
@@ -41,15 +41,15 @@ class Experiments:
         self.set_dcd_params()
         self.set_metrics_to_none()  # so that even if an algorithm does not provide some metric, we can still put it into the table
 
-        self.explanation = f"No explanation given."
+        self.explanation = f"{self.run_number}; {self.algorithm_name}; {self.num_nodes}; Trying CMA-ES with non-diagonal elements"
 
     def set_graph_generation_params(self):
         self.generator_seed = random.randint(1, pow(10, 6))
-        self.num_nodes = 10
+        self.num_nodes = 20
         self.avg_degree = 4
         self.frac_directed = 0.6
         self.degree_variance = 0.0
-        self.num_samples = 2000
+        self.num_samples = 4000
         self.admg_model = 'bow-free'  # could be one of 'ancestral' or 'bow-free'
         self.beta_low = 0.5
         self.beta_high = 2.0
@@ -64,7 +64,7 @@ class Experiments:
         self.generator = data_generator.GraphGenerator(self.generator_seed)
 
     def set_post_prediction_params(self):
-        self.do_thresholding = False
+        self.do_thresholding = True
         self.threshold = 0.05
 
     def set_cmaes_params(self):
@@ -81,6 +81,7 @@ class Experiments:
         self.cmaes_delta = 1.0
         self.cmaes_gamma = 0.2 * np.log(self.num_samples) / (self.num_nodes * self.cmaes_delta)
         self.cmaes_obj_fn_type = 'order_edge_stability'  # can be one of order_edge_stability or z_l2_regularization
+        self.cmaes_diagonal = False
 
     def set_relcadilac_params(self):
         self.steps_per_env = 10_000
@@ -218,7 +219,7 @@ class Experiments:
 
     def get_algorithm_params(self):
         if self.algorithm_name == 'CMA-ES':
-            return {'max_fevals': self.max_fevals, 'verbose': self.cmaes_verbose_level, 'popsize': self.cmaes_popsize, 'num_parallel_workers': self.cmaes_num_parallel_workers, 'output_folder': self.cmaes_output_folder, 'cmaes_lambda': self.cmaes_lambda, 'gamma': self.cmaes_gamma, 'delta': self.cmaes_delta, 'obj_fn_type': self.cmaes_obj_fn_type}
+            return {'max_fevals': self.max_fevals, 'verbose': self.cmaes_verbose_level, 'popsize': self.cmaes_popsize, 'num_parallel_workers': self.cmaes_num_parallel_workers, 'output_folder': self.cmaes_output_folder, 'cmaes_lambda': self.cmaes_lambda, 'gamma': self.cmaes_gamma, 'delta': self.cmaes_delta, 'obj_fn_type': self.cmaes_obj_fn_type, 'cmaes_diagonal': self.cmaes_diagonal}
         elif self.algorithm_name == 'DCD':
             return {'num_restarts': self.dcd_num_restarts, 'local': False, 'verbose': True}
         elif self.algorithm_name == 'Relcadilac':
@@ -254,7 +255,7 @@ class Experiments:
         # metrics
         m = [self.thresh_admg_tpr, self.thresh_admg_fdr, self.thresh_admg_f1, self.thresh_admg_shd, self.thresh_admg_skeleton_tpr, self.thresh_admg_skeleton_fdr, self.thresh_admg_skeleton_f1, self.thresh_pag_skeleton_f1, self.thresh_pag_skeleton_tpr, self.thresh_pag_skeleton_fdr, self.thresh_pag_circle_f1, self.thresh_pag_circle_tpr, self.thresh_pag_circle_fdr, self.thresh_pag_head_f1, self.thresh_pag_head_tpr, self.thresh_pag_head_fdr, self.thresh_pag_tail_f1, self.thresh_pag_tail_tpr, self.thresh_pag_tail_fdr, self.admg_tpr, self.admg_fdr, self.admg_f1, self.admg_shd, self.admg_skeleton_tpr, self.admg_skeleton_fdr, self.admg_skeleton_f1, self.pag_skeleton_f1, self.pag_skeleton_tpr, self.pag_skeleton_fdr, self.pag_circle_f1, self.pag_circle_tpr, self.pag_circle_fdr, self.pag_head_f1, self.pag_head_tpr, self.pag_head_fdr, self.pag_tail_f1, self.pag_tail_tpr, self.pag_tail_fdr, self.thresh_pred_bic, self.pred_bic, self.true_bic, self.runtime]
         # extra
-        ex = [self.pred_bic_excess, self.thresh_pred_bic_excess, self.sachs_data]
+        ex = [self.pred_bic_excess, self.thresh_pred_bic_excess, self.sachs_data, self.cmaes_diagonal]
         m = [round(val, 4) if val is not None else None for val in m]
         self.log_df.loc[len(self.log_df)] = f + m + p + ex
         self.log_df.to_csv(self.log_file, index=False)
@@ -298,8 +299,8 @@ class Experiments:
             self.evaluate_and_set_metrics()
             print(f'\nPredicted D:\n{self.pred_D}\nPredicted B:\n{self.pred_B}\nTrue bic: {self.true_bic}\nPredicted bic: {self.pred_bic}\nThresholded bic: {self.thresh_pred_bic}\nThresholded SHD: {self.thresh_admg_shd}\nPredicted ADMG SHD: {self.admg_shd}\n'), 
             self.log_metrics_and_data()
-            if not self.algorithm_name == 'GFCI':
-                self.plot_admgs()
+            # if not self.algorithm_name == 'GFCI':
+            #     self.plot_admgs()
         except Exception as e:
             print("THERE WAS AN EXCEPTION")
             traceback.print_exc()
@@ -383,4 +384,5 @@ def run_sachs_dataset():
         exp.run_test()
     
 if __name__ == '__main__':
-    run_variation_test_02()
+    exp = Experiments()
+    exp.run_test()
