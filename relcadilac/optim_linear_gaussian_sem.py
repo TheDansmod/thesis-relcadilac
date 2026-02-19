@@ -20,7 +20,7 @@ def ricf_update_kernel(X, B, Omega, parent_indices, sibling_indices, n, d):
         # Y = X[:, var_index]
         # Xmat = [intercept, parents, spouses(from Z)]
         
-        # Get parents and siblings from pre-computed adjacency lists
+        # get parents and siblings from pre-computed adjacency lists
         parents = parent_indices[var_index]
         siblings = sibling_indices[var_index]
         n_parents = len(parents)

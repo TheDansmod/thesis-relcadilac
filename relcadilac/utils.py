@@ -33,50 +33,15 @@ def vec_2_bow_free_admg_logits(z, d, tril_ind, topo_order):
     m = len(tril_ind[0])
     w_di = z[d : d + m]
     w_bi = z[d + m :]
-
-    # 3. Construct the Logic Competition
-    # We create a (3, m) stack: [Null_Potentials, Dir_Potentials, Bi_Potentials]
-    # Null potentials are fixed at 0.
     null_potentials = np.zeros(m)
-
-    # Stack structure: row 0 = Null, row 1 = Directed, row 2 = Bidirected
     logits = np.vstack([null_potentials, w_di, w_bi]) # Shape (3, m)
-
-    # 4. Determine Edge Types via Argmax
-    # choices will be an array of length m with values {0, 1, 2}
     choices = np.argmax(logits, axis=0)
-
-    # 5. Map back to Adjacency Matrices
-    # Create strictly lower triangular matrices first
     D = np.zeros((d, d))
     B = np.zeros((d, d))
-
     D[tril_ind] = (choices == 1).astype(float)
     B[tril_ind] = (choices == 2).astype(float)
-
-    # 6. Enforce Topological Ordering on Directed Edges
-    # An edge i->j exists in the final graph ONLY if:
-    #   a) The logit competition selected Directed (L_dir[i,j] == 1 or L_dir[j,i] == 1)
-    #   b) The ordering condition is met.
-
-    # Expand p to compare all pairs
-    # P_diff[i, j] = p[i] - p[j]
-    # P_diff = p[:, None] - p[None, :]
-
-    # The tril_ind usually maps to indices (i, j) where i > j.
-    # We populate the full matrix by adding the transpose (symmetrizing the existence decision)
-    # then masking by ordering.
-
-    # "Raw" existence based on logits (ignoring direction for a moment)
-    # adj_existence_dir = D + D.T
-
-    # Final D: Keep edge if existence is predicted AND ordering agrees
     D = (D + D.T) * (p[:, None] > p[None, :])
-
-    # Final B: Bidirected edges are symmetric and unconstrained by ordering
-    # (other than the bow-free constraint which is handled by the mutual exclusivity of argmax)
     B = B + B.T
-
     return D, B
 
 def get_transitive_closure(num_nodes, adj):

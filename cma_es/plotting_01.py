@@ -10,16 +10,15 @@ def create_plots_434():
         "pgf.texsystem": "pdflatex",
         "lines.linewidth": 1,
         "font.family": "serif",
-        "font.serif": ["Times", "Times New Roman"], # Match IEEEtran font
-        "text.usetex": True,                        # Use LaTeX for text rendering
-        "pgf.rcfonts": False,                       # Disables Matplotlib's internal font handling
-        "font.size": 10,                            # IEEEtran main text size
+        "font.serif": ["Times", "Times New Roman"],
+        "text.usetex": True,
+        "pgf.rcfonts": False,
+        "font.size": 10,                        
         "axes.labelsize": 10,
-        "legend.fontsize": 8,                       # Legends are typically smaller
+        "legend.fontsize": 8,                  
         "xtick.labelsize": 8,
         "ytick.labelsize": 8,
-        "figure.figsize": (7.16, 4.0),              # Width matched to IEEEtran \textwidth (double column)
-                                                    # Use (3.5, 3.5) if targeting a single column width.
+        "figure.figsize": (7.16, 4.0),        
     })
     shd_samples_ancestral_cmaes = [12.666667, 16.000000, 14.000000, 10.000000, 22.000000]  # 5 points - rest 4 points
     shd_samples_ancestral_relcadilac = [25.5, 25.5, 9.0, 19.0]
@@ -104,61 +103,17 @@ def create_plots_434():
     # ax[1][1].set_ylabel(r'PAG Skeleton \(F_{1}\)')
     ax[1][1].grid(which="both", axis="both", linestyle='--', alpha=0.5)
 
-    # Legend A: Encodes the Variable mapped to COLOR
-    # We create lines with the specific colors but generic style (solid is usually best for color keys)
     legend_color_handles = [
         Line2D([0], [0], color='blue', lw=2, label=r'Ancestral'),
-        Line2D([0], [0], color='green', lw=2, label=r'Bow-Free')
-    ]
-    
-    # Legend B: Encodes the Variable mapped to LINE STYLE
-    # We create lines with black color (neutral) to emphasize the style
+        Line2D([0], [0], color='green', lw=2, label=r'Bow-Free') ]
     legend_style_handles = [
         Line2D([0], [0], color='black', lw=1.5, linestyle='--', label=r'DCD'),
         Line2D([0], [0], color='black', lw=1.5, linestyle='-.', label=r'GFCI'),
         Line2D([0], [0], color='black', lw=1.5, linestyle=':', label=r'Relcadilac'),
-        Line2D([0], [0], color='black', lw=1.5, linestyle='-', label=r'CMA-ES')
-    ]
+        Line2D([0], [0], color='black', lw=1.5, linestyle='-', label=r'CMA-ES') ]
+    leg1 = fig.legend(handles=legend_color_handles, title=r"ADMG Classes", loc='center left', bbox_to_anchor=(1, 0.65), frameon=False)
+    leg2 = fig.legend(handles=legend_style_handles, title=r"Algorithms", loc='center left', bbox_to_anchor=(1, 0.35), frameon=False)
     
-    # 5. Placing the Legends
-    # Note: When adding multiple legends to a figure, Matplotlib typically overwrites the first.
-    # We must explicitly add the first legend artist back to the layout.
-    
-    # Primary Legend (Colors) - Positioned Upper Right of the Figure bounding box
-    leg1 = fig.legend(handles=legend_color_handles, 
-                      title=r"ADMG Classes",
-                      loc='center left', 
-                      bbox_to_anchor=(1, 0.65), # Coordinates (x, y) relative to figure
-                      frameon=False) # Removing frame for cleaner IEEE look
-    
-    # Secondary Legend (Styles) - Positioned below the first
-    leg2 = fig.legend(handles=legend_style_handles, 
-                      title=r"Algorithms",
-                      loc='center left', 
-                      bbox_to_anchor=(1, 0.35),
-                      frameon=False)
-    
-    # CRITICAL: If using axis-level legends, you would need ax.add_artist(leg1). 
-    # Since we are using figure-level legends (fig.legend), Matplotlib handles them concurrently 
-    # provided we don't overlap them, though older versions might require add_artist logic.
-    # The 'bbox_inches' in savefig handles the extra width.
-    # ax.yaxis.set_major_locator(ticker.LogLocator(base=10.0, subs=np.arange(1, 10)))
-    # 
-    # # 2. Format as Scalar (Rational Integers)
-    # # Instead of 10^1, we display 10.
-    # ax.yaxis.set_major_formatter(ticker.ScalarFormatter())
-    # 
-    # # 3. Innovative/Detailed: Annotate exact bounds
-    # # We add manual ticks for the global min and max to show the exact range.
-    # # We retrieve current ticks, append min/max, and re-apply.
-    # # Note: This is an "out-of-the-box" method to mix dynamic and static ticks.
-    # yticks = list(ax.get_yticks()) + [global_min, global_max]
-    # # Filter ticks to ensure they are within the viewable plot limits to avoid compression
-    # ylim = ax.get_ylim()
-    # visible_ticks = [y for y in yticks if ylim[0] <= y <= ylim[1]]
-    # # We can strictly set these, but usually, letting the Locator handle the
-    # # log structure is safer. Instead, let's just ensure the minor grid works:
-    # ax.yaxis.set_minor_locator(ticker.LogLocator(base=10.0, subs='auto', numticks=100))
 
     plt.tight_layout()
     # plt.legend()

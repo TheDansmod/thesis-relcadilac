@@ -236,12 +236,14 @@ class Experiments:
         if not self.sachs_data:
             utils.draw_admg(self.true_D, self.true_B, f'{file_prefix}true', directory)
             utils.draw_admg(self.pred_D, self.pred_B, f'{file_prefix}pred', directory)
-            utils.draw_admg(self.pred_thresh_D, self.pred_thresh_B, f'{file_prefix}pred_thresh', directory)
+            if self.do_thresholding:
+                utils.draw_admg(self.pred_thresh_D, self.pred_thresh_B, f'{file_prefix}pred_thresh', directory)
         else:
             vertex_names = 'Raf,Mek,Plcg,PIP2,PIP3,Erk,Akt,PKA,PKC,P38,Jnk'.split(',')
             utils.draw_admg_named_vertices(self.true_D, self.true_B, vertex_names, f'{file_prefix}true', directory)
             utils.draw_admg_named_vertices(self.pred_D, self.pred_B, vertex_names, f'{file_prefix}pred', directory)
-            utils.draw_admg_named_vertices(self.pred_thresh_D, self.pred_thresh_B, vertex_names, f'{file_prefix}pred_thresh', directory)
+            if self.do_thresholding:
+                utils.draw_admg_named_vertices(self.pred_thresh_D, self.pred_thresh_B, vertex_names, f'{file_prefix}pred_thresh', directory)
 
     def log_metrics_and_data(self):
         # data
